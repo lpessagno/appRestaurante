@@ -156,41 +156,51 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/panel_fotos"
-        android:gravity="center">
-
-
-        <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:id="@+id/foto1"
-                android:src="@mipmap/lomito"
-                android:layout_gravity="center"/>
-        <TextView
+        <GridLayout
+            android:id="@+id/panel_fotos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            android:text="Lomo Saltado"/>
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:id="@+id/foto2"
-            android:src="@mipmap/causa"
-            android:layout_gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            android:text="Causa de Atún"/>
+            android:columnCount="2">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_columnSpan="1">
+                <ImageView
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/foto1"
+                    android:src="@mipmap/lomito"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="Lomo Saltado"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_columnSpan="1">
+                <ImageView
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/foto2"
+                    android:src="@mipmap/causa"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="Causa de Atún"/>
+            </LinearLayout>
 
+        </GridLayout>
 
-    </LinearLayout>
 
 <LinearLayout
     android:layout_width="wrap_content"

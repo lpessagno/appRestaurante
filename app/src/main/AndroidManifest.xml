@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FotosComidaActivity"></activity>
+        <activity android:name=".SignInActivity"></activity>
     </application>
 
 </manifest>
