@@ -1,8 +1,10 @@
 package com.restaurante.cibertec.apprestaurante;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TabHost;
 
 public class ResturantActivity extends AppCompatActivity {
@@ -41,6 +43,12 @@ public class ResturantActivity extends AppCompatActivity {
         tabHost.addTab(spec3);
 
 
+
+    }
+
+    public void subirFoto(View view) {
+        Intent intent= new Intent(getApplicationContext(),FotosComidaActivity.class);
+        startActivity(intent);
 
     }
 }
