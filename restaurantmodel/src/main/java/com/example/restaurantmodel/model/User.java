@@ -15,7 +15,7 @@ public class User implements Serializable {
 
     private Restaurant[] favorites;
     private Commentaries[] commentaries;
-    private UserPhotos[] userPhotos;
+    private Platos[] userPhotos;
     private DefaultSearch search;
 
     public User() {
@@ -77,11 +77,11 @@ public class User implements Serializable {
         this.commentaries = commentaries;
     }
 
-    public UserPhotos[] getUserPhotos() {
+    public Platos[] getUserPhotos() {
         return userPhotos;
     }
 
-    public void setUserPhotos(UserPhotos[] userPhotos) {
+    public void setUserPhotos(Platos[] userPhotos) {
         this.userPhotos = userPhotos;
     }
 

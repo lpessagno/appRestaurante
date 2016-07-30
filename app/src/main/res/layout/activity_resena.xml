@@ -39,12 +39,12 @@
             android:layout_height="wrap_content"
             android:digits="true"/>
     </LinearLayout>
-    <Button
-        android:id="@+id/buttonResena"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enviar"
-        android:onClick=""
-        android:layout_gravity="right"/>
+    <!--<Button-->
+        <!--android:id="@+id/buttonResena"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Enviar"-->
+        <!--android:onClick=""-->
+        <!--android:layout_gravity="right"/>-->
 
 </LinearLayout>

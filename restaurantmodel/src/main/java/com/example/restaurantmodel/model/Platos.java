@@ -5,17 +5,20 @@ import java.io.Serializable;
 /**
  * Created by Jorge on 7/24/2016.
  */
-public class UserPhotos implements Serializable {
+public class Platos implements Serializable {
 
     private int id;
     private User user;
     private Restaurant restaurant;
+    private String description;
 
     //Usar la mas eficiente
     private byte[] photo;
     private String photo_dir;
 
-    public UserPhotos() {}
+
+
+    public Platos() {}
 
     public int getId() {
         return id;
@@ -55,5 +58,13 @@ public class UserPhotos implements Serializable {
 
     public void setPhoto_dir(String photo_dir) {
         this.photo_dir = photo_dir;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
