@@ -15,8 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FotosComidaActivity"></activity>
-        <activity android:name=".SignInActivity"></activity>
+        <activity android:name=".FotosComidaActivity" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".ResenaActivity"></activity>
     </application>
 
 </manifest>
