@@ -26,7 +26,7 @@ public class Restaurant implements Serializable  {
 
     //Setear correctamente
     private Commentaries[] resena;
-    private UserPhotos[] userPhotos;
+    private Platos[] userPhotos;
 
     //decidir cual usar
     private String photodir;
@@ -172,11 +172,11 @@ public class Restaurant implements Serializable  {
         this.resena = resena;
     }
 
-    public UserPhotos[] getUserPhotos() {
+    public Platos[] getUserPhotos() {
         return userPhotos;
     }
 
-    public void setUserPhotos(UserPhotos[] userPhotos) {
+    public void setUserPhotos(Platos[] userPhotos) {
         this.userPhotos = userPhotos;
     }
 }
