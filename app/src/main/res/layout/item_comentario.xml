@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usuario"
+        android:textColorHighlight="@color/colorPrimaryDark"
+        android:text="rmendez" android:textStyle="bold"
+        android:textSize="14dp"
+
+        />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/comentario"
+        android:textColorHighlight="@color/colorPrimaryDark"
+        android:text="Es un restaurante agradable y la comida es rica"
+        />
+
+</LinearLayout>

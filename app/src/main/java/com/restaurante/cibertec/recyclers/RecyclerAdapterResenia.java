@@ -1,4 +1,4 @@
-package com.restaurante.cibertec.apprestaurante;
+package com.restaurante.cibertec.recyclers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.restaurante.cibertec.apprestaurante.R;
+import com.restaurante.cibertec.apprestaurante.Resenia;
 
 import java.util.List;
 

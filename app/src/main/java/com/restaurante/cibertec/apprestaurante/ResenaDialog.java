@@ -21,12 +21,19 @@ public class ResenaDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.activity_resena,null);
         builder.setView(view);
+        builder.setTitle("Dejar Reseña");
         builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Log.d("APPResena","Agregar Resena");
                 Toast.makeText(getActivity(),"Resena Agregada",Toast.LENGTH_SHORT).show();
                 //Agregar la resena a la lista y recargar la ventana
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //NO hacer nada.
             }
         });
 

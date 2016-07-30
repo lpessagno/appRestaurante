@@ -145,34 +145,12 @@
             android:orientation="vertical"
             android:id="@+id/tab_comentarios"
             >
-            <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/usuario"
-            android:textColorHighlight="@color/colorPrimaryDark"
-            android:text="rmendez" android:textStyle="bold"
-                android:textSize="14dp"
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lista_comentarios">
 
-            />
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/comentario"
-                android:textColorHighlight="@color/colorPrimaryDark"
-                android:text="Es un restaurante agradable y la comida es rica"
-                />
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/usuario2"
-                android:textColorHighlight="@color/colorPrimaryDark"
-                android:text="amaldonado" android:textStyle="bold"
-                android:textSize="14dp"
-
-                />
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/comentario2"
-                android:textColorHighlight="@color/colorPrimaryDark"
-                android:text="La comida es exquisita"
-                />
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 
@@ -197,16 +175,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/tab_menu">
-    <TextView android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/menu"
-        android:text="Lomo Saltado 45 Soles"
-        />
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/menu2"
-        android:text="Causa Limeña 25 Soles"
-        />
+        android:id="@+id/lista_menus">
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>
 
 

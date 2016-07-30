@@ -1,7 +1,6 @@
 package com.restaurante.cibertec.apprestaurante;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TabHost;
 
+import com.example.restaurantmodel.model.Commentaries;
+import com.example.restaurantmodel.model.Menu;
 import com.example.restaurantmodel.model.Platos;
+import com.example.restaurantmodel.model.User;
+import com.restaurante.cibertec.recyclers.ComentariosAdapter;
+import com.restaurante.cibertec.recyclers.MenusAdapter;
+import com.restaurante.cibertec.recyclers.PlatosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +25,8 @@ public class ResturantActivity extends AppCompatActivity {
     TabHost tabHost;
     TabHost.TabSpec tabSpec;
     RecyclerView lista_platos;
+    RecyclerView lista_comentarios;
+    RecyclerView lista_menus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +36,31 @@ public class ResturantActivity extends AppCompatActivity {
         tabHost=(TabHost)findViewById(R.id.tabpanel);
         tabHost.setup();
 
+        lista_comentarios=(RecyclerView) findViewById(R.id.lista_comentarios);
+        lista_comentarios.setLayoutManager(new LinearLayoutManager(this));
+
+
+        RecyclerView.Adapter adapter_comentarios=new ComentariosAdapter(this,getComentarios());
+        lista_comentarios.setAdapter(adapter_comentarios);
+
+
+
         lista_platos=(RecyclerView) findViewById(R.id.lista_platos);
         lista_platos.setLayoutManager(new LinearLayoutManager(this));
 
 
         RecyclerView.Adapter adapter_platos=new PlatosAdapter(this,getPlatos());
         lista_platos.setAdapter(adapter_platos);
+
+
+        lista_menus=(RecyclerView) findViewById(R.id.lista_menus);
+        lista_menus.setLayoutManager(new LinearLayoutManager(this));
+
+
+        RecyclerView.Adapter adapter_menus=new MenusAdapter(this,getMenus());
+        lista_menus.setAdapter(adapter_menus);
+
+
 
 
         TabHost.TabSpec spec1 = tabHost.newTabSpec("Comentarios");
@@ -91,4 +117,49 @@ public class ResturantActivity extends AppCompatActivity {
 
         return platos;
     }
+
+
+
+
+    //TODO: este método desaparece cuando este la base de datos
+    public List<Commentaries> getComentarios(){
+        List<Commentaries> comentarios= new ArrayList<Commentaries>();
+        Commentaries c1= new Commentaries();
+        c1.setComment("EXCELENTE SITIO");
+        User u= new User();
+        u.setName("lpessagno");
+        c1.setUser(u);
+
+        Commentaries c2= new Commentaries();
+        c2.setComment("RECOMENDADO");
+        User u2= new User();
+        u2.setName("jkrentzien");
+        c2.setUser(u2);
+
+       comentarios.add(c1);
+        comentarios.add(c2);
+
+        return comentarios;
+    }
+
+
+    //TODO: este método desaparece cuando este la base de datos
+    public List<Menu> getMenus(){
+        List<Menu> menus= new ArrayList<Menu>();
+
+        Menu m1= new Menu();
+        m1.setName("Lomo Saltado");
+        m1.setPrice(25.0);
+
+        Menu m2= new Menu();
+        m2.setName("Ají de Gallina");
+        m2.setPrice(25.0);
+
+        menus.add(m1);
+        menus.add(m2);
+
+        return menus;
+    }
+
+
 }

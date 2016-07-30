@@ -17,27 +17,39 @@
         android:hint="Agrega tu reseña aqui!"/>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        >
+        <TextView
+            android:id="@+id/rank_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ranking:"
+            android:layout_weight="1"/>
+        <Spinner
+            android:id="@+id/ranking_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/ranking_values"
+            android:prompt="@string/rank"
+            android:layout_weight="1"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Ranking:"/>
-        <EditText
-            android:id="@+id/ranking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:digits="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Precio:"/>
+            android:text="Precio:"
+            android:layout_weight="1"/>
         <EditText
             android:id="@+id/price"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="true"/>
+            android:inputType="number"
+            android:hint="poner un precio"
+            android:layout_weight="2"
+            android:gravity="fill_horizontal"
+            />
     </LinearLayout>
     <!--<Button-->
         <!--android:id="@+id/buttonResena"-->
