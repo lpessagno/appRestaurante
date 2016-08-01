@@ -31,8 +31,7 @@ public class Restaurant implements Serializable  {
     //decidir cual usar
     private String photodir;
     private byte[] photo;
-
-
+    private int photoid;
 
     public Restaurant() {}
 
@@ -178,5 +177,13 @@ public class Restaurant implements Serializable  {
 
     public void setUserPhotos(Platos[] userPhotos) {
         this.userPhotos = userPhotos;
+    }
+
+    public int getPhotoid() {
+        return photoid;
+    }
+
+    public void setPhotoid(int photoid) {
+        this.photoid = photoid;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.restaurantmodel.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Jorge on 7/24/2016.
@@ -13,6 +14,7 @@ public class Commentaries implements Serializable {
     private int ranking; //1-5
     private double price;
     private String comment;
+    private Date date;
 
     public Commentaries() {}
 
@@ -62,5 +64,13 @@ public class Commentaries implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
