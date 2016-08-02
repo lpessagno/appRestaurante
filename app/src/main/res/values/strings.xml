@@ -2,6 +2,9 @@
     <string name="app_name">appRestaurante</string>
     <string name="rank">Ranking</string>
     <string name="preferences">appRestaurantPreferences</string>
+    <string name="user">USER</string>
+    <string name="password">PASSWORD</string>
+    <string name="default_string">APP_RESTAURANT_DEFAULT</string>
 
     <string-array name="ranking_values">
         <item>1</item>

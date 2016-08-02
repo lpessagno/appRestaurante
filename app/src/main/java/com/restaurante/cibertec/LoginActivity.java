@@ -37,7 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         loginPasswordText = pwdlogin.getText().toString();
         if(validateLogin()){
             //setear valores en preferencias
-
+            editor = appPreferences.edit();
+            editor.putString(getString(R.string.user),loginUserText);
+            editor.putString(getString(R.string.password),loginPasswordText);
+            editor.commit();
             //Cambiar de activity
             //ActivityPrincipal de restaurante.
         }
