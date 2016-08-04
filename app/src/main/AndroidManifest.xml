@@ -9,16 +9,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ResturantActivity">
+
+        </activity>
+        <activity android:name=".FotosComidaActivity" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".ResenaActivity" />
+        <activity android:name="com.restaurante.cibertec.LoginActivity"></activity>
+        <activity android:name=".DetalleRestActivity" />
+        <activity
+            android:name=".BienvenidaActivity"
+            android:label="@string/title_activity_bienvenida"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FotosComidaActivity" />
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".ResenaActivity" />
-        <activity android:name="com.restaurante.cibertec.LoginActivity"></activity>
     </application>
 
 </manifest>
