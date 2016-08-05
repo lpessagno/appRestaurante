@@ -46,4 +46,26 @@ public class RestaurantSchemaContract {
         public static final String COLUMN_RESTAURANT = "idrestaurant";
         public static final String COLUMN_CATEGORIES = "idcategory";
     }
+
+
+    public static final class Resenia implements BaseColumns{
+        public static final String TABLE_NAME = "resenia";
+        public static final String COLUMN_USER = "iduser";
+        public static final String COLUMN_RESTAURANT = "idrestaurant";
+        public static final String COLUMN_RANKING = "ranking";
+        public static final String COLUMN_PRECIO = "price";
+        public static final String COLUMN_COMENTARIO = "comentario";
+        public static final String COLUMN_FECHA = "fecha";
+        public static final String COLUMN_IMAGEN = "imagen";
+    }
+
+    public static abstract class Favorites implements BaseColumns {
+            public static final String TABLE_NAME = "favorites";
+            public static final String COLUMN_NAME = "iduser";
+            public static final String COLUMN_PRICE = "idrestaurant";
+        }
+
+
+
+
 }
