@@ -2,11 +2,13 @@ package com.example.restaurantmodel.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
 import com.example.restaurantmodel.model.Resenia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,31 +23,18 @@ public class ReseniaDaoImpl implements ReseniaDAO{
     @Override
     public long insertarResenia(Resenia resenia) {
 
-       /* AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
-        SQLiteDatabase sqlite = helper.getWritableDatabase();
-
+        SQLiteDatabase sqlite =  appRestSqlOpenHelper.getWritableDatabase();
         ContentValues content = new ContentValues();
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_NAME,rest.getName());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO,rest.getHorario());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,rest.getEmail());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,rest.getPhone());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,rest.getAvg_ranking());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,rest.getAvg_ranking());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,rest.getDistrict().getId());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,rest.getAddress());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,rest.getLatitude());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,rest.getLongitude());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO,rest.getPhotoid());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT,resenia.getRestaurant().getId());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_USER,resenia.getUser().getId());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_RANKING,resenia.getRanking());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_PRECIO, resenia.getPrice());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO,resenia.getComment());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_IMAGEN,resenia.getImagen());
 
-        long id = sqlite.insert(RestaurantSchemaContract.Restaurant.TABLE_NAME,null,content);
-
-        //insert other restaurant properties like category
-
-        //importante cerrar la conexion
+        long id = sqlite.insert(RestaurantSchemaContract.Resenia.TABLE_NAME,null,content);
         sqlite.close();
-*/
-        return 0;
+        return id;
     }
 
     @Override
@@ -65,6 +54,19 @@ public class ReseniaDaoImpl implements ReseniaDAO{
 
     @Override
     public List<Resenia> listarResenia() {
-        return null;
+       SQLiteDatabase db=appRestSqlOpenHelper.getWritableDatabase();
+         String campos[] = {"id", "nombre"};
+        Cursor cursor = db.query("mytable",campos,null,null,null,null ,null ,null);
+        int size = cursor.getCount();
+        List<Resenia> objetos = new ArrayList<>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+           Resenia o = new Resenia();
+            o.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            o.setComment(cursor.getString(cursor.getColumnIndex("nombre")));
+            objetos.add(o);
+            cursor.moveToNext();
+        }
+        return objetos;
     }
 }
