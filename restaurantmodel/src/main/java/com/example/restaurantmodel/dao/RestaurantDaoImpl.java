@@ -22,6 +22,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
         this.context = context;
     }
 
+
+
     @Override
     public long insert(Restaurant rest) {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
@@ -79,9 +81,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
     }
 
     @Override
-    public long delete() {
+    public long delete(Restaurant restaurant) {
         return 0;
     }
+
 
     @Override
     public Restaurant get(int id) {

@@ -69,6 +69,23 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(sql_rest_cat);
 
+        //@
+        String sql_resenia = "CREATE TABLE "+RestaurantSchemaContract.Resenia.TABLE_NAME+" ( "+
+                RestaurantSchemaContract.Resenia._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
+                RestaurantSchemaContract.Resenia.COLUMN_USER +" INTEGER ," +
+                RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT +" INTEGER ," +
+                RestaurantSchemaContract.Resenia.COLUMN_RANKING +" INTEGER NOT NULL," +
+                RestaurantSchemaContract.Resenia.COLUMN_PRECIO +" INTEGER NOT NULL," +
+                RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO +" TEXT NOT NULL," +
+                RestaurantSchemaContract.Resenia.COLUMN_IMAGEN +"TEXT NOT NULL);";
+        db.execSQL(sql_resenia);
+
+
+        String sql_favorites = "CREATE TABLE "+RestaurantSchemaContract.Favorites.TABLE_NAME+" ( "+
+                RestaurantSchemaContract.Resenia._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
+                RestaurantSchemaContract.Resenia.COLUMN_USER +" INTEGER ," +
+                RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT +" INTEGER);";
+        db.execSQL(sql_favorites);
 
     }
 
