@@ -50,6 +50,7 @@ public class RestaurantSchemaContract {
 
     public static final class Resenia implements BaseColumns{
         public static final String TABLE_NAME = "resenia";
+        public static final String COLUMN_ID = "idresenia";
         public static final String COLUMN_USER = "iduser";
         public static final String COLUMN_RESTAURANT = "idrestaurant";
         public static final String COLUMN_RANKING = "ranking";

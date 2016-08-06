@@ -22,19 +22,36 @@ public class ReseniaDaoImpl implements ReseniaDAO{
 
     @Override
     public long insertarResenia(Resenia resenia) {
-
         SQLiteDatabase sqlite =  appRestSqlOpenHelper.getWritableDatabase();
         ContentValues content = new ContentValues();
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT,resenia.getRestaurant().getId());
         content.put(RestaurantSchemaContract.Resenia.COLUMN_USER,resenia.getUser().getId());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT,resenia.getRestaurant().getId());
         content.put(RestaurantSchemaContract.Resenia.COLUMN_RANKING,resenia.getRanking());
         content.put(RestaurantSchemaContract.Resenia.COLUMN_PRECIO, resenia.getPrice());
         content.put(RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO,resenia.getComment());
+        content.put(RestaurantSchemaContract.Resenia.COLUMN_FECHA,resenia.getDate().toString());
         content.put(RestaurantSchemaContract.Resenia.COLUMN_IMAGEN,resenia.getImagen());
-
         long id = sqlite.insert(RestaurantSchemaContract.Resenia.TABLE_NAME,null,content);
         sqlite.close();
         return id;
+    }
+
+    @Override
+    public List<Resenia> listarResenia() {
+        SQLiteDatabase db=appRestSqlOpenHelper.getWritableDatabase();
+        String campos[] = {RestaurantSchemaContract.Resenia.COLUMN_ID, RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO};
+        Cursor cursor = db.query(RestaurantSchemaContract.Resenia.TABLE_NAME,campos,null,null,null,null ,null ,null);
+        int size = cursor.getCount();
+        List<Resenia> objetos = new ArrayList<>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Resenia o = new Resenia();
+            o.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Resenia.COLUMN_ID)));
+            o.setComment(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO)));
+            objetos.add(o);
+            cursor.moveToNext();
+        }
+        return objetos;
     }
 
     @Override
@@ -52,21 +69,5 @@ public class ReseniaDaoImpl implements ReseniaDAO{
         return null;
     }
 
-    @Override
-    public List<Resenia> listarResenia() {
-       SQLiteDatabase db=appRestSqlOpenHelper.getWritableDatabase();
-         String campos[] = {"id", "nombre"};
-        Cursor cursor = db.query("mytable",campos,null,null,null,null ,null ,null);
-        int size = cursor.getCount();
-        List<Resenia> objetos = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-           Resenia o = new Resenia();
-            o.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            o.setComment(cursor.getString(cursor.getColumnIndex("nombre")));
-            objetos.add(o);
-            cursor.moveToNext();
-        }
-        return objetos;
-    }
+
 }
