@@ -1,6 +1,6 @@
 package com.example.restaurantmodel.dao;
 
-import com.example.restaurantmodel.model.Resenia;
+import com.example.restaurantmodel.model.Commentary;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface ReseniaDAO {
 
-    public  long insertarResenia(Resenia resenia);
-    public  int actualizarResenia(Resenia resenia);
-    public  int eliminarResenia(Resenia resenia);
-    public  Resenia obtenerResenia(Resenia resenia);
-    public List<Resenia> listarResenia();
+    public  long insertarResenia(Commentary commentary);
+    public  int actualizarResenia(Commentary commentary);
+    public  int eliminarResenia(Commentary commentary);
+    public Commentary obtenerResenia(Commentary commentary);
+    public List<Commentary> listarResenia();
 }

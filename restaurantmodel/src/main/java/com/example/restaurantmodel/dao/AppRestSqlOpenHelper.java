@@ -15,8 +15,6 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
     private static final int versionDB = 1;
     private static final String NOTNULL = "NOT NULL";
 
-
-
     public AppRestSqlOpenHelper(Context context) {
         super(context, dbName, null, versionDB);
     }
@@ -54,7 +52,8 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS+" TEXT, "+
                 RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE+" TEXT, "+
                 RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE+" TEXT, "+
-                RestaurantSchemaContract.Restaurant.COLUMN_PHOTO+" INTEGER, "+  // Puede cambiar si se decide utilizar byte[]-> CLOB, string filesystem -> TEXT
+                RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID+" INTEGER, "+
+                RestaurantSchemaContract.Restaurant.COLUMN_PHOTO+" BLOB, "+
                 "FOREIGN KEY ("+RestaurantSchemaContract.Restaurant.COLUMN_MENU+") REFERENCES "+RestaurantSchemaContract.Menu.TABLE_NAME+"("+RestaurantSchemaContract.Menu._ID+"),"+
                 "FOREIGN KEY ("+RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT+") REFERENCES "+RestaurantSchemaContract.District.TABLE_NAME+"("+RestaurantSchemaContract.District._ID+")"+
                 ")";
@@ -70,21 +69,22 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         db.execSQL(sql_rest_cat);
 
         //@
-        String sql_resenia = "CREATE TABLE "+RestaurantSchemaContract.Resenia.TABLE_NAME+" ( "+
-                RestaurantSchemaContract.Resenia._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
-                RestaurantSchemaContract.Resenia.COLUMN_USER +" INTEGER ," +
-                RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT +" INTEGER ," +
-                RestaurantSchemaContract.Resenia.COLUMN_RANKING +" INTEGER NOT NULL," +
-                RestaurantSchemaContract.Resenia.COLUMN_PRECIO +" INTEGER NOT NULL," +
-                RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO +" TEXT NOT NULL," +
-                RestaurantSchemaContract.Resenia.COLUMN_IMAGEN +"TEXT NOT NULL);";
+        String sql_resenia = "CREATE TABLE "+ RestaurantSchemaContract.Comment.TABLE_NAME+" ( "+
+                RestaurantSchemaContract.Comment._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
+                RestaurantSchemaContract.Comment.COLUMN_USER +" INTEGER ," +
+                RestaurantSchemaContract.Comment.COLUMN_RESTAURANT +" INTEGER ," +
+                RestaurantSchemaContract.Comment.COLUMN_RANKING +" INTEGER NOT NULL," +
+                RestaurantSchemaContract.Comment.COLUMN_PRICE +" INTEGER NOT NULL," +
+                RestaurantSchemaContract.Comment.COLUMN_COMMENT +" TEXT NOT NULL," +
+                RestaurantSchemaContract.Comment.COLUMN_DATE+"DATE NOT NULL, "+
+                RestaurantSchemaContract.Comment.COLUMN_IMAGEN +"TEXT NOT NULL);";
         db.execSQL(sql_resenia);
 
 
         String sql_favorites = "CREATE TABLE "+RestaurantSchemaContract.Favorites.TABLE_NAME+" ( "+
-                RestaurantSchemaContract.Resenia._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
-                RestaurantSchemaContract.Resenia.COLUMN_USER +" INTEGER ," +
-                RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT +" INTEGER);";
+                RestaurantSchemaContract.Comment._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
+                RestaurantSchemaContract.Comment.COLUMN_USER +" INTEGER ," +
+                RestaurantSchemaContract.Comment.COLUMN_RESTAURANT +" INTEGER);";
         db.execSQL(sql_favorites);
 
     }

@@ -25,11 +25,10 @@ public class Restaurant implements Serializable  {
     private String longitude;
 
     //Setear correctamente
-    private Commentaries[] resena;
+    private Commentary[] resena;
     private Platos[] userPhotos;
 
     //decidir cual usar
-    private String photodir;
     private byte[] photo;
     private int photoid;
 
@@ -147,14 +146,6 @@ public class Restaurant implements Serializable  {
         this.menu = menu;
     }
 
-    public String getPhotodir() {
-        return photodir;
-    }
-
-    public void setPhotodir(String photodir) {
-        this.photodir = photodir;
-    }
-
     public byte[] getPhoto() {
         return photo;
     }
@@ -163,11 +154,11 @@ public class Restaurant implements Serializable  {
         this.photo = photo;
     }
 
-    public Commentaries[] getResena() {
+    public Commentary[] getResena() {
         return resena;
     }
 
-    public void setResena(Commentaries[] resena) {
+    public void setResena(Commentary[] resena) {
         this.resena = resena;
     }
 
@@ -186,4 +177,5 @@ public class Restaurant implements Serializable  {
     public void setPhotoid(int photoid) {
         this.photoid = photoid;
     }
+
 }

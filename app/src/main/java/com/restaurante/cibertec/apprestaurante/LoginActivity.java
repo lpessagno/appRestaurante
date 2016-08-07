@@ -1,4 +1,4 @@
-package com.restaurante.cibertec;
+package com.restaurante.cibertec.apprestaurante;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
-import com.example.restaurantmodel.model.Resenia;
+import com.example.restaurantmodel.model.Commentary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,33 +21,33 @@ public class ReseniaDaoImpl implements ReseniaDAO{
     public ReseniaDaoImpl(Context context){ appRestSqlOpenHelper = new AppRestSqlOpenHelper(context);}
 
     @Override
-    public long insertarResenia(Resenia resenia) {
+    public long insertarResenia(Commentary commentary) {
         SQLiteDatabase sqlite =  appRestSqlOpenHelper.getWritableDatabase();
         ContentValues content = new ContentValues();
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_USER,resenia.getUser().getId());
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_RESTAURANT,resenia.getRestaurant().getId());
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_RANKING,resenia.getRanking());
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_PRECIO, resenia.getPrice());
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO,resenia.getComment());
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_FECHA,resenia.getDate().toString());
-        content.put(RestaurantSchemaContract.Resenia.COLUMN_IMAGEN,resenia.getImagen());
-        long id = sqlite.insert(RestaurantSchemaContract.Resenia.TABLE_NAME,null,content);
+        content.put(RestaurantSchemaContract.Comment.COLUMN_USER, commentary.getUser().getId());
+        content.put(RestaurantSchemaContract.Comment.COLUMN_RESTAURANT, commentary.getRestaurant().getId());
+        content.put(RestaurantSchemaContract.Comment.COLUMN_RANKING, commentary.getRanking());
+        content.put(RestaurantSchemaContract.Comment.COLUMN_PRICE, commentary.getPrice());
+        content.put(RestaurantSchemaContract.Comment.COLUMN_COMMENT, commentary.getComment());
+        content.put(RestaurantSchemaContract.Comment.COLUMN_DATE, commentary.getDate().toString());
+        content.put(RestaurantSchemaContract.Comment.COLUMN_IMAGEN, commentary.getImagen());
+        long id = sqlite.insert(RestaurantSchemaContract.Comment.TABLE_NAME,null,content);
         sqlite.close();
         return id;
     }
 
     @Override
-    public List<Resenia> listarResenia() {
+    public List<Commentary> listarResenia() {
         SQLiteDatabase db=appRestSqlOpenHelper.getWritableDatabase();
-        String campos[] = {RestaurantSchemaContract.Resenia.COLUMN_ID, RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO};
-        Cursor cursor = db.query(RestaurantSchemaContract.Resenia.TABLE_NAME,campos,null,null,null,null ,null ,null);
+        String campos[] = {RestaurantSchemaContract.Comment._ID, RestaurantSchemaContract.Comment.COLUMN_COMMENT};
+        Cursor cursor = db.query(RestaurantSchemaContract.Comment.TABLE_NAME,campos,null,null,null,null ,null ,null);
         int size = cursor.getCount();
-        List<Resenia> objetos = new ArrayList<>();
+        List<Commentary> objetos = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            Resenia o = new Resenia();
-            o.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Resenia.COLUMN_ID)));
-            o.setComment(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Resenia.COLUMN_COMENTARIO)));
+            Commentary o = new Commentary();
+            o.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment._ID)));
+            o.setComment(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_COMMENT)));
             objetos.add(o);
             cursor.moveToNext();
         }
@@ -55,17 +55,17 @@ public class ReseniaDaoImpl implements ReseniaDAO{
     }
 
     @Override
-    public int actualizarResenia(Resenia resenia) {
+    public int actualizarResenia(Commentary commentary) {
         return 0;
     }
 
     @Override
-    public int eliminarResenia(Resenia resenia) {
+    public int eliminarResenia(Commentary commentary) {
         return 0;
     }
 
     @Override
-    public Resenia obtenerResenia(Resenia resenia) {
+    public Commentary obtenerResenia(Commentary commentary) {
         return null;
     }
 

@@ -1,5 +1,7 @@
 package com.example.restaurantmodel.dao;
 
+import com.example.restaurantmodel.contract.RestaurantSchemaContract;
+import com.example.restaurantmodel.model.Category;
 import com.example.restaurantmodel.model.Restaurant;
 
 import java.util.List;
@@ -13,6 +15,7 @@ public interface RestaurantDao {
     public long update(Restaurant restaurant);
     public long delete(Restaurant restaurant);
     public Restaurant get(int id);
-   public List<Restaurant> list();
+    public List<Restaurant> list();
+    public List<Category> getRestaurantCategories(int restaurantid);
 
 }

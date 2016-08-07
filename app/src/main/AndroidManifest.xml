@@ -14,7 +14,7 @@
         <activity android:name=".FotosComidaActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".ResenaActivity" />
-        <activity android:name="com.restaurante.cibertec.LoginActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".DetalleRestActivity" />
         <activity
             android:name=".BienvenidaActivity"

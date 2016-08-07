@@ -9,10 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TabHost;
 
-import com.example.restaurantmodel.model.Commentaries;
-import com.example.restaurantmodel.model.Menu;
-import com.example.restaurantmodel.model.Platos;
-import com.example.restaurantmodel.model.User;
+import com.example.restaurantmodel.model.*;
+import com.example.restaurantmodel.model.Commentary;
 import com.restaurante.cibertec.recyclers.ComentariosAdapter;
 import com.restaurante.cibertec.recyclers.MenusAdapter;
 import com.restaurante.cibertec.recyclers.PlatosAdapter;
@@ -122,15 +120,15 @@ public class ResturantActivity extends AppCompatActivity {
 
 
     //TODO: este método desaparece cuando este la base de datos
-    public List<Commentaries> getComentarios(){
-        List<Commentaries> comentarios= new ArrayList<Commentaries>();
-        Commentaries c1= new Commentaries();
+    public List<Commentary> getComentarios(){
+        List<Commentary> comentarios= new ArrayList<Commentary>();
+        Commentary c1= new Commentary();
         c1.setComment("EXCELENTE SITIO");
         User u= new User();
         u.setName("lpessagno");
         c1.setUser(u);
 
-        Commentaries c2= new Commentaries();
+        Commentary c2= new Commentary();
         c2.setComment("RECOMENDADO");
         User u2= new User();
         u2.setName("jkrentzien");

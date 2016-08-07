@@ -14,7 +14,7 @@ public class User implements Serializable {
     private String password;
 
     private Restaurant[] favorites;
-    private Commentaries[] commentaries;
+    private Commentary[] commentaries;
     private Platos[] userPhotos;
     private DefaultSearch search;
 
@@ -69,11 +69,11 @@ public class User implements Serializable {
         this.favorites = favorites;
     }
 
-    public Commentaries[] getCommentaries() {
+    public Commentary[] getCommentaries() {
         return commentaries;
     }
 
-    public void setCommentaries(Commentaries[] commentaries) {
+    public void setCommentaries(Commentary[] commentaries) {
         this.commentaries = commentaries;
     }
 
