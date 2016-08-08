@@ -88,9 +88,13 @@ public class ResturantActivity extends AppCompatActivity {
     }
 
     public void subirFoto(View view) {
-        Intent intent= new Intent(getApplicationContext(),FotosComidaActivity.class);
-        startActivity(intent);
+        DialogFragment dialog = new FotosDialog();
+        dialog.show(getSupportFragmentManager(),"Fotos");
+       // Intent intent= new Intent(getApplicationContext(),FotosComidaActivity.class);
+       // startActivity(intent);
     }
+
+
 
     public void hacerResena(View view) {
         DialogFragment dialog = new ResenaDialog();

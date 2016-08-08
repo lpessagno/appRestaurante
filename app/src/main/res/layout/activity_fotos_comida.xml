@@ -10,12 +10,17 @@
     android:gravity="center"
     tools:context="com.restaurante.cibertec.apprestaurante.FotosComidaActivity">
 
+    <ImageView
+        android:id="@+id/dishphoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tomarFoto"
         android:text="Tomar Foto"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:onClick="tomarFoto"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
