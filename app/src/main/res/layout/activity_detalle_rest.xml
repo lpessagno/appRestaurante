@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imagenRest"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_launcher"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:id="@+id/nombreRest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imagenRest"
+        android:text="Ebisu"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ubicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nombreRest"
+        android:layout_toRightOf="@id/imagenRest"
+        android:text="San Isidro"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tipoComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ubicacion"
+        android:layout_toRightOf="@id/imagenRest"
+        android:text="Japonesa"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/votos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tipoComida"
+        android:layout_toRightOf="@id/tipoComida"
+        android:gravity="right"
+        android:text="5" />
+
+    <TextView
+        android:id="@+id/lblVotos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/votos"
+        android:layout_toRightOf="@id/tipoComida"
+        android:gravity="right"
+        android:text="Votos" />
+
+    <TextView
+        android:id="@+id/ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tipoComida"
+        android:layout_toRightOf="@id/imagenRest"
+        android:text="4.5"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sobreRanking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tipoComida"
+        android:layout_toRightOf="@id/ranking"
+        android:text="/5"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/lblRanking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ranking"
+        android:layout_toRightOf="@id/imagenRest"
+        android:text="Ranking"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/nombreRest"
+        android:gravity="right"
+        android:text="S/.65"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/distancia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/nombreRest"
+        android:layout_toRightOf="@id/ubicacion"
+        android:gravity="right"
+        android:text="170m"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

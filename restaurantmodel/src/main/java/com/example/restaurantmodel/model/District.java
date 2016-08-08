@@ -12,6 +12,10 @@ public class District implements Serializable {
 
     public District() {}
 
+    public District(int iddist) {
+        setId(iddist);
+    }
+
     public int getId() {
         return id;
     }

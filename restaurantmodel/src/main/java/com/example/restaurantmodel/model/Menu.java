@@ -14,6 +14,10 @@ public class Menu implements Serializable {
 
     public Menu() {}
 
+    public Menu(int idmenu){
+        setId(idmenu);
+    }
+
     public int getId() {
         return id;
     }

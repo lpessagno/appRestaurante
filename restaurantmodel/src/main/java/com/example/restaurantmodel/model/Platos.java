@@ -1,9 +1,10 @@
 package com.example.restaurantmodel.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * Created by Jorge on 7/24/2016.
+ * Created by Jorge on 7/24/2016. USER PHOTOS
  */
 public class Platos implements Serializable {
 
@@ -11,12 +12,10 @@ public class Platos implements Serializable {
     private User user;
     private Restaurant restaurant;
     private String description;
+    private Date date;
 
     //Usar la mas eficiente
     private byte[] photo;
-    private String photo_dir;
-
-
 
     public Platos() {}
 
@@ -52,19 +51,19 @@ public class Platos implements Serializable {
         this.photo = photo;
     }
 
-    public String getPhoto_dir() {
-        return photo_dir;
-    }
-
-    public void setPhoto_dir(String photo_dir) {
-        this.photo_dir = photo_dir;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

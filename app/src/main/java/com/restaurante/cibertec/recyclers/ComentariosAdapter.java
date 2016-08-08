@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.restaurantmodel.model.Commentaries;
+import com.example.restaurantmodel.model.Commentary;
 import com.restaurante.cibertec.apprestaurante.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -20,9 +18,9 @@ import java.util.List;
 public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.CustomComentariosHolder> {
 
     private Context context;
-    private List<Commentaries> lista_comentarios;
+    private List<Commentary> lista_comentarios;
 
-    public ComentariosAdapter(Context context, List<Commentaries> lista_comentarios) {
+    public ComentariosAdapter(Context context, List<Commentary> lista_comentarios) {
         this.context = context;
         this.lista_comentarios = lista_comentarios;
     }
@@ -36,7 +34,7 @@ public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.
 
     @Override
     public void onBindViewHolder(ComentariosAdapter.CustomComentariosHolder holder, int position) {
-        Commentaries comment= lista_comentarios.get(position);
+        Commentary comment= lista_comentarios.get(position);
         holder.usuario.setText(comment.getUser().getName());
         holder.comentario.setText(comment.getComment());
     }
