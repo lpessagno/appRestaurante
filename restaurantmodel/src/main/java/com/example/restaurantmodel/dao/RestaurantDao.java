@@ -16,6 +16,6 @@ public interface RestaurantDao {
     public long delete(Restaurant restaurant);
     public Restaurant get(int id);
     public List<Restaurant> list();
-    public List<Category> getRestaurantCategories(int restaurantid);
+    //public List<Category> getRestaurantCategories(int restaurantid);
 
 }

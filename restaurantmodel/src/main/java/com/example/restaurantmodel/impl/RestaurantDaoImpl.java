@@ -1,14 +1,20 @@
-package com.example.restaurantmodel.dao;
+package com.example.restaurantmodel.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.restaurantmodel.contract.AppRestSqlOpenHelper;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
+import com.example.restaurantmodel.dao.CategoryDistrictDao;
+import com.example.restaurantmodel.dao.ReseniaDAO;
+import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.model.Category;
+import com.example.restaurantmodel.model.Commentary;
 import com.example.restaurantmodel.model.District;
 import com.example.restaurantmodel.model.Menu;
+import com.example.restaurantmodel.model.Platos;
 import com.example.restaurantmodel.model.Restaurant;
 
 import java.util.ArrayList;
@@ -25,8 +31,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
         this.context = context;
     }
 
-
-
     @Override
     public long insert(Restaurant rest) {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
@@ -37,7 +41,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO,rest.getHorario());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,rest.getEmail());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,rest.getPhone());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
+        //content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,rest.getAvg_ranking());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,rest.getAvg_ranking());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,rest.getDistrict().getId());
@@ -67,7 +71,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO,rest.getHorario());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,rest.getEmail());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,rest.getPhone());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
+        //content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,rest.getAvg_ranking());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,rest.getAvg_ranking());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,rest.getDistrict().getId());
@@ -94,6 +98,65 @@ public class RestaurantDaoImpl implements RestaurantDao {
 
     @Override
     public Restaurant get(int id) {
+        // restaurant
+        Restaurant rest = getRestaurant(id);
+        //CATEGORY
+        rest.setCategories(getRestaurantCategories(id));
+        //DISTRICT
+        rest.setDistrict(getDistrict(rest.getDistrict().getId()));
+        // MENU
+        rest.setMenu(getRestaurantMenu(id));
+        //COMMENTS
+        rest.setResena(getRestaurantComment(id));
+        //PLATOS
+        rest.setUserPhotos(getRestaurantDish(id));
+        return rest;
+    }
+
+    private List<Platos> getRestaurantDish(int id) {
+        //create dao for dish
+        //exec method for list
+        return null;
+    }
+
+    private List<Commentary> getRestaurantComment(int id) {
+        ReseniaDAO dao = new ReseniaDaoImpl(context);
+        return dao.getCommentByRestaurantId(id);
+    }
+
+    private List<Menu> getRestaurantMenu(int id) {
+        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite = helper.getWritableDatabase();
+
+        String whereClause = RestaurantSchemaContract.Menu.COLUMN_RESTAURANT+"=?";
+        String[] whereArgs = new String[]{""+id};
+
+        Cursor cursor = sqlite.query(RestaurantSchemaContract.Menu.TABLE_NAME,null,whereClause,whereArgs,null,null,null);
+        List<Menu> list = new ArrayList<Menu>();
+        if (cursor.moveToFirst()) {
+            do {
+                Menu menu = new Menu();
+                menu.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Menu._ID)));
+                menu.setName(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Menu.COLUMN_NAME)));
+                menu.setPrice(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Menu.COLUMN_PRICE)));
+                menu.setIdRestaurant(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Menu.COLUMN_RESTAURANT)));
+                list.add(menu);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        sqlite.close();
+
+        return list;
+    }
+
+    private District getDistrict(int id) {
+        CategoryDistrictDao catDao = new CategoryDistrictDaoImpl(context);
+        return catDao.getDistrict(id);
+    }
+
+    private Restaurant getRestaurant(int id) {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
         SQLiteDatabase sqlite = helper.getWritableDatabase();
         String whereClause = RestaurantSchemaContract.Restaurant._ID+"=?";
@@ -109,9 +172,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
             rest.setHorario(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO)));
             rest.setEmail(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL)));
             rest.setPhone(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHONE)));
-            //MENU
-            int menuid = cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_MENU));
-            rest.setMenu(new Menu(menuid));
             rest.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
             rest.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
             //DISTRICT
@@ -133,9 +193,37 @@ public class RestaurantDaoImpl implements RestaurantDao {
         return rest;
     }
 
+    private List<Category> getRestaurantCategories(int id) {
+        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite = helper.getWritableDatabase();
+        List<Integer> cat_list = new ArrayList<Integer>();
+
+        String whereClause =RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT+"=?";
+        String[] whereArgs =new String[]{""+id};
+        Cursor cursor = sqlite.query(RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME,null,whereClause,whereArgs,null,null,null);
+        if (cursor.moveToFirst()) {
+            do {
+                cat_list.add(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES)));
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        sqlite.close();
+
+        List<Category> list = new ArrayList<Category>();
+        CategoryDistrictDao catDao = new CategoryDistrictDaoImpl(context);
+        for (Integer catid:cat_list){
+            Category cat = catDao.getCategory(catid);
+            list.add(cat);
+        }
+
+        return list;
+    }
+
     @Override
     public List<Restaurant> list() {
-
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
         SQLiteDatabase sqlite = helper.getWritableDatabase();
 
@@ -149,10 +237,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 rest.setHorario(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO)));
                 rest.setEmail(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL)));
                 rest.setPhone(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHONE)));
-                //MENU
-                int menuid = cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_MENU));
-                rest.setMenu(new Menu(menuid));
-
                 rest.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
                 rest.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
                 //DISTRICT
@@ -177,14 +261,4 @@ public class RestaurantDaoImpl implements RestaurantDao {
         return list;
     }
 
-    @Override
-    public List<Category> getRestaurantCategories(int restaurantid) {
-        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
-        SQLiteDatabase sqlite = helper.getWritableDatabase();
-
-        Cursor cursor = sqlite.query(RestaurantSchemaContract.Restaurant.TABLE_NAME,null,null,null,null,null,null);
-
-        sqlite.close();
-        return null;
-    }
 }

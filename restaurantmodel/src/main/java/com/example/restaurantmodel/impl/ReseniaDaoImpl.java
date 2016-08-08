@@ -1,20 +1,26 @@
-package com.example.restaurantmodel.dao;
+package com.example.restaurantmodel.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.restaurantmodel.contract.AppRestSqlOpenHelper;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
+import com.example.restaurantmodel.dao.ReseniaDAO;
 import com.example.restaurantmodel.model.Commentary;
+import com.example.restaurantmodel.model.Menu;
+import com.example.restaurantmodel.model.Restaurant;
+import com.example.restaurantmodel.model.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by azapata on 04/08/2016.
  */
-public class ReseniaDaoImpl implements ReseniaDAO{
+public class ReseniaDaoImpl implements ReseniaDAO {
 
     AppRestSqlOpenHelper appRestSqlOpenHelper;
 
@@ -52,6 +58,40 @@ public class ReseniaDaoImpl implements ReseniaDAO{
             cursor.moveToNext();
         }
         return objetos;
+    }
+
+    @Override
+    public List<Commentary> getCommentByRestaurantId(int id) {
+        SQLiteDatabase db=appRestSqlOpenHelper.getWritableDatabase();
+        String whereClause = RestaurantSchemaContract.Comment.COLUMN_RESTAURANT+"=?";
+        String[] whereArgs = new String[]{""+id};
+
+        Cursor cursor = db.query(RestaurantSchemaContract.Comment.TABLE_NAME,null,whereClause,whereArgs,null,null,null);
+        List<Commentary> list = new ArrayList<Commentary>();
+        if (cursor.moveToFirst()) {
+            do {
+                Commentary comment = new Commentary();
+                comment.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment._ID)));
+                User user = new User();
+                user.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_USER)));
+                comment.setUser(user); //SETEAR LUEGO EL USUARIO
+                Restaurant r = new Restaurant();
+                r.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_RESTAURANT)));
+                comment.setRestaurant(r);
+                comment.setRanking(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_RANKING)));
+                comment.setPrice(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_PRICE))); //VALIDAR
+                comment.setComment(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_COMMENT)));
+                Date date = new Date(cursor.getLong(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_DATE))); //VALIDAR
+                comment.setDate(date);
+                list.add(comment);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        db.close();
+
+        return list;
     }
 
     @Override

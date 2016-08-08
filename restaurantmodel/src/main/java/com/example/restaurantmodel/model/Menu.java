@@ -10,13 +10,9 @@ public class Menu implements Serializable {
     private int id;
     private String name;
     private double price;
-    private Restaurant restaurant;
+    private int idRestaurant;
 
     public Menu() {}
-
-    public Menu(int idmenu){
-        setId(idmenu);
-    }
 
     public int getId() {
         return id;
@@ -42,11 +38,11 @@ public class Menu implements Serializable {
         this.price = price;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public int getIdRestaurant() {
+        return idRestaurant;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setIdRestaurant(int idRestaurant) {
+        this.idRestaurant = idRestaurant;
     }
 }
