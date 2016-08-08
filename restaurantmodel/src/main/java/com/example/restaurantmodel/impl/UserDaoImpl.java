@@ -8,6 +8,7 @@ import com.example.restaurantmodel.model.User;
  */
 public class UserDaoImpl implements UserDao {
 
+
     @Override
     public long insert(User user) {
         return 0;
@@ -19,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User get(int id) {
+    public User getByName(String Name) {
         return null;
     }
 }
