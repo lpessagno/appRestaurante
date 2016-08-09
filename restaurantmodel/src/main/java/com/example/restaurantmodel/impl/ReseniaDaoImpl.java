@@ -95,6 +95,11 @@ public class ReseniaDaoImpl implements ReseniaDAO {
     }
 
     @Override
+    public List<Commentary> getCommentByUserId(int userid) {
+        return null;
+    }
+
+    @Override
     public int actualizarResenia(Commentary commentary) {
         return 0;
     }

@@ -16,4 +16,5 @@ public interface ReseniaDAO {
     public List<Commentary> listarResenia();
 
     List<Commentary> getCommentByRestaurantId(int id);
+    List<Commentary> getCommentByUserId(int userid);
 }
