@@ -1,5 +1,6 @@
 package com.restaurante.cibertec.apprestaurante;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -62,6 +66,30 @@ public class BienvenidaActivity extends AppCompatActivity {
 
         RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this, restaurantes);
         recyclerView.setAdapter(adapter1);
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int idopcion = item.getItemId();
+        switch (idopcion) {
+            case R.id.opt1:
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
+                //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.opt2:
+                Intent intent2 = new Intent(this,PerfActivity.class);
+                startActivity(intent2);
+                //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
