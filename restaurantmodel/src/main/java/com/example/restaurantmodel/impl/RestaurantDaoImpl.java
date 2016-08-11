@@ -164,6 +164,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
         return rest;
     }
 
+    //COLOCAR COMENTARIOS AQUI
     private List<Category> getRestaurantCategories(int id) {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
         SQLiteDatabase sqlite = helper.getWritableDatabase();
