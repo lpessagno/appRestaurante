@@ -2,6 +2,8 @@ package com.restaurante.cibertec.apprestaurante;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.restaurantmodel.model.Restaurant;
 
 import java.util.List;
 
@@ -26,9 +31,9 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
     public static final String RANKING = "RANKING";
     public static final String VOTOS = "VOTOS";
     private Context context;
-    private List<Restaurante> data;
+    private List<Restaurant> data;
 
-    public RestauranteRecyclerAdapter(Context context, List<Restaurante> data) {
+    public RestauranteRecyclerAdapter(Context context, List<Restaurant> data) {
         this.context = context;
         this.data = data;
     }
@@ -45,16 +50,27 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
     public void onBindViewHolder(RestauranteViewHolder holder, int position) {
 
         Log.d("FFFF", "onBindViewHolder");
-        Restaurante fila = data.get(position);
-        holder.txtNombre.setText(fila.getNombre());
-        holder.txtUbicacion.setText(fila.getUbicacion());
-        holder.imgRestaurant.setImageResource(fila.getImagen());
-        holder.txtTipoComida.setText(fila.getTipoComida());
-        holder.txtUbicacion.setText(fila.getUbicacion());
-        holder.txtDistancia.setText(fila.getDistancia());
-        holder.txtPrecio.setText("S/." + fila.getPrecio());
-        holder.txtRanking.setText("" + fila.getRanking());
-        holder.txtVotos.setText("" + fila.getVotos());
+        Restaurant fila = data.get(position);
+        holder.txtNombre.setText(fila.getName());
+        holder.imgRestaurant.setImageResource(fila.getPhotoid());
+        Bitmap bit = BitmapFactory.decodeByteArray(fila.getPhoto(),0,fila.getPhoto().length);
+        //otra forma de setear la imagen
+        holder.txtUbicacion.setText(fila.getAddress());
+        //holder.txtTipoComida.setText(fila.getCategories().get(0).getName());
+        holder.txtRanking.setText(Double.toString(fila.getAvg_ranking()));
+        holder.txtVotos.setText("5");
+        holder.txtPrecio.setText(Double.toString(fila.getAvg_price()));
+        holder.txtDistancia.setText("111mts");
+//        Restaurante fila = data.get(position);
+//        holder.txtNombre.setText(fila.getNombre());
+//        holder.txtUbicacion.setText(fila.getUbicacion());
+//        holder.imgRestaurant.setImageResource(fila.getImagen());
+//        holder.txtTipoComida.setText(fila.getTipoComida());
+//        holder.txtUbicacion.setText(fila.getUbicacion());
+//        holder.txtDistancia.setText(fila.getDistancia());
+//        holder.txtPrecio.setText("S/." + fila.getPrecio());
+//        holder.txtRanking.setText("" + fila.getRanking());
+//        holder.txtVotos.setText("" + fila.getVotos());
     }
 
     @Override
@@ -90,19 +106,20 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    Restaurante restaurante = data.get(position);
-                    Intent intent = new Intent(context, ResturantActivity.class);
-                    intent.putExtra(IMAGEN,restaurante.getImagen());
-                    intent.putExtra(NOMBRE,restaurante.getNombre());
-                    intent.putExtra(UBICACION,restaurante.getUbicacion());
-                    intent.putExtra(TIPOCOMIDA,restaurante.getTipoComida());
-                    intent.putExtra(DISTANCIA,restaurante.getDistancia());
-                    intent.putExtra(PRECIO,restaurante.getPrecio());
-                    intent.putExtra(RANKING,restaurante.getRanking());
-                    intent.putExtra(VOTOS,restaurante.getVotos());
-
-                    context.startActivity(intent);
+                    Toast.makeText(context,"CLICK",Toast.LENGTH_SHORT).show();
+//                    int position = getAdapterPosition();
+//                    Restaurante restaurante = data.get(position);
+//                    Intent intent = new Intent(context, ResturantActivity.class);
+//                    intent.putExtra(IMAGEN,restaurante.getImagen());
+//                    intent.putExtra(NOMBRE,restaurante.getNombre());
+//                    intent.putExtra(UBICACION,restaurante.getUbicacion());
+//                    intent.putExtra(TIPOCOMIDA,restaurante.getTipoComida());
+//                    intent.putExtra(DISTANCIA,restaurante.getDistancia());
+//                    intent.putExtra(PRECIO,restaurante.getPrecio());
+//                    intent.putExtra(RANKING,restaurante.getRanking());
+//                    intent.putExtra(VOTOS,restaurante.getVotos());
+//
+//                    context.startActivity(intent);
 
                 }
             });

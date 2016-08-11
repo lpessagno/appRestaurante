@@ -76,7 +76,7 @@ public class RestaurantSchemaContract {
         public static final String COLUMN_EMAIL = "email";
         public static final String COLUMN_PHONE = "phone";
         public static final String COLUMN_PWD = "password";
-        public static final String COLUMN_AVATAR = "avatar"; //BLOB
+        //public static final String COLUMN_AVATAR = "avatar"; //BLOB
         public static final String COLUMN_DEFAULT_SEARCH = "default_search_id";
     }
 

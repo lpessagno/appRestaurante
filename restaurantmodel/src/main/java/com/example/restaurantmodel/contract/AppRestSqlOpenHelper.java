@@ -1,11 +1,17 @@
 package com.example.restaurantmodel.contract;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.example.restaurantmodel.R;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Jorge on 7/24/2016.
@@ -15,9 +21,11 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
     private static final String dbName = "appRestaurantDB.db";
     private static final int versionDB = 1;
     private static final String NOTNULL = "NOT NULL";
+    private Context ctx;
 
     public AppRestSqlOpenHelper(Context context) {
         super(context, dbName, null, versionDB);
+        ctx = context;
     }
 
     @Override
@@ -39,7 +47,7 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         //DEFAULT_SEARCH
         String sql_search = "CREATE TABLE "+RestaurantSchemaContract.DefaultSearch.TABLE_NAME+" ( "+
                 RestaurantSchemaContract.DefaultSearch._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                RestaurantSchemaContract.DefaultSearch.COLUMN_NAME+" TEXT "+NOTNULL+" " +
+                RestaurantSchemaContract.DefaultSearch.COLUMN_NAME+" TEXT "+NOTNULL+", " +
                 RestaurantSchemaContract.DefaultSearch.COLUMN_DISTRICT+" INTEGER, "+
                 RestaurantSchemaContract.DefaultSearch.COLUMN_RANKING+" INTEGER, "+
                 RestaurantSchemaContract.DefaultSearch.COLUMN_PRICE_LOW+" NUMERIC, "+
@@ -84,9 +92,9 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 RestaurantSchemaContract.User.COLUMN_EMAIL+" TEXT, "+
                 RestaurantSchemaContract.User.COLUMN_PHONE+" TEXT, "+
                 RestaurantSchemaContract.User.COLUMN_PWD+" TEXT, "+
-                RestaurantSchemaContract.User.COLUMN_AVATAR+" BLOB, "+
+                //RestaurantSchemaContract.User.COLUMN_AVATAR+" BLOB, "+
                 RestaurantSchemaContract.User.COLUMN_DEFAULT_SEARCH+" INTEGER, "+
-                "FOREIGN KEY ("+RestaurantSchemaContract.User.COLUMN_DEFAULT_SEARCH+") REFERENCES "+RestaurantSchemaContract.DefaultSearch.TABLE_NAME+"("+RestaurantSchemaContract.DefaultSearch._ID+"),"+
+                "FOREIGN KEY ("+RestaurantSchemaContract.User.COLUMN_DEFAULT_SEARCH+") REFERENCES "+RestaurantSchemaContract.DefaultSearch.TABLE_NAME+"("+RestaurantSchemaContract.DefaultSearch._ID+")"+
                 ")";
         db.execSQL(sql_user);
 
@@ -108,8 +116,8 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 RestaurantSchemaContract.Comment.COLUMN_RANKING +" INTEGER NOT NULL," +
                 RestaurantSchemaContract.Comment.COLUMN_PRICE +" NUMERIC NOT NULL," +
                 RestaurantSchemaContract.Comment.COLUMN_COMMENT +" TEXT NOT NULL," +
-                RestaurantSchemaContract.Comment.COLUMN_DATE+"DATE NOT NULL, "+
-                RestaurantSchemaContract.Comment.COLUMN_IMAGEN +"TEXT NOT NULL), "+ //que es esto
+                RestaurantSchemaContract.Comment.COLUMN_DATE+" DATE NOT NULL, "+
+                RestaurantSchemaContract.Comment.COLUMN_IMAGEN +"TEXT NOT NULL, "+ //que es esto
                 "FOREIGN KEY ("+RestaurantSchemaContract.Comment.COLUMN_USER+") REFERENCES "+RestaurantSchemaContract.User.TABLE_NAME+"("+RestaurantSchemaContract.User._ID+"),"+
                 "FOREIGN KEY ("+RestaurantSchemaContract.Comment.COLUMN_RESTAURANT+") REFERENCES "+RestaurantSchemaContract.Restaurant.TABLE_NAME+"("+RestaurantSchemaContract.Restaurant._ID+")"+
                 ")";
@@ -119,7 +127,7 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         String sql_favorites = "CREATE TABLE "+RestaurantSchemaContract.Favorites.TABLE_NAME+" ( "+
                 RestaurantSchemaContract.Comment._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
                 RestaurantSchemaContract.Comment.COLUMN_USER +" INTEGER ," +
-                RestaurantSchemaContract.Comment.COLUMN_RESTAURANT +" INTEGER), "+
+                RestaurantSchemaContract.Comment.COLUMN_RESTAURANT +" INTEGER, "+
                 "FOREIGN KEY ("+RestaurantSchemaContract.Comment.COLUMN_USER+") REFERENCES "+RestaurantSchemaContract.User.TABLE_NAME+"("+RestaurantSchemaContract.User._ID+"),"+
                 "FOREIGN KEY ("+RestaurantSchemaContract.Comment.COLUMN_RESTAURANT+") REFERENCES "+RestaurantSchemaContract.Restaurant.TABLE_NAME+"("+RestaurantSchemaContract.Restaurant._ID+")"+
                 ")";
@@ -146,8 +154,57 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY ("+RestaurantSchemaContract.UserPhotos.COLUMN_USER+") REFERENCES "+RestaurantSchemaContract.User.TABLE_NAME+"("+RestaurantSchemaContract.User._ID+"),"+
                 "FOREIGN KEY ("+RestaurantSchemaContract.UserPhotos.COLUMN_RESTAURANT+") REFERENCES "+RestaurantSchemaContract.Restaurant.TABLE_NAME+"("+RestaurantSchemaContract.Restaurant._ID+")"+
                 ")";
-        db.execSQL(sql_resenia);
+        db.execSQL(sql_platos);
 
+        //DISTRICT
+        insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Surquillo");
+        insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Ate");
+        insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Lima");
+        insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"La Molina");
+
+        //Category
+        insertColumn(db,RestaurantSchemaContract.Categories.TABLE_NAME,RestaurantSchemaContract.Categories.COLUMN_NAME,"Carnes");
+        insertColumn(db,RestaurantSchemaContract.Categories.TABLE_NAME,RestaurantSchemaContract.Categories.COLUMN_NAME,"Italiano");
+
+        insertRestaurant(db);
+        //db.close();
+    }
+
+    private void insertRestaurant(SQLiteDatabase db) {
+        ContentValues content = new ContentValues();
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_NAME,"labistecca");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO,"8:00 - 18:00");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,"labistecca@mail.com");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,"015544879");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,5.0);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,80.0);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,3);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,"calle 5");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,"-12.235");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,"-12.235");
+        int id = ctx.getResources().getIdentifier("labistecca","drawable",ctx.getPackageName());
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID, id);
+        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(),id);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO,byteArray);
+        db.insert(RestaurantSchemaContract.Restaurant.TABLE_NAME,null,content);
+
+        ContentValues catrest = new ContentValues();
+        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT,1);
+        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES,1);
+        db.insert(RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME,null,catrest);
+
+    }
+
+
+
+
+    private void insertColumn(SQLiteDatabase db, String tableName,String coolumnName,String name) {
+        ContentValues content = new ContentValues();
+        content.put(tableName,name);
+        db.insert(tableName,null,content);
     }
 
     @Override

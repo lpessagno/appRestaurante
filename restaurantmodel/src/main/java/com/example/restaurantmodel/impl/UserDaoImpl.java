@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.restaurantmodel.contract.AppRestSqlOpenHelper;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
 import com.example.restaurantmodel.dao.UserDao;
+import com.example.restaurantmodel.model.DefaultSearch;
 import com.example.restaurantmodel.model.District;
 import com.example.restaurantmodel.model.Restaurant;
 import com.example.restaurantmodel.model.User;
@@ -48,7 +49,10 @@ public class UserDaoImpl implements UserDao {
             user.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.User._ID)));
             user.setName(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.User.COLUMN_NAME)));
             user.setEmail(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.User.COLUMN_EMAIL)));
-
+            user.setPhone(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.User.COLUMN_PHONE)));
+            user.setPassword(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.User.COLUMN_PWD)));
+            DefaultSearch ds = new DefaultSearch();
+            ds.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.User.COLUMN_DEFAULT_SEARCH)));
         } else {
             user = null;
         }
