@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
 
 public class ResturantActivity extends AppCompatActivity {
 
-
+    public static final String  EXTRA_NAME="NAME";
     public static final String  EXTRA_LATITUD="LATITUD";
     public static final String  EXTRA_LONGITUD="LONGITUD";
 
@@ -281,7 +281,8 @@ public class ResturantActivity extends AppCompatActivity {
         }
         else {
         Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:"+detailPhoneNumber)); // pasar telefono del Restaurant   detailPhoneNumber (043) 631641
+        intent.setData(Uri.parse("tel:"+detailPhoneNumber.getText())); // pasar telefono del Restaurant   detailPhoneNumber (043) 631641
+            Log.d("phone",""+ detailPhoneNumber.getText());
         startActivity(intent);
         }
     }
@@ -302,6 +303,7 @@ public class ResturantActivity extends AppCompatActivity {
                 break;*/
             case R.id.opt1: //Llamar a mapa
                 Intent intentMap = new Intent(this,MapsActivity.class);
+                intentMap.putExtra(EXTRA_NAME, detailName.getText());
                 intentMap.putExtra(EXTRA_LATITUD, detailLatitud.getText());
                 intentMap.putExtra(EXTRA_LONGITUD, detailLongitud.getText());
                 Log.d("mapArctmr",""+detailLatitud.getText() + detailLongitud.getText());

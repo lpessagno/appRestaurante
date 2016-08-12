@@ -20,17 +20,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     public String latitud;
-    public String longitud;
+    public String longitud,nombreRest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
         Intent intent = getIntent();
+        nombreRest = intent.getStringExtra(ResturantActivity.EXTRA_NAME);
         latitud=intent.getStringExtra(ResturantActivity.EXTRA_LATITUD);
         longitud=intent.getStringExtra(ResturantActivity.EXTRA_LONGITUD);
 
-        Log.d("recibe","recibe "+ latitud +" - "+ longitud);
+        Log.d("recibe","recibe "+nombreRest+ latitud +" - "+ longitud);
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -47,10 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera ,
         LatLng sydney1 = new LatLng( Double.parseDouble(latitud), Double.parseDouble(longitud));
-        mMap.addMarker(new MarkerOptions().position(sydney1).title("Restaurant1"));
-
-       /* LatLng sydney = new LatLng(-12.0875127, -77.052761);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Restaurant"));*/
+        mMap.addMarker(new MarkerOptions().position(sydney1).title(nombreRest));
         mMap.setMinZoomPreference(15);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
     }
