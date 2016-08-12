@@ -1,9 +1,11 @@
 package com.restaurante.cibertec.apprestaurante;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,10 +19,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+    Double latitud;
+    Double longitud;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Intent intent = getIntent();
+        latitud=intent.getDoubleExtra(ResturantActivity.EXTRA_LATITUD,0);
+        longitud=intent.getDoubleExtra(ResturantActivity.EXTRA_LONGITUD,0);
+
+        Log.d("recibe","recibe "+ latitud +" - "+ longitud);
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -34,13 +46,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera ,
-        LatLng sydney1 = new LatLng(-12.02, -77.61);
+        LatLng sydney1 = new LatLng(latitud, longitud);
         mMap.addMarker(new MarkerOptions().position(sydney1).title("Restaurant1"));
 
-        LatLng sydney = new LatLng(-12.0875127, -77.052761);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Restaurant"));
+       /* LatLng sydney = new LatLng(-12.0875127, -77.052761);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Restaurant"));*/
         //mMap.setMinZoomPreference(15);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
     }
 
    /* private void setUpMapIfNeeded() {

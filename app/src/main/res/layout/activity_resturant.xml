@@ -91,12 +91,7 @@
 
                 />
 
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:text="Mapa"
-                android:onClick="verMapa"/>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -216,7 +211,7 @@
             android:id="@+id/material_design_floating_action_menu_item4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_favorite_white_24dp"
+            android:src="@drawable/ic_camera_enhance_white_24dp"
             fab:fab_label="Tomar Foto"
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>

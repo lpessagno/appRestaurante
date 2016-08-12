@@ -35,8 +35,13 @@ import com.restaurante.cibertec.recyclers.PlatosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class ResturantActivity extends AppCompatActivity {
+
+
+    public static final String  EXTRA_LATITUD="LATITUD";
+    public static final String  EXTRA_LONGITUD="LONGITUD";
 
     TabHost tabHost;
     TabHost.TabSpec tabSpec;
@@ -290,22 +295,23 @@ public class ResturantActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int idopcion = item.getItemId();
         switch (idopcion) {
-           /* case R.id.opt1:
+           /* case R.id.opt2:
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
                 //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
                 break;*/
-            case R.id.opt1:
-                Intent intent2 = new Intent(this,MapsActivity.class);
-                startActivity(intent2);
-                //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();
+            case R.id.opt1: //Llamar a mapa
+                Intent intentMap = new Intent(this,MapsActivity.class);
+                intentMap.putExtra(EXTRA_LATITUD, String.valueOf(detailLatitud));
+                intentMap.putExtra(EXTRA_LONGITUD,String.valueOf(detailLongitud));
+                startActivity(intentMap);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    public void verMapa(View view) {
+   /* public void verMapa(View view) {
         Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();
-    }
+    }*/
 }

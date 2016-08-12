@@ -184,8 +184,8 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,5);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,3);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,"calle 5");
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,"-12.235");
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,"-12.235");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,"-12.1066035");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,"-77.0372236");
         int id = ctx.getResources().getIdentifier("labistecca","drawable",ctx.getPackageName());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID, id);
         Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(),id);
@@ -213,8 +213,8 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,3);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,4);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,"algun sitio");
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,"-11.235");
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,"-11.135");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,"-12.086522");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,"-77.048332");
         int id = ctx.getResources().getIdentifier("ebisu","drawable",ctx.getPackageName());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID, id);
         Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(),id);
