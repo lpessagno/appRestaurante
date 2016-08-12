@@ -43,19 +43,16 @@ public class RestaurantDaoImpl implements RestaurantDao {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,rest.getEmail());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,rest.getPhone());
         //content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,rest.getAvg_ranking());
+        //content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,rest.getAvg_ranking());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,rest.getAvg_ranking());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,rest.getDistrict().getId());
+        //content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,rest.getPhotoid());
+       // content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,rest.getDistrict().getId());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,rest.getAddress());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,rest.getLatitude());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,rest.getLongitude());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,rest.getPhotoid());
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO,rest.getPhoto());
-
+        //content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO,rest.getPhoto());
         long id = sqlite.insert(RestaurantSchemaContract.Restaurant.TABLE_NAME,null,content);
-
         //insert other restaurant properties like category
-
         //importante cerrar la conexion
         sqlite.close();
 
@@ -193,8 +190,31 @@ public class RestaurantDaoImpl implements RestaurantDao {
 
         return list;
     }
-
-    private List<Restaurant> getRestaurantList() {
+//
+    public List<Restaurant> listarRestaurantes() {
+        AppRestSqlOpenHelper mySqlOpenHelper= new AppRestSqlOpenHelper(context);
+        SQLiteDatabase db=mySqlOpenHelper.getWritableDatabase();
+        String campos[] = {RestaurantSchemaContract.Restaurant.COLUMN_NAME, RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,RestaurantSchemaContract.Restaurant.COLUMN_RANKING,RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,RestaurantSchemaContract.Restaurant.COLUMN_HORARIO};
+        Cursor cursor = db.query("restaurant",campos,null,null,null,null ,null ,null);
+        int size = cursor.getCount();
+        List<Restaurant> objetos = new ArrayList<>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Restaurant o = new Restaurant();
+            o.setName(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_NAME)));
+            o.setPhotoid(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID)));
+            o.setAddress(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID)));
+            o.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
+            o.setEmail(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL)));
+            o.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
+            o.setWebpage(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO)));
+            objetos.add(o);
+            cursor.moveToNext();
+        }
+        return objetos;
+    }
+//
+  private   List<Restaurant> getRestaurantList() {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
         SQLiteDatabase sqlite = helper.getWritableDatabase();
 

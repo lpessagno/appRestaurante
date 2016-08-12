@@ -53,13 +53,13 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
         Restaurant fila = data.get(position);
         holder.txtNombre.setText(fila.getName());
         holder.imgRestaurant.setImageResource(fila.getPhotoid());
-        Bitmap bit = BitmapFactory.decodeByteArray(fila.getPhoto(),0,fila.getPhoto().length);
+        //Bitmap bit = BitmapFactory.decodeByteArray(fila.getPhoto(),0,fila.getPhoto().length);
         //otra forma de setear la imagen
         holder.txtUbicacion.setText(fila.getAddress());
         //holder.txtTipoComida.setText(fila.getCategories().get(0).getName());
-        holder.txtRanking.setText(Double.toString(fila.getAvg_ranking()));
+        holder.txtRanking.setText(String.valueOf(fila.getAvg_ranking()));
         holder.txtVotos.setText("5");
-        holder.txtPrecio.setText(Double.toString(fila.getAvg_price()));
+        holder.txtPrecio.setText(String.valueOf(fila.getAvg_price()));
         holder.txtDistancia.setText("111mts");
 //        Restaurante fila = data.get(position);
 //        holder.txtNombre.setText(fila.getNombre());
@@ -107,8 +107,8 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context,"CLICK",Toast.LENGTH_SHORT).show();
-//                    int position = getAdapterPosition();
-//                    Restaurante restaurante = data.get(position);
+                   //int position = getAdapterPosition();
+                        //Restaurante restaurante = data.get(position);
 //                    Intent intent = new Intent(context, ResturantActivity.class);
 //                    intent.putExtra(IMAGEN,restaurante.getImagen());
 //                    intent.putExtra(NOMBRE,restaurante.getNombre());

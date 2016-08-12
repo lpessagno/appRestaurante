@@ -24,6 +24,22 @@ public class BienvenidaActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
+    public void grabar()
+    {
+        RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
+        Restaurant o= new Restaurant();
+        o.setName("Ole");
+        o.setHorario("www.wwww.www");
+        o.setEmail("ssss");
+        o.setPhone("1212121");
+        o.setAvg_price(12);
+        o.setAddress("Av.canevaro 178");
+        o.setLatitude("-12.0912905");
+        o.setLongitude("-77.0502661");
+        mydao.insert(o);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,40 +51,21 @@ public class BienvenidaActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                grabar();
+                listar();
             }
         });
+    }
 
-
+    public void listar()
+    {
         recyclerView = (RecyclerView) findViewById(R.id.lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //String data[] = {"Ebisu", "La Bistecca"};
-        //String ubicacion[] = {"San Isidro", "San Isidro"};
-        //String tipoComida[] = {"Japonesa", "Grill"};
-        //double precio[] = {65, 78};
-        //String distancia[] = {"175m", "234m"};
-        //double ranking[] = {4.7, 4.3};
-        //int votos[] = {5, 3};
-
-
-        List<Restaurante> restaurantes = new ArrayList<>();
-       // for (int i = 0; i < data.length; i++) {
-         //   Restaurante restaurante = new Restaurante();
-           // restaurante.setNombre(data[i]);
-           // restaurante.setUbicacion(ubicacion[i]);
-      //      restaurante.setImagen(getResources().getIdentifier(restaurante.getNombre().toLowerCase().replace(" ", ""), "drawable", getPackageName()));
-        //    restaurante.setTipoComida(tipoComida[i]);
-          //  restaurante.setPrecio(precio[i]);
-          //  restaurante.setDistancia(distancia[i]);
-           // restaurante.setRanking(ranking[i]);
-          //  restaurante.setVotos(votos[i]);
-          //  restaurantes.add(restaurante);
-        //}
-        List<Restaurant> rest = getRestaurtants();
-
-        RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this, rest); //cambiar el dato de entrada
+        RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
+        List<Restaurant> list = mydao.listarRestaurantes();
+        RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this,list); //cambiar el dato de entrada
         recyclerView.setAdapter(adapter1);
     }
 

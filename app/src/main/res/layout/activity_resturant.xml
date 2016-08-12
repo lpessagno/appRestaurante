@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,61 +12,71 @@
     tools:context="com.restaurante.cibertec.apprestaurante.ResturantActivity">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/l1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre del Restaurante"
                 android:textSize="20dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Categoria"/>
+                android:text="Categoria" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Distrito"/>
+                android:text="Distrito" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dirección"/>
+                android:text="Dirección" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Teléfono"/>
+                android:text="Teléfono" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Horario"/>
+                android:text="Horario" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="right"
+            android:orientation="vertical"
 
-           >
+            >
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:src="@mipmap/labisteca"
 
                 />
+
             <Button
                 android:layout_width="70dp"
                 android:layout_height="50dp"
-                android:text="Mapa"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:text="Mapa" />
         </LinearLayout>
 
     </LinearLayout>
@@ -74,34 +85,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Ranking" android:textStyle="bold"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text=" 5"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Votos" android:textStyle="bold"
-            android:layout_weight="1"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text=" 35"
-            android:layout_weight="1"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Precio Promedio " android:textStyle="bold"
             android:layout_weight="1"
-            />
+            android:text="Ranking"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=" 5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Votos"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=" 35" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Precio Promedio "
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -111,83 +128,150 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/subirFoto"
-        android:text="Subir Foto"
-            android:onClick="subirFoto"/>
-        <Button
+            android:id="@+id/subirFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="subirFoto"
+            android:text="Subir Foto" />
+
+        <Button
             android:id="@+id/hacerResena"
-            android:text="Hacer Reseña"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="hacerResena"
-            />
+            android:text="Hacer Reseña" />
     </LinearLayout>
 
-<TabHost
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:id="@+id/tabpanel">
-    <TabWidget android:id="@android:id/tabs"
+    <TabHost
+        android:id="@+id/tabpanel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <FrameLayout android:id="@android:id/tabcontent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="65px">
-        <LinearLayout
+        android:layout_height="match_parent">
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/tab_comentarios"
-            >
-            <android.support.v7.widget.RecyclerView
+            android:paddingTop="65px">
+
+            <LinearLayout
+                android:id="@+id/tab_comentarios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lista_comentarios">
+                android:orientation="vertical">
 
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lista_comentarios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-        </LinearLayout>
+                </android.support.v7.widget.RecyclerView>
 
-      <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:id="@+id/panel_fotos">
-          <android.support.v7.widget.RecyclerView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/lista_platos">
+            </LinearLayout>
 
-          </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:id="@+id/panel_fotos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-      </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lista_platos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:id="@+id/tab_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/tab_menu">
-    <android.support.v7.widget.RecyclerView
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lista_menus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+    </TabHost>
+<!--
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/material_design_android_floating_action_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lista_menus">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/l1"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        fab:menu_animationDelayPerItem="55"
+        fab:menu_backgroundColor="@android:color/transparent"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_colorNormal="#da3c2f"
+        fab:menu_colorPressed="#dc4b3f"
+        fab:menu_colorRipple="#99d4d4d4"
+        fab:menu_fab_size="normal"
+        fab:menu_icon="@drawable/fab_add"
+        fab:menu_labels_colorNormal="#333"
+        fab:menu_labels_colorPressed="#444"
+        fab:menu_labels_colorRipple="#66efecec"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_padding="8dp"
+        fab:menu_labels_position="left"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="false"
+        fab:menu_labels_textColor="#f2f1f1"
+        fab:menu_labels_textSize="15sp"
+        fab:menu_openDirection="up"
+        fab:menu_shadowColor="#66aff198"
+        fab:menu_shadowRadius="4dp"
+        fab:menu_shadowXOffset="1dp"
+        fab:menu_shadowYOffset="4dp">
 
-</LinearLayout>
 
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/material_design_floating_action_menu_item1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_call_white_24dp"
+            fab:fab_label="LLamar"
+            fab:fab_size="mini" />
 
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/material_design_floating_action_menu_item2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_chat_white_24dp"
+            fab:fab_label="Comentar"
+            fab:fab_size="mini" />
 
-    </FrameLayout>
-
-</TabHost>
-
-
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/material_design_floating_action_menu_item3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_white_24dp"
+            fab:fab_label="Me gusta"
+            fab:fab_size="mini" />
+    </com.github.clans.fab.FloatingActionMenu>-->
 </LinearLayout>

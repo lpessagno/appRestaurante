@@ -90,4 +90,8 @@ public class Restaurante {
 
     Bitmap imagenBitmap;
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

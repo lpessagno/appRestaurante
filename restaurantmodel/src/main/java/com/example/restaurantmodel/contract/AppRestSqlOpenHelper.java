@@ -18,8 +18,8 @@ import java.io.ByteArrayOutputStream;
  */
 public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
 
-    private static final String dbName = "appRestaurantDB.db";
-    private static final int versionDB = 1;
+    private static final String dbName = "RestaurantDB.db";
+    private static final int versionDB = 2;
     private static final String NOTNULL = "NOT NULL";
     private Context ctx;
 
@@ -155,19 +155,19 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY ("+RestaurantSchemaContract.UserPhotos.COLUMN_RESTAURANT+") REFERENCES "+RestaurantSchemaContract.Restaurant.TABLE_NAME+"("+RestaurantSchemaContract.Restaurant._ID+")"+
                 ")";
         db.execSQL(sql_platos);
-
+/*
         //DISTRICT
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Surquillo");
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Ate");
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Lima");
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"La Molina");
-
+ */
         //Category
         insertColumn(db,RestaurantSchemaContract.Categories.TABLE_NAME,RestaurantSchemaContract.Categories.COLUMN_NAME,"Carnes");
         insertColumn(db,RestaurantSchemaContract.Categories.TABLE_NAME,RestaurantSchemaContract.Categories.COLUMN_NAME,"Italiano");
 
-        insertRestaurant(db);
-        //db.close();
+        //insertRestaurant(db);
+       // db.close();
     }
 
     private void insertRestaurant(SQLiteDatabase db) {
@@ -190,11 +190,11 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         byte[] byteArray = stream.toByteArray();
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO,byteArray);
         db.insert(RestaurantSchemaContract.Restaurant.TABLE_NAME,null,content);
-
+        /*
         ContentValues catrest = new ContentValues();
         catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT,1);
         catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES,1);
-        db.insert(RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME,null,catrest);
+        db.insert(RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME,null,catrest);*/
 
     }
 
