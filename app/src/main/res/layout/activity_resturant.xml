@@ -24,6 +24,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/restDetailName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre del Restaurante"
@@ -31,26 +32,31 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/restDetailCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Categoria" />
 
             <TextView
+                android:id="@+id/restDetailDistrict"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Distrito" />
 
             <TextView
+                android:id="@+id/restDetailAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dirección" />
 
             <TextView
+                android:id="@+id/restDetailPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Teléfono" />
 
             <TextView
+                android:id="@+id/restDetailTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Horario" />
@@ -66,6 +72,7 @@
             >
 
             <ImageView
+                android:id="@+id/detailPicture"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:src="@mipmap/labisteca"
@@ -76,7 +83,8 @@
                 android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:text="Mapa" />
+                android:text="Mapa"
+                android:onClick="verMapa"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -94,6 +102,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/detailAvgRank"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -107,6 +116,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/detailVotes"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -120,6 +130,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/detailAvgPrice"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" 45 Soles" />

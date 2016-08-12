@@ -4,6 +4,8 @@ import android.*;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -12,10 +14,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.restaurantmodel.contract.RestaurantSchemaContract;
+import com.example.restaurantmodel.dao.RestaurantDao;
+import com.example.restaurantmodel.impl.RestaurantDaoImpl;
 import com.example.restaurantmodel.model.*;
 import com.example.restaurantmodel.model.Commentary;
 import com.github.clans.fab.FloatingActionButton;
@@ -35,6 +43,19 @@ public class ResturantActivity extends AppCompatActivity {
     RecyclerView lista_comentarios;
     RecyclerView lista_menus;
 
+    //RestaurantViews
+    TextView detailName;
+    TextView detailCategory;
+    TextView detailDistrict;
+    TextView detailAddress;
+    TextView detailPhoneNumber;
+    TextView detailTime;
+    ImageView detailPicture;
+    TextView detailRank;
+    TextView detailVotes;
+    TextView detailPrice;
+
+
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
 
@@ -42,6 +63,14 @@ public class ResturantActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resturant);
+
+        Intent intent = getIntent();
+        int idRest = intent.getIntExtra(getString(R.string.intentIdExtra),0);
+        Log.d("RESTACTIVITY","ID: "+idRest);
+        findRestaurantViews();
+
+        Restaurant restaurantDetail = getRestaurantData(idRest);
+        setDetailData(restaurantDetail);
 
         tabHost = (TabHost) findViewById(R.id.tabpanel);
         tabHost.setup();
@@ -120,6 +149,42 @@ public class ResturantActivity extends AppCompatActivity {
             }
         });*/
 
+    }
+
+    private void findRestaurantViews() {
+        detailName = (TextView)findViewById(R.id.restDetailName);
+        detailCategory = (TextView) findViewById(R.id.restDetailCategory);
+        detailDistrict = (TextView) findViewById(R.id.restDetailDistrict);
+        detailAddress = (TextView) findViewById(R.id.restDetailAddress);
+        detailPhoneNumber = (TextView) findViewById(R.id.restDetailPhoneNumber);
+        detailTime = (TextView) findViewById(R.id.restDetailTime);
+        detailPicture = (ImageView)findViewById(R.id.detailPicture);
+        detailRank = (TextView)findViewById(R.id.detailAvgRank);
+        detailVotes = (TextView)findViewById(R.id.detailVotes);
+        detailPrice = (TextView)findViewById(R.id.detailAvgPrice);
+    }
+
+    private void setDetailData(Restaurant restaurantDetail) {
+        detailName.setText(restaurantDetail.getName());
+        String catstr = "";
+        for (Category cat:restaurantDetail.getCategories()){
+            catstr += cat.getName()+", ";
+        }
+        detailCategory.setText(catstr.substring(0,catstr.length()-2));
+        detailDistrict.setText(restaurantDetail.getDistrict().getName());
+        detailAddress.setText(restaurantDetail.getAddress());
+        detailPhoneNumber.setText(restaurantDetail.getPhone());
+        detailTime.setText(restaurantDetail.getHorario());
+        Bitmap bm = BitmapFactory.decodeByteArray(restaurantDetail.getPhoto(),0,restaurantDetail.getPhoto().length);
+        detailPicture.setImageBitmap(bm);
+        detailRank.setText(""+restaurantDetail.getAvg_ranking());
+        detailVotes.setText(""+restaurantDetail.getVotos());
+        detailPrice.setText(""+restaurantDetail.getAvg_price());
+    }
+
+    private Restaurant getRestaurantData(int idRest) {
+        RestaurantDao dao = new RestaurantDaoImpl(this);
+        return dao.get(idRest);
     }
 
     public void subirFoto(View view) {
@@ -202,11 +267,12 @@ public class ResturantActivity extends AppCompatActivity {
         }
         else {
         Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:(043) 631641")); // pasar telefono del Restaurante
+        intent.setData(Uri.parse("tel:(043) 631641")); // pasar telefono del Restaurant
         startActivity(intent);
         }
     }
 
-
-
+    public void verMapa(View view) {
+        Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();
+    }
 }

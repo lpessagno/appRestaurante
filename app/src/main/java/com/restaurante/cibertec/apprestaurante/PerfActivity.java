@@ -45,8 +45,8 @@ public class PerfActivity extends AppCompatActivity {
         final String[] nombre = {"China","Argentina","Peru"};
         final String[] fecha = {"24 JUN 2016","30 JUN 2016","15 JUL 2016"};
         final String[] descripcion = {"Estuvimos en el Chifa Mandarin para un almuerzo de sabado con un grupo grandem en lo cual fuismo muy bien atendidos por todo el staff.",
-                "Estuvimos en el Restaurante Comida Gourmet El Argentino para un almuerzo de sabado con un grupo grande en lo cual fuimos muy bien atendidos por todo el staff.",
-                "Estuvimos en el Restaurante Peruano para un almuerzo de sabado con un grupo grande en lo cual fuimos muy bien atendidos por todo el staff."};
+                "Estuvimos en el Restaurant Comida Gourmet El Argentino para un almuerzo de sabado con un grupo grande en lo cual fuimos muy bien atendidos por todo el staff.",
+                "Estuvimos en el Restaurant Peruano para un almuerzo de sabado con un grupo grande en lo cual fuimos muy bien atendidos por todo el staff."};
 
         List<Resenia> resenialista = new ArrayList<Resenia>();
         for (int i=0; i<nombre.length;i++){

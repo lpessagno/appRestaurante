@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.restaurantmodel.contract.AppRestSqlOpenHelper;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
@@ -45,6 +46,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
         //content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
         //content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,rest.getAvg_ranking());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,rest.getAvg_ranking());
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,rest.getVotos());
         //content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,rest.getPhotoid());
        // content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,rest.getDistrict().getId());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,rest.getAddress());
@@ -72,6 +74,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
         //content.put(RestaurantSchemaContract.Restaurant.COLUMN_MENU,rest.getMenu().getId());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,rest.getAvg_ranking());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,rest.getAvg_ranking());
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,rest.getVotos());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,rest.getDistrict().getId());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,rest.getAddress());
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,rest.getLatitude());
@@ -98,26 +101,41 @@ public class RestaurantDaoImpl implements RestaurantDao {
     public Restaurant get(int id) {
         // restaurant
         Restaurant rest = getRestaurant(id);
+        Log.d("DAORESTAURANT",rest.getName());
         //CATEGORY
         rest.setCategories(getRestaurantCategories(id));
+        Log.d("DAORESTAURANT",rest.getCategories().get(0).getName());
         //DISTRICT
         rest.setDistrict(getDistrict(rest.getDistrict().getId()));
+        Log.d("DAORESTAURANT",rest.getDistrict().getName());
         // MENU
         rest.setMenu(getRestaurantMenu(id));
+        if (rest.getMenu()!=null){
+            Log.d("DAORESTAURANT","menu: "+rest.getMenu().size());
+        }
         //COMMENTS
         rest.setResena(getRestaurantComment(id));
+        if (rest.getResena()!=null){
+            Log.d("DAORESTAURANT","comment: "+rest.getResena().size());
+        }
         //PLATOS
         rest.setUserPhotos(getRestaurantDish(id));
+        if (rest.getUserPhotos()!=null){
+            Log.d("DAORESTAURANT","platos: "+rest.getUserPhotos().size());
+        }
         return rest;
     }
 
     @Override
     public List<Restaurant> list() {
         List<Restaurant> allRestaurants = getRestaurantList();
+        Log.d("DAO","LIST: "+allRestaurants.size());
         //District AND Category
         for (Restaurant rest:allRestaurants){
             int district_id = rest.getDistrict().getId();
+            Log.d("DAO","LIST: "+district_id);
             rest.setDistrict(getDistrict(district_id));
+            Log.d("DAO","LIST: "+getRestaurantCategories(rest.getId()));
             rest.setCategories(getRestaurantCategories(rest.getId()));
         }
         //PUEDE SER NECESARIO SETEAR OTRAS COSAS
@@ -142,6 +160,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
             rest.setPhone(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHONE)));
             rest.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
             rest.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
+            rest.setVotos(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_VOTE)));
             //DISTRICT
             int districtid= cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT));
             rest.setDistrict(new District(districtid));
@@ -175,7 +194,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 cat_list.add(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES)));
             } while (cursor.moveToNext());
         }
-
+        Log.d("DAO","LIST: CAT: "+cat_list.size());
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
@@ -191,28 +210,28 @@ public class RestaurantDaoImpl implements RestaurantDao {
         return list;
     }
 //
-    public List<Restaurant> listarRestaurantes() {
-        AppRestSqlOpenHelper mySqlOpenHelper= new AppRestSqlOpenHelper(context);
-        SQLiteDatabase db=mySqlOpenHelper.getWritableDatabase();
-        String campos[] = {RestaurantSchemaContract.Restaurant.COLUMN_NAME, RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,RestaurantSchemaContract.Restaurant.COLUMN_RANKING,RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,RestaurantSchemaContract.Restaurant.COLUMN_HORARIO};
-        Cursor cursor = db.query("restaurant",campos,null,null,null,null ,null ,null);
-        int size = cursor.getCount();
-        List<Restaurant> objetos = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-            Restaurant o = new Restaurant();
-            o.setName(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_NAME)));
-            o.setPhotoid(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID)));
-            o.setAddress(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID)));
-            o.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
-            o.setEmail(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL)));
-            o.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
-            o.setWebpage(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO)));
-            objetos.add(o);
-            cursor.moveToNext();
-        }
-        return objetos;
-    }
+//    public List<Restaurant> listarRestaurantes() {
+//        AppRestSqlOpenHelper mySqlOpenHelper= new AppRestSqlOpenHelper(context);
+//        SQLiteDatabase db=mySqlOpenHelper.getWritableDatabase();
+//        String campos[] = {RestaurantSchemaContract.Restaurant.COLUMN_NAME, RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID,RestaurantSchemaContract.Restaurant.COLUMN_RANKING,RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,RestaurantSchemaContract.Restaurant.COLUMN_HORARIO};
+//        Cursor cursor = db.query("restaurant",campos,null,null,null,null ,null ,null);
+//        int size = cursor.getCount();
+//        List<Restaurant> objetos = new ArrayList<>();
+//        cursor.moveToFirst();
+//        while (!cursor.isAfterLast()){
+//            Restaurant o = new Restaurant();
+//            o.setName(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_NAME)));
+//            o.setPhotoid(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID)));
+//            o.setAddress(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID)));
+//            o.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
+//            o.setEmail(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL)));
+//            o.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
+//            o.setWebpage(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO)));
+//            objetos.add(o);
+//            cursor.moveToNext();
+//        }
+//        return objetos;
+//    }
 //
   private   List<Restaurant> getRestaurantList() {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
@@ -230,6 +249,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 rest.setPhone(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHONE)));
                 rest.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
                 rest.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
+                rest.setVotos(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_VOTE)));
                 //DISTRICT
                 int districtid= cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT));
                 rest.setDistrict(new District(districtid));

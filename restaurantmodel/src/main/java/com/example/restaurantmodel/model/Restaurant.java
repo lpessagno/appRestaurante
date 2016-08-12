@@ -15,6 +15,7 @@ public class Restaurant implements Serializable  {
     private List<Menu> menu;
     private double avg_ranking; //en veremos -> calculados
     private double avg_price;   //en veremos -> calculados
+    private int votos; // NO ESTA EN LA BD
 
     private String email;
     private String phone;
@@ -179,4 +180,11 @@ public class Restaurant implements Serializable  {
         this.photoid = photoid;
     }
 
+    public int getVotos() {
+        return votos;
+    }
+
+    public void setVotos(int votos) {
+        this.votos = votos;
+    }
 }

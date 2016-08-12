@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
 public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
 
     private static final String dbName = "RestaurantDB.db";
-    private static final int versionDB = 2;
+    private static final int versionDB = 4;
     private static final String NOTNULL = "NOT NULL";
     private Context ctx;
 
@@ -65,6 +65,7 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 RestaurantSchemaContract.Restaurant.COLUMN_PHONE+" TEXT, "+
                 RestaurantSchemaContract.Restaurant.COLUMN_RANKING+" NUMERIC , "+
                 RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE+" NUMERIC , "+
+                RestaurantSchemaContract.Restaurant.COLUMN_VOTE+" INTEGER , "+
                 RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT+" INTEGER , "+
                 RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS+" TEXT, "+
                 RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE+" TEXT, "+
@@ -155,18 +156,20 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY ("+RestaurantSchemaContract.UserPhotos.COLUMN_RESTAURANT+") REFERENCES "+RestaurantSchemaContract.Restaurant.TABLE_NAME+"("+RestaurantSchemaContract.Restaurant._ID+")"+
                 ")";
         db.execSQL(sql_platos);
-/*
+
         //DISTRICT
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Surquillo");
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Ate");
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"Lima");
         insertColumn(db,RestaurantSchemaContract.District.TABLE_NAME,RestaurantSchemaContract.District.COLUMN_NAME,"La Molina");
- */
+
         //Category
         insertColumn(db,RestaurantSchemaContract.Categories.TABLE_NAME,RestaurantSchemaContract.Categories.COLUMN_NAME,"Carnes");
         insertColumn(db,RestaurantSchemaContract.Categories.TABLE_NAME,RestaurantSchemaContract.Categories.COLUMN_NAME,"Italiano");
+        insertColumn(db,RestaurantSchemaContract.Categories.TABLE_NAME,RestaurantSchemaContract.Categories.COLUMN_NAME,"Chino");
 
-        //insertRestaurant(db);
+        insertRestaurant(db);
+        insertRestaurant2(db);
        // db.close();
     }
 
@@ -178,6 +181,7 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,"015544879");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,5.0);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,80.0);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,5);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,3);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,"calle 5");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,"-12.235");
@@ -190,25 +194,75 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         byte[] byteArray = stream.toByteArray();
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO,byteArray);
         db.insert(RestaurantSchemaContract.Restaurant.TABLE_NAME,null,content);
-        /*
+
         ContentValues catrest = new ContentValues();
-        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT,1);
-        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES,1);
-        db.insert(RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME,null,catrest);*/
+        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT,2);
+        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES,3);
+        db.insert(RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME,null,catrest);
 
     }
 
+    private void insertRestaurant2(SQLiteDatabase db) {
+        ContentValues content = new ContentValues();
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_NAME,"ebisu");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO,"8:00 - 19:00");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,"ebisu@mail.com");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,"015544879");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,4.0);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,75.33);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,3);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT,4);
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS,"algun sitio");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE,"-11.235");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE,"-11.135");
+        int id = ctx.getResources().getIdentifier("ebisu","drawable",ctx.getPackageName());
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID, id);
+        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(),id);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO,byteArray);
+        db.insert(RestaurantSchemaContract.Restaurant.TABLE_NAME,null,content);
 
+        ContentValues catrest = new ContentValues();
+        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT,1);
+        catrest.put(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES,1);
+        db.insert(RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME,null,catrest);
 
+    }
 
     private void insertColumn(SQLiteDatabase db, String tableName,String coolumnName,String name) {
         ContentValues content = new ContentValues();
-        content.put(tableName,name);
+        content.put(coolumnName,name);
         db.insert(tableName,null,content);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        Log.d("RESTAURANTAPPDB","onUpgrade");
+        String sql = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql);
+        String sql1 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.Comment.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql1);
+        String sql3 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.Favorites.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql3);
+        String sql4 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.Menu.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql4);
+        String sql5 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.Restaurant.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql5);
+        String sql8 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.Search_Categories.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql8);
+        String sql6 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.Categories.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql6);
+        String sql7 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.District.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql7);
+        String sql10 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.UserPhotos.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql10);
+        String sql9 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.User.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql9);
+        String sql2 = "DROP TABLE IF EXISTS "+RestaurantSchemaContract.DefaultSearch.TABLE_NAME;
+        sqLiteDatabase.execSQL(sql2);
 
+        onCreate(sqLiteDatabase);
     }
 }

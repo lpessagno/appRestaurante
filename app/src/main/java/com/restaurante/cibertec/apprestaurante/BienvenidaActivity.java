@@ -3,11 +3,11 @@ package com.restaurante.cibertec.apprestaurante;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,8 +16,8 @@ import android.view.View;
 import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.impl.RestaurantDaoImpl;
 import com.example.restaurantmodel.model.Restaurant;
+import com.restaurante.cibertec.recyclers.RestauranteRecyclerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BienvenidaActivity extends AppCompatActivity {
@@ -53,23 +53,28 @@ public class BienvenidaActivity extends AppCompatActivity {
             public void onClick(View view) {
                /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                grabar();
-                listar();
+                //grabar();
+                //listar();
             }
         });
+
+        listar();
+
     }
 
     public void listar()
     {
         recyclerView = (RecyclerView) findViewById(R.id.lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
-        List<Restaurant> list = mydao.listarRestaurantes();
+        //RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
+        //List<Restaurant> list = mydao.listarRestaurantes();
+        List<Restaurant> list = getRestaurtants();
         RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this,list); //cambiar el dato de entrada
         recyclerView.setAdapter(adapter1);
     }
 
     private List<Restaurant> getRestaurtants() {
+        Log.d("DAOS","getRestaurtants");
         RestaurantDao dao = new RestaurantDaoImpl(this);
         List<Restaurant> list = dao.list();
         return list;

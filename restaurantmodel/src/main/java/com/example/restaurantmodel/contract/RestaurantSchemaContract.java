@@ -35,6 +35,7 @@ public class RestaurantSchemaContract {
         public static final String COLUMN_PHONE = "phone";
         public static final String COLUMN_RANKING = "avg_ranking";
         public static final String COLUMN_AVG_PRICE = "avg_price";
+        public static final String COLUMN_VOTE = "votes";
         public static final String COLUMN_DISTRICT = "districtid";
         public static final String COLUMN_ADDRESS = "address";
         public static final String COLUMN_LATITUDE = "latitude";
