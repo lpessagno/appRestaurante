@@ -90,11 +90,11 @@ public class BienvenidaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int idopcion = item.getItemId();
         switch (idopcion) {
-            case R.id.opt1:
+           /* case R.id.opt1:
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
                 //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
-                break;
+                break;*/
             case R.id.opt2:
                 Intent intent2 = new Intent(this,PerfActivity.class);
                 startActivity(intent2);

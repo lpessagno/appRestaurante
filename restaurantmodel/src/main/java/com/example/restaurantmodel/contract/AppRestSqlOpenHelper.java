@@ -178,7 +178,7 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_NAME,"labistecca");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO,"8:00 - 18:00");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,"labistecca@mail.com");
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,"015544879");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,"(01) 5631641");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,5.0);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,80.0);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,5);
@@ -207,7 +207,7 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_NAME,"ebisu");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO,"8:00 - 19:00");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL,"ebisu@mail.com");
-        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,"015544879");
+        content.put(RestaurantSchemaContract.Restaurant.COLUMN_PHONE,"(043) 631641");
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_RANKING,4.0);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE,75.33);
         content.put(RestaurantSchemaContract.Restaurant.COLUMN_VOTE,3);

@@ -56,11 +56,23 @@
                 android:text="Teléfono" />
 
             <TextView
+
                 android:id="@+id/restDetailTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Horario" />
-
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/restLatitud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/restLongitud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
         </LinearLayout>
 
         <LinearLayout
@@ -90,6 +102,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/liBotonera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -136,27 +149,77 @@
             android:text=" 45 Soles" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/material_design_android_floating_action_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="185dp"
+        android:layout_below="@+id/liBotonera"
+        android:layout_gravity="bottom|right"
 
-        <Button
-            android:id="@+id/subirFoto"
+        android:layout_marginLeft="11dp"
+
+        fab:menu_animationDelayPerItem="55"
+        fab:menu_backgroundColor="@android:color/transparent"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_colorNormal="#da3c2f"
+        fab:menu_colorPressed="#dc4b3f"
+        fab:menu_colorRipple="#99d4d4d4"
+        fab:menu_fab_size="normal"
+        fab:menu_icon="@drawable/fab_add"
+        fab:menu_labels_colorNormal="#333"
+        fab:menu_labels_colorPressed="#444"
+        fab:menu_labels_colorRipple="#66efecec"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_padding="8dp"
+        fab:menu_labels_position="left"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="false"
+        fab:menu_labels_textColor="#f2f1f1"
+        fab:menu_labels_textSize="15sp"
+        fab:menu_openDirection="up"
+        fab:menu_shadowColor="#66efecec"
+        fab:menu_shadowRadius="4dp"
+        fab:menu_shadowXOffset="1dp"
+        fab:menu_shadowYOffset="4dp">
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/material_design_floating_action_menu_item1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="subirFoto"
-            android:text="Subir Foto" />
+            android:src="@drawable/ic_call_white_24dp"
+            fab:fab_label="LLamar"
+            fab:fab_size="mini" />
 
-        <Button
-            android:id="@+id/hacerResena"
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/material_design_floating_action_menu_item2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="hacerResena"
-            android:text="Hacer Reseña" />
-    </LinearLayout>
+            android:src="@drawable/ic_chat_white_24dp"
+            fab:fab_label="Comentar"
+            fab:fab_size="mini" />
 
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/material_design_floating_action_menu_item3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_white_24dp"
+            fab:fab_label="Me gusta"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/material_design_floating_action_menu_item4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_white_24dp"
+            fab:fab_label="Tomar Foto"
+            fab:fab_size="mini" />
+    </com.github.clans.fab.FloatingActionMenu>
     <TabHost
         android:id="@+id/tabpanel"
         android:layout_width="wrap_content"
@@ -221,68 +284,6 @@
         </FrameLayout>
 
     </TabHost>
-<!--
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/material_design_android_floating_action_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/l1"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="11dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="11dp"
-        fab:menu_animationDelayPerItem="55"
-        fab:menu_backgroundColor="@android:color/transparent"
-        fab:menu_buttonSpacing="0dp"
-        fab:menu_colorNormal="#da3c2f"
-        fab:menu_colorPressed="#dc4b3f"
-        fab:menu_colorRipple="#99d4d4d4"
-        fab:menu_fab_size="normal"
-        fab:menu_icon="@drawable/fab_add"
-        fab:menu_labels_colorNormal="#333"
-        fab:menu_labels_colorPressed="#444"
-        fab:menu_labels_colorRipple="#66efecec"
-        fab:menu_labels_cornerRadius="3dp"
-        fab:menu_labels_ellipsize="none"
-        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
-        fab:menu_labels_margin="0dp"
-        fab:menu_labels_maxLines="-1"
-        fab:menu_labels_padding="8dp"
-        fab:menu_labels_position="left"
-        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
-        fab:menu_labels_showShadow="true"
-        fab:menu_labels_singleLine="false"
-        fab:menu_labels_textColor="#f2f1f1"
-        fab:menu_labels_textSize="15sp"
-        fab:menu_openDirection="up"
-        fab:menu_shadowColor="#66aff198"
-        fab:menu_shadowRadius="4dp"
-        fab:menu_shadowXOffset="1dp"
-        fab:menu_shadowYOffset="4dp">
 
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/material_design_floating_action_menu_item1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_call_white_24dp"
-            fab:fab_label="LLamar"
-            fab:fab_size="mini" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/material_design_floating_action_menu_item2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_chat_white_24dp"
-            fab:fab_label="Comentar"
-            fab:fab_size="mini" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/material_design_floating_action_menu_item3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_favorite_white_24dp"
-            fab:fab_label="Me gusta"
-            fab:fab_size="mini" />
-    </com.github.clans.fab.FloatingActionMenu>-->
 </LinearLayout>

@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -26,6 +26,7 @@ import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.impl.RestaurantDaoImpl;
 import com.example.restaurantmodel.model.*;
 import com.example.restaurantmodel.model.Commentary;
+import com.example.restaurantmodel.model.Menu;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.restaurante.cibertec.recyclers.ComentariosAdapter;
@@ -54,10 +55,12 @@ public class ResturantActivity extends AppCompatActivity {
     TextView detailRank;
     TextView detailVotes;
     TextView detailPrice;
+    TextView detailLatitud;
+    TextView detailLongitud;
 
 
     FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3, floatingActionButton4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,11 +125,12 @@ public class ResturantActivity extends AppCompatActivity {
         tabHost.addTab(spec3);
 
         ///@
-        /*
+
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
+        floatingActionButton4 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item4);
 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,19 +140,20 @@ public class ResturantActivity extends AppCompatActivity {
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu second item clicked
-                Toast toast2 = Toast.makeText(getApplicationContext(), "Ejemplo 2", Toast.LENGTH_SHORT);
-                toast2.show();
+                hacerResena(v);
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
                 Toast toast3 = Toast.makeText(getApplicationContext(), "Ejemplo 3", Toast.LENGTH_SHORT);
                 toast3.show();
             }
-        });*/
-
+        });
+        floatingActionButton4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+              subirFoto(v);
+            }
+        });
     }
 
     private void findRestaurantViews() {
@@ -162,6 +167,8 @@ public class ResturantActivity extends AppCompatActivity {
         detailRank = (TextView)findViewById(R.id.detailAvgRank);
         detailVotes = (TextView)findViewById(R.id.detailVotes);
         detailPrice = (TextView)findViewById(R.id.detailAvgPrice);
+        detailLatitud = (TextView)findViewById(R.id.restLatitud);
+        detailLongitud = (TextView)findViewById(R.id.restLongitud);
     }
 
     private void setDetailData(Restaurant restaurantDetail) {
@@ -180,6 +187,8 @@ public class ResturantActivity extends AppCompatActivity {
         detailRank.setText(""+restaurantDetail.getAvg_ranking());
         detailVotes.setText(""+restaurantDetail.getVotos());
         detailPrice.setText(""+restaurantDetail.getAvg_price());
+        detailLatitud.setText(restaurantDetail.getLatitude());
+        detailLongitud.setText(restaurantDetail.getLongitude());
     }
 
     private Restaurant getRestaurantData(int idRest) {
@@ -267,10 +276,34 @@ public class ResturantActivity extends AppCompatActivity {
         }
         else {
         Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:(043) 631641")); // pasar telefono del Restaurant
+        intent.setData(Uri.parse("tel:"+detailPhoneNumber)); // pasar telefono del Restaurant   detailPhoneNumber (043) 631641
         startActivity(intent);
         }
     }
+
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_detalle, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int idopcion = item.getItemId();
+        switch (idopcion) {
+           /* case R.id.opt1:
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
+                //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
+                break;*/
+            case R.id.opt1:
+                Intent intent2 = new Intent(this,MapsActivity.class);
+                startActivity(intent2);
+                //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void verMapa(View view) {
         Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();
