@@ -302,8 +302,9 @@ public class ResturantActivity extends AppCompatActivity {
                 break;*/
             case R.id.opt1: //Llamar a mapa
                 Intent intentMap = new Intent(this,MapsActivity.class);
-                intentMap.putExtra(EXTRA_LATITUD, String.valueOf(detailLatitud));
-                intentMap.putExtra(EXTRA_LONGITUD,String.valueOf(detailLongitud));
+                intentMap.putExtra(EXTRA_LATITUD, detailLatitud.getText());
+                intentMap.putExtra(EXTRA_LONGITUD, detailLongitud.getText());
+                Log.d("mapArctmr",""+detailLatitud.getText() + detailLongitud.getText());
                 startActivity(intentMap);
                 break;
         }

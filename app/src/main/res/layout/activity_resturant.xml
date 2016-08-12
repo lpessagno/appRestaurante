@@ -62,13 +62,13 @@
                 android:layout_height="wrap_content"
                 android:text="Horario" />
             <TextView
-                android:visibility="invisible"
+
                 android:id="@+id/restLatitud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                  />
             <TextView
-                android:visibility="invisible"
+
                 android:id="@+id/restLongitud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
