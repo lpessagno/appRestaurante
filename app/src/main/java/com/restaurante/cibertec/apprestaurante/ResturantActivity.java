@@ -1,12 +1,16 @@
 package com.restaurante.cibertec.apprestaurante;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
 
 import com.example.restaurantmodel.model.*;
@@ -25,6 +29,9 @@ public class ResturantActivity extends AppCompatActivity {
     RecyclerView lista_platos;
     RecyclerView lista_comentarios;
     RecyclerView lista_menus;
+
+    private static final int REQUEST_CAPTURA =111 ;
+    private ImageView photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,4 +171,20 @@ public class ResturantActivity extends AppCompatActivity {
     }
 
 
+    public void tomarFoto(View view) {
+        Log.d("HOLA","HOLA A TODOS");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAPTURA);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==111){
+            if (resultCode==RESULT_OK){
+                Bitmap foto = (Bitmap) data.getExtras().get("data");
+                photo.setImageBitmap(foto);
+            }
+        }
+    }
 }
