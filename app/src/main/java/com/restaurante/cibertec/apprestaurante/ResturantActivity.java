@@ -45,6 +45,7 @@ public class ResturantActivity extends AppCompatActivity {
     public static final String  EXTRA_NAME="NAME";
     public static final String  EXTRA_LATITUD="LATITUD";
     public static final String  EXTRA_LONGITUD="LONGITUD";
+    public static final int RESENA_REQUEST = 1987;
 
     TabHost tabHost;
     TabHost.TabSpec tabSpec;
@@ -228,8 +229,10 @@ public class ResturantActivity extends AppCompatActivity {
     }
 
     public void hacerResena(View view) {
-        DialogFragment dialog = new ResenaDialog();
-        dialog.show(getSupportFragmentManager(), "Resena");
+//        DialogFragment dialog = new ResenaDialog();
+//        dialog.show(getSupportFragmentManager(), "Resena");
+        Intent intent = new Intent(this,ResenaActivity.class);
+        startActivityForResult(intent, RESENA_REQUEST);
     }
 
     public List<Platos> getPlatos(Restaurant rest) {
@@ -339,6 +342,13 @@ public class ResturantActivity extends AppCompatActivity {
             byte[] byteArray = stream.toByteArray();
             intent.putExtra("fotografia_plato",byteArray);
             startActivityForResult(intent,1984);*/
+        } else if (resultCode==RESENA_REQUEST) {
+            //actualizar recycler view
+            /*restaurantDetail = getRestaurantData(idRest);
+            lista_comentarios = (RecyclerView) findViewById(R.id.lista_comentarios);
+            lista_comentarios.setLayoutManager(new LinearLayoutManager(this));
+            RecyclerView.Adapter adapter_comentarios = new ComentariosAdapter(this, getComentarios(restaurantDetail));
+            lista_comentarios.setAdapter(adapter_comentarios);*/
         }
 
     }

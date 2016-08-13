@@ -42,7 +42,7 @@ public class ReseniaDaoImpl implements ReseniaDAO {
         content.put(RestaurantSchemaContract.Comment.COLUMN_PRICE, commentary.getPrice());
         content.put(RestaurantSchemaContract.Comment.COLUMN_COMMENT, commentary.getComment());
         content.put(RestaurantSchemaContract.Comment.COLUMN_DATE, commentary.getDate().toString());
-        content.put(RestaurantSchemaContract.Comment.COLUMN_IMAGEN, commentary.getImagen());
+        //content.put(RestaurantSchemaContract.Comment.COLUMN_IMAGEN, commentary.getImagen());
         long id = sqlite.insert(RestaurantSchemaContract.Comment.TABLE_NAME,null,content);
         sqlite.close();
         return id;
