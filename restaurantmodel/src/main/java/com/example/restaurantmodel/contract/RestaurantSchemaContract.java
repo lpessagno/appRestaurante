@@ -24,6 +24,7 @@ public class RestaurantSchemaContract {
         public static final String TABLE_NAME = "menu";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_PRICE = "price";
+        public static final String COLUMN_RESTAURANT = "restaurant_id";
     }
 
     public static abstract class Restaurant implements BaseColumns {
@@ -32,9 +33,9 @@ public class RestaurantSchemaContract {
         public static final String COLUMN_HORARIO = "horario";
         public static final String COLUMN_EMAIL = "email";
         public static final String COLUMN_PHONE = "phone";
-        public static final String COLUMN_MENU = "menuid";
         public static final String COLUMN_RANKING = "avg_ranking";
         public static final String COLUMN_AVG_PRICE = "avg_price";
+        public static final String COLUMN_VOTE = "votes";
         public static final String COLUMN_DISTRICT = "districtid";
         public static final String COLUMN_ADDRESS = "address";
         public static final String COLUMN_LATITUDE = "latitude";
@@ -59,7 +60,7 @@ public class RestaurantSchemaContract {
         public static final String TABLE_NAME = "default_search";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DISTRICT = "district_id";
-        public static final String COLUMN_RANKING_ = "ranking";
+        public static final String COLUMN_RANKING = "ranking";
         public static final String COLUMN_PRICE_LOW = "low_price";
         public static final String COLUMN_PRICE_HIGH = "high_price";
     }
@@ -76,7 +77,7 @@ public class RestaurantSchemaContract {
         public static final String COLUMN_EMAIL = "email";
         public static final String COLUMN_PHONE = "phone";
         public static final String COLUMN_PWD = "password";
-        public static final String COLUMN_AVATAR = "avatar"; //BLOB
+        //public static final String COLUMN_AVATAR = "avatar"; //BLOB
         public static final String COLUMN_DEFAULT_SEARCH = "default_search_id";
     }
 

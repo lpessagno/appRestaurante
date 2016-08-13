@@ -1,6 +1,7 @@
 package com.example.restaurantmodel.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Jorge on 7/24/2016.
@@ -10,10 +11,11 @@ public class Restaurant implements Serializable  {
     private int id;
     private String name;
     private String horario;
-    private Category[] categories;
-    private Menu menu;
+    private List<Category> categories;
+    private List<Menu> menu;
     private double avg_ranking; //en veremos -> calculados
     private double avg_price;   //en veremos -> calculados
+    private int votos; // NO ESTA EN LA BD
 
     private String email;
     private String phone;
@@ -25,8 +27,8 @@ public class Restaurant implements Serializable  {
     private String longitude;
 
     //Setear correctamente
-    private Commentary[] resena;
-    private Platos[] userPhotos;
+    private List<Commentary> resena;
+    private List<Platos> userPhotos;
 
     //decidir cual usar
     private byte[] photo;
@@ -58,11 +60,11 @@ public class Restaurant implements Serializable  {
         this.horario = horario;
     }
 
-    public Category[] getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Category[] categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -138,11 +140,11 @@ public class Restaurant implements Serializable  {
         this.longitude = longitude;
     }
 
-    public Menu getMenu() {
+    public List<Menu> getMenu() {
         return menu;
     }
 
-    public void setMenu(Menu menu) {
+    public void setMenu(List<Menu> menu) {
         this.menu = menu;
     }
 
@@ -154,19 +156,19 @@ public class Restaurant implements Serializable  {
         this.photo = photo;
     }
 
-    public Commentary[] getResena() {
+    public List<Commentary> getResena() {
         return resena;
     }
 
-    public void setResena(Commentary[] resena) {
+    public void setResena(List<Commentary> resena) {
         this.resena = resena;
     }
 
-    public Platos[] getUserPhotos() {
+    public List<Platos> getUserPhotos() {
         return userPhotos;
     }
 
-    public void setUserPhotos(Platos[] userPhotos) {
+    public void setUserPhotos(List<Platos> userPhotos) {
         this.userPhotos = userPhotos;
     }
 
@@ -178,4 +180,11 @@ public class Restaurant implements Serializable  {
         this.photoid = photoid;
     }
 
+    public int getVotos() {
+        return votos;
+    }
+
+    public void setVotos(int votos) {
+        this.votos = votos;
+    }
 }
