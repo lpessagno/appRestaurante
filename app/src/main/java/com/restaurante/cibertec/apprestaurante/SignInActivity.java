@@ -1,5 +1,6 @@
 package com.restaurante.cibertec.apprestaurante;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,8 +62,12 @@ public class SignInActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = appPreferences.edit();
             editor.putString(getString(R.string.user),user.getName());
             editor.putString(getString(R.string.password),user.getPassword());
+            editor.putString(getString(R.string.userid),""+user.getId());
             editor.commit();
-            this.getIntent().putExtra(getString(R.string.USEROK_VALUE),userid);
+
+            Intent intent = new Intent();
+            intent.putExtra(getString(R.string.USEROK_VALUE),userid);
+            setResult(RESULT_OK,intent);
             finish();
         }
     }

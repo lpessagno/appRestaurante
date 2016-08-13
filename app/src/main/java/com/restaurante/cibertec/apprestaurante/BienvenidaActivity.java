@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.impl.RestaurantDaoImpl;
@@ -136,6 +137,18 @@ public class BienvenidaActivity extends AppCompatActivity {
             case R.id.opt3:
                 Intent intent3 = new Intent(this, FiltrosActivity.class);
                 startActivity(intent3);
+                break;
+            case R.id.opt4:
+                String logname = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
+                if (!logname.equals(getString(R.string.default_string))){
+                    editor = appPreferences.edit();
+                    editor.putString(getString(R.string.user),getString(R.string.default_string));
+                    editor.putString(getString(R.string.password),getString(R.string.default_string));
+                    editor.putString(getString(R.string.userid),getString(R.string.default_string));
+                    editor.commit();
+                } else {
+                    Toast.makeText(this,"NO USER",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -43,7 +43,8 @@
         android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Telefono"/>
+        android:hint="Telefono"
+        android:inputType="number"/>
     <Button
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"

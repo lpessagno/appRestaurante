@@ -1,5 +1,6 @@
 package com.example.restaurantmodel.impl;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +27,24 @@ public class PlatosDaoImpl implements PlatosDao {
 
     public PlatosDaoImpl(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public long insertPlato(Platos plato) {
+        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite = helper.getWritableDatabase();
+
+        ContentValues content = new ContentValues();
+        content.put(RestaurantSchemaContract.UserPhotos.COLUMN_USER,plato.getUser().getId());
+        content.put(RestaurantSchemaContract.UserPhotos.COLUMN_RESTAURANT,plato.getRestaurant().getId());
+        content.put(RestaurantSchemaContract.UserPhotos.COLUMN_USER,plato.getUser().getId());
+        content.put(RestaurantSchemaContract.UserPhotos.COLUMN_NAME,plato.getDescription());
+        content.put(RestaurantSchemaContract.UserPhotos.COLUMN_DISH,plato.getPhoto());
+        content.put(RestaurantSchemaContract.UserPhotos.COLUMN_DATE,plato.getDate().getTime());
+        long id = sqlite.insert(RestaurantSchemaContract.UserPhotos.TABLE_NAME,null,content);
+        sqlite.close();
+
+        return 0;
     }
 
     @Override

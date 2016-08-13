@@ -13,6 +13,7 @@
     <string name="signin_error">SIGN IN ERROR</string>
     <string name="USEROK_VALUE">USEROK</string>
     <string name="ok">OK</string>
+    <string name="userid">USER_ID</string>
 
     <string-array name="ranking_values">
         <item>1</item>
