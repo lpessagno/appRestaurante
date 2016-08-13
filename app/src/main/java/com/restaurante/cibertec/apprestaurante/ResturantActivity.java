@@ -3,6 +3,7 @@ package com.restaurante.cibertec.apprestaurante;
 import android.*;
 import android.Manifest;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.content.pm.PackageManager;
@@ -311,7 +312,32 @@ public class ResturantActivity extends AppCompatActivity {
               //  List<Platos> list = getPlatos();
               //  RecyclerView.Adapter adapter1 = new PlatosAdapter(this,list); //cambiar el dato de entrada
               //  recyclerView.setAdapter(adapter1);
+        } else if (requestCode== 2222){
+            Intent intent = new Intent(this,FotosComidaActivity.class);
+            Uri selectedImage = data.getData();
+            String[] filePath = { MediaStore.Images.Media.DATA };
+            Log.d("filPath",filePath[0]+filePath[1]+"");
+            Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+            Bitmap foto_bitmap = (BitmapFactory.decodeFile(picturePath));
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            foto_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            intent.putExtra("fotografia_plato",byteArray);
+            startActivityForResult(intent,1984);
+
+
         }
+
+    }
+
+        public void seleccionarGaleria(View view) {
+            Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 2222);
     }
    /* public void verMapa(View view) {
         Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();
