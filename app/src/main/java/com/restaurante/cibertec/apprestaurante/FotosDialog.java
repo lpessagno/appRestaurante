@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
+
 import android.widget.Toast;
 
 /**
@@ -22,7 +23,7 @@ public class FotosDialog extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fotos_comida,null);
         builder.setView(view);
         builder.setTitle("Subir Fotos");
-        builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+      /*  builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Log.d("APPResena","Agregar Resena");
@@ -30,13 +31,14 @@ public class FotosDialog extends DialogFragment {
                 //TRANSFORMAR imagen de PHOTO EN BYTE[]
                 //INSERTAR EN BD
             }
-        });
+        });*/
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //NO hacer nada.
             }
         });
+
 
         return builder.create();
     }

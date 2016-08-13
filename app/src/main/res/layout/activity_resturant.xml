@@ -143,7 +143,6 @@
             android:layout_height="match_parent"
             android:text=" 45 Soles" />
     </LinearLayout>
-
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/material_design_android_floating_action_menu"
         android:layout_width="wrap_content"
@@ -215,6 +214,7 @@
             fab:fab_label="Tomar Foto"
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
+
     <TabHost
         android:id="@+id/tabpanel"
         android:layout_width="wrap_content"
