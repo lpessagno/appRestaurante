@@ -96,6 +96,8 @@ public class ResturantActivity extends AppCompatActivity {
 
         editor = appPreferences.edit();
         editor.putInt(getString(R.string.restaurantid),restaurantDetail.getId());
+        editor.putString(getString(R.string.restaurant_name),restaurantDetail.getName());
+        editor.commit();
 
         tabHost = (TabHost) findViewById(R.id.tabpanel);
         tabHost.setup();
