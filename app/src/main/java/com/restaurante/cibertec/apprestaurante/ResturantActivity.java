@@ -87,7 +87,7 @@ public class ResturantActivity extends AppCompatActivity {
         lista_comentarios.setLayoutManager(new LinearLayoutManager(this));
 
 
-        RecyclerView.Adapter adapter_comentarios = new ComentariosAdapter(this, getComentarios());
+        RecyclerView.Adapter adapter_comentarios = new ComentariosAdapter(this, getComentarios(restaurantDetail));
         lista_comentarios.setAdapter(adapter_comentarios);
 
 
@@ -95,7 +95,7 @@ public class ResturantActivity extends AppCompatActivity {
         lista_platos.setLayoutManager(new LinearLayoutManager(this));
 
 
-        RecyclerView.Adapter adapter_platos = new PlatosAdapter(this, getPlatos());
+        RecyclerView.Adapter adapter_platos = new PlatosAdapter(this, getPlatos(restaurantDetail));
         lista_platos.setAdapter(adapter_platos);
 
 
@@ -103,7 +103,7 @@ public class ResturantActivity extends AppCompatActivity {
         lista_menus.setLayoutManager(new LinearLayoutManager(this));
 
 
-        RecyclerView.Adapter adapter_menus = new MenusAdapter(this, getMenus());
+        RecyclerView.Adapter adapter_menus = new MenusAdapter(this, getMenus(restaurantDetail));
         lista_menus.setAdapter(adapter_menus);
 
 
@@ -208,6 +208,11 @@ public class ResturantActivity extends AppCompatActivity {
         // startActivity(intent);
     }
 
+    public void tomarFoto(View view){
+        Toast.makeText(view.getContext(),"FOTO",Toast.LENGTH_SHORT).show();
+        ImageView photos;
+
+    }
 
     public void hacerResena(View view) {
         DialogFragment dialog = new ResenaDialog();
@@ -216,27 +221,23 @@ public class ResturantActivity extends AppCompatActivity {
 //        startActivity(intent);
     }
 
-
-    //TODO: este método desaparece cuando este la base de datos
-    public List<Platos> getPlatos() {
-        List<Platos> platos = new ArrayList<Platos>();
-        Platos p1 = new Platos();
+    public List<Platos> getPlatos(Restaurant rest) {
+        List<Platos> platos = rest.getUserPhotos();
+       /* Platos p1 = new Platos();
         p1.setDescription("Causa de Atún");
 
         Platos p2 = new Platos();
         p2.setDescription("Lomito Saltado");
 
         platos.add(p1);
-        platos.add(p2);
+        platos.add(p2);*/
 
         return platos;
     }
 
-
-    //TODO: este método desaparece cuando este la base de datos
-    public List<Commentary> getComentarios() {
-        List<Commentary> comentarios = new ArrayList<Commentary>();
-        Commentary c1 = new Commentary();
+    public List<Commentary> getComentarios(Restaurant rest) {
+        List<Commentary> comentarios = rest.getResena();
+        /*Commentary c1 = new Commentary();
         c1.setComment("EXCELENTE SITIO");
         User u = new User();
         u.setName("lpessagno");
@@ -249,17 +250,15 @@ public class ResturantActivity extends AppCompatActivity {
         c2.setUser(u2);
 
         comentarios.add(c1);
-        comentarios.add(c2);
+        comentarios.add(c2);*/
 
         return comentarios;
     }
 
+    public List<Menu> getMenus(Restaurant rest) {
+        List<Menu> menus = rest.getMenu();
 
-    //TODO: este método desaparece cuando este la base de datos
-    public List<Menu> getMenus() {
-        List<Menu> menus = new ArrayList<Menu>();
-
-        Menu m1 = new Menu();
+        /*Menu m1 = new Menu();
         m1.setName("Lomo Saltado");
         m1.setPrice(25.0);
 
@@ -268,7 +267,7 @@ public class ResturantActivity extends AppCompatActivity {
         m2.setPrice(25.0);
 
         menus.add(m1);
-        menus.add(m2);
+        menus.add(m2);*/
 
         return menus;
     }

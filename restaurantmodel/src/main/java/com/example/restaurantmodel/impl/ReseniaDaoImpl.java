@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.restaurantmodel.contract.AppRestSqlOpenHelper;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
 import com.example.restaurantmodel.dao.ReseniaDAO;
+import com.example.restaurantmodel.dao.RestaurantDao;
+import com.example.restaurantmodel.dao.UserDao;
 import com.example.restaurantmodel.model.Commentary;
 import com.example.restaurantmodel.model.Menu;
 import com.example.restaurantmodel.model.Restaurant;
@@ -23,8 +25,12 @@ import java.util.List;
 public class ReseniaDaoImpl implements ReseniaDAO {
 
     AppRestSqlOpenHelper appRestSqlOpenHelper;
+    Context context;
 
-    public ReseniaDaoImpl(Context context){ appRestSqlOpenHelper = new AppRestSqlOpenHelper(context);}
+    public ReseniaDaoImpl(Context context){
+        appRestSqlOpenHelper = new AppRestSqlOpenHelper(context);
+        this.context = context;
+    }
 
     @Override
     public long insertarResenia(Commentary commentary) {
@@ -91,12 +97,53 @@ public class ReseniaDaoImpl implements ReseniaDAO {
         }
         db.close();
 
+        //SetUser
+        for (Commentary comm:list){
+            UserDao dao = new UserDaoImpl(context);
+            comm.setUser(dao.get(comm.getUser().getId()));
+        }
+
         return list;
     }
 
     @Override
     public List<Commentary> getCommentByUserId(int userid) {
-        return null;
+        SQLiteDatabase db=appRestSqlOpenHelper.getWritableDatabase();
+        String whereClause = RestaurantSchemaContract.Comment.COLUMN_USER+"=?";
+        String[] whereArgs = new String[]{""+userid};
+
+        Cursor cursor = db.query(RestaurantSchemaContract.Comment.TABLE_NAME,null,whereClause,whereArgs,null,null,null);
+        List<Commentary> list = new ArrayList<Commentary>();
+        if (cursor.moveToFirst()) {
+            do {
+                Commentary comment = new Commentary();
+                comment.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment._ID)));
+                User user = new User();
+                user.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_USER)));
+                comment.setUser(user); //SETEAR LUEGO EL USUARIO
+                Restaurant r = new Restaurant();
+                r.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_RESTAURANT)));
+                comment.setRestaurant(r);//setear luego el restaurante
+                comment.setRanking(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_RANKING)));
+                comment.setPrice(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_PRICE))); //VALIDAR
+                comment.setComment(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_COMMENT)));
+                Date date = new Date(cursor.getLong(cursor.getColumnIndex(RestaurantSchemaContract.Comment.COLUMN_DATE))); //VALIDAR
+                comment.setDate(date);
+                list.add(comment);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        db.close();
+
+        //SetREstaurant
+        for (Commentary comm:list){
+            RestaurantDao dao = new RestaurantDaoImpl(context);
+            comm.setRestaurant(dao.simpleGet(comm.getRestaurant().getId()));
+        }
+
+        return list;
     }
 
     @Override

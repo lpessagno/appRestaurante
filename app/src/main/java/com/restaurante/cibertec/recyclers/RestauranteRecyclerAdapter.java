@@ -60,7 +60,7 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
         holder.txtUbicacion.setText(fila.getAddress());
         holder.txtTipoComida.setText(fila.getCategories().get(0).getName());
         holder.txtRanking.setText(String.valueOf(fila.getAvg_ranking()));
-        holder.txtVotos.setText("5");
+        holder.txtVotos.setText(""+fila.getVotos());
         holder.txtPrecio.setText(String.valueOf(fila.getAvg_price()));
         holder.txtDistancia.setText("111mts");
     }

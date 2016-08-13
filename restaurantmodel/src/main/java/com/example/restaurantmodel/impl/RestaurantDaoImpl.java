@@ -92,39 +92,27 @@ public class RestaurantDaoImpl implements RestaurantDao {
     }
 
     @Override
-    public long delete(Restaurant restaurant) {
-        return 0;
-    }
-
-
-    @Override
     public Restaurant get(int id) {
         // restaurant
         Restaurant rest = getRestaurant(id);
-        Log.d("DAORESTAURANT",rest.getName());
         //CATEGORY
         rest.setCategories(getRestaurantCategories(id));
-        Log.d("DAORESTAURANT",rest.getCategories().get(0).getName());
         //DISTRICT
         rest.setDistrict(getDistrict(rest.getDistrict().getId()));
-        Log.d("DAORESTAURANT",rest.getDistrict().getName());
         // MENU
         rest.setMenu(getRestaurantMenu(id));
-        if (rest.getMenu()!=null){
-            Log.d("DAORESTAURANT","menu: "+rest.getMenu().size());
-        }
         //COMMENTS
         rest.setResena(getRestaurantComment(id));
-        if (rest.getResena()!=null){
-            Log.d("DAORESTAURANT","comment: "+rest.getResena().size());
-        }
         //PLATOS
         rest.setUserPhotos(getRestaurantDish(id));
-        if (rest.getUserPhotos()!=null){
-            Log.d("DAORESTAURANT","platos: "+rest.getUserPhotos().size());
-        }
         return rest;
     }
+
+    @Override
+    public Restaurant simpleGet(int id) {
+        return getRestaurant(id);
+    }
+
 
     @Override
     public List<Restaurant> list() {
@@ -180,7 +168,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
         return rest;
     }
 
-    //COLOCAR COMENTARIOS AQUI
     private List<Category> getRestaurantCategories(int id) {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
         SQLiteDatabase sqlite = helper.getWritableDatabase();
@@ -194,7 +181,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 cat_list.add(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES)));
             } while (cursor.moveToNext());
         }
-        Log.d("DAO","LIST: CAT: "+cat_list.size());
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }

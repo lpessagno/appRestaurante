@@ -12,6 +12,5 @@ public interface PlatosDao {
     Platos get(int id);
     List<Platos> listByRestaurantId(int restid);
     List<Platos> listByUserId(int userid);
-    List<Platos> list();
 
 }

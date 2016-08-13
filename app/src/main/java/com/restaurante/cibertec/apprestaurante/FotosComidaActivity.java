@@ -37,9 +37,9 @@ public class FotosComidaActivity extends AppCompatActivity {
         photo = (ImageView)findViewById(R.id.dishphoto);
     }
 
-    public void tomarFoto(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CAPTURA);
+//    public void tomarFoto(View view) {
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(intent, REQUEST_CAPTURA);
 //        int permisoWriteExternalCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 //        Log.d("CAMERAIMG", "CHECK: " + permisoWriteExternalCheck + " granted: " + PackageManager.PERMISSION_GRANTED);
 //        if (permisoWriteExternalCheck != PackageManager.PERMISSION_GRANTED) {
@@ -47,7 +47,7 @@ public class FotosComidaActivity extends AppCompatActivity {
 //        } else {
 //            openCamera();
 //        }
-    }
+//    }
 //    //DONDE LLEGA CUANDO SE LLAMA EL REQUEST PERMISSIONS
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -96,4 +96,6 @@ public class FotosComidaActivity extends AppCompatActivity {
         }
     }
 
+    public void tomarFoto(View view) {
+    }
 }

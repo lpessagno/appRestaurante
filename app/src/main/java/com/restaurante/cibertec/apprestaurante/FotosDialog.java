@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -15,11 +17,13 @@ import android.widget.Toast;
  */
 public class FotosDialog extends DialogFragment {
 
+    ImageView photos;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.activity_fotos_comida,null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.fotos_activity,null);
         builder.setView(view);
         builder.setTitle("Subir Fotos");
         builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
@@ -40,6 +44,5 @@ public class FotosDialog extends DialogFragment {
 
         return builder.create();
     }
-
 
 }

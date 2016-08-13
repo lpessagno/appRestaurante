@@ -1,6 +1,7 @@
 package com.restaurante.cibertec.apprestaurante;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -23,40 +24,45 @@ import java.util.List;
 public class BienvenidaActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    SharedPreferences appPreferences;
+    SharedPreferences.Editor editor;
 
-    public void grabar()
-    {
-        RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
-        Restaurant o= new Restaurant();
-        o.setName("Ole");
-        o.setHorario("www.wwww.www");
-        o.setEmail("ssss");
-        o.setPhone("1212121");
-        o.setAvg_price(12);
-        o.setAddress("Av.canevaro 178");
-        o.setLatitude("-12.0912905");
-        o.setLongitude("-77.0502661");
-        mydao.insert(o);
-    }
+//    public void grabar()
+//    {
+//        RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
+//        Restaurant o= new Restaurant();
+//        o.setName("Ole");
+//        o.setHorario("www.wwww.www");
+//        o.setEmail("ssss");
+//        o.setPhone("1212121");
+//        o.setAvg_price(12);
+//        o.setAddress("Av.canevaro 178");
+//        o.setLatitude("-12.0912905");
+//        o.setLongitude("-77.0502661");
+//        mydao.insert(o);
+//    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bienvenida);
+        appPreferences = getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                //grabar();
-                //listar();
-            }
-        });
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();*/
+//                //grabar();
+//                //listar();
+//            }
+//        });
 
         listar();
 
