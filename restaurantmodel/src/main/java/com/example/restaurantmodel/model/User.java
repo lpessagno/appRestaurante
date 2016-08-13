@@ -1,6 +1,7 @@
 package com.example.restaurantmodel.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Jorge on 7/24/2016.
@@ -13,9 +14,9 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
-    private Restaurant[] favorites;
-    private Commentary[] commentaries;
-    private Platos[] userPhotos;
+    private List<Restaurant> favorites;
+    private List<Commentary> commentaries;
+    private List<Platos> userPhotos;
     private DefaultSearch search;
 
     public User() {
@@ -61,28 +62,35 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Restaurant[] getFavorites() {
+    public List<Restaurant> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(Restaurant[] favorites) {
+    public void setFavorites(List<Restaurant> favorites) {
         this.favorites = favorites;
     }
 
-    public Commentary[] getCommentaries() {
+    public List<Commentary> getCommentaries() {
         return commentaries;
     }
 
-    public void setCommentaries(Commentary[] commentaries) {
+    public void setCommentaries(List<Commentary> commentaries) {
         this.commentaries = commentaries;
     }
 
-    public Platos[] getUserPhotos() {
+    public List<Platos> getUserPhotos() {
         return userPhotos;
     }
 
-    public void setUserPhotos(Platos[] userPhotos) {
+    public void setUserPhotos(List<Platos> userPhotos) {
         this.userPhotos = userPhotos;
     }
 
+    public DefaultSearch getSearch() {
+        return search;
+    }
+
+    public void setSearch(DefaultSearch search) {
+        this.search = search;
+    }
 }

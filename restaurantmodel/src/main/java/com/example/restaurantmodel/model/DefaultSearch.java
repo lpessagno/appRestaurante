@@ -1,6 +1,7 @@
 package com.example.restaurantmodel.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Jorge on 7/24/2016.
@@ -9,10 +10,12 @@ public class DefaultSearch implements Serializable {
 
     private int id;
 
+    private String name;
     private District district;
     private int ranking;
-    private double price;
-    private Category[] categories;
+    private double price_low;
+    private double price_high;
+    private List<Category> categories;
 
     public DefaultSearch() {
     }
@@ -41,19 +44,35 @@ public class DefaultSearch implements Serializable {
         this.ranking = ranking;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Category[] getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Category[] categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice_low() {
+        return price_low;
+    }
+
+    public void setPrice_low(double price_low) {
+        this.price_low = price_low;
+    }
+
+    public double getPrice_high() {
+        return price_high;
+    }
+
+    public void setPrice_high(double price_high) {
+        this.price_high = price_high;
     }
 }

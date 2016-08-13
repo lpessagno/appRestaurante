@@ -13,9 +13,9 @@ public interface RestaurantDao {
 
     public long insert(Restaurant restaurant);
     public long update(Restaurant restaurant);
-    public long delete(Restaurant restaurant);
     public Restaurant get(int id);
+    public Restaurant simpleGet(int id);
     public List<Restaurant> list();
-    //public List<Category> getRestaurantCategories(int restaurantid);
+    public List<Restaurant> listByFiltro(int[] idsDistricts, String orderBy);
 
 }

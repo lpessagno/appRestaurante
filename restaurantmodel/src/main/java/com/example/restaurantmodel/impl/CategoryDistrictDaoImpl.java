@@ -1,5 +1,6 @@
 package com.example.restaurantmodel.impl;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -116,6 +117,35 @@ public class CategoryDistrictDaoImpl implements CategoryDistrictDao {
         sqlite.close();
 
         return list;
+    }
+
+    @Override
+    public void insertSearchCategory(int id, List<Category> list) {
+        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite = helper.getWritableDatabase();
+
+        for(Category cat:list){
+            ContentValues content = new ContentValues();
+            content.put(RestaurantSchemaContract.Search_Categories.COLUMN_SEARCH,id);
+            content.put(RestaurantSchemaContract.Search_Categories.COLUMN_CATEGORY,cat.getId());
+
+            sqlite.insert(RestaurantSchemaContract.Search_Categories.TABLE_NAME,null,content);
+        }
+        sqlite.close();
+    }
+
+    @Override
+    public int deleteSearchCategoryFromSearchId(int searchId) {
+        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite = helper.getWritableDatabase();
+
+        String whereClause = RestaurantSchemaContract.Search_Categories.COLUMN_SEARCH+"=?";
+        String[] whereArgs = new String[]{""+searchId};
+        int num = sqlite.delete(RestaurantSchemaContract.Search_Categories.TABLE_NAME,whereClause,whereArgs);
+
+        sqlite.close();
+
+        return num;
     }
 
 }

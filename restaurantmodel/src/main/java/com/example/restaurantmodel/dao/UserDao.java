@@ -10,5 +10,6 @@ public interface UserDao {
     long insert(User user);
     long update(User user);
     User getByName(String Name);
+    User get(int id);
 
 }

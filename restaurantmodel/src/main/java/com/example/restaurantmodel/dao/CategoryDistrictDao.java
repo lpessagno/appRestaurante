@@ -20,5 +20,7 @@ public interface CategoryDistrictDao {
     District getDistrict(int id);
     List<District> listDistrict();
 
+    void insertSearchCategory(int id,List<Category> list);
+    int deleteSearchCategoryFromSearchId(int searchId);
 
 }

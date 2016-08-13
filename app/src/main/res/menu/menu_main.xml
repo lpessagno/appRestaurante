@@ -12,7 +12,11 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_perm_contact_calendar_white_24dp"
         android:title="opt2"></item>
-
+    <item
+        android:id="@+id/opt3"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="Filtros"></item>
 
 
 </menu>

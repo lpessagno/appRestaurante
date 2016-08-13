@@ -6,15 +6,19 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
+
 import android.view.View;
 
-import android.widget.Toast;
+
+import android.widget.ImageView;
+
 
 /**
  * Created by Jorge on 7/29/2016.
  */
 public class FotosDialog extends DialogFragment {
+
+    ImageView photos;
 
     @NonNull
     @Override
@@ -42,6 +46,5 @@ public class FotosDialog extends DialogFragment {
 
         return builder.create();
     }
-
 
 }

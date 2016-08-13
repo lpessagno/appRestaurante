@@ -79,18 +79,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right"
-            android:orientation="vertical"
-
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/detailPicture"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:src="@mipmap/labisteca"
-
                 />
-
 
         </LinearLayout>
 
@@ -146,9 +142,8 @@
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/material_design_android_floating_action_menu"
         android:layout_width="wrap_content"
-        android:layout_height="185dp"
-        android:layout_below="@+id/liBotonera"
-        android:layout_gravity="bottom|right"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
 
         android:layout_marginLeft="11dp"
 
@@ -180,7 +175,6 @@
         fab:menu_shadowRadius="4dp"
         fab:menu_shadowXOffset="1dp"
         fab:menu_shadowYOffset="4dp">
-
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/material_design_floating_action_menu_item1"
@@ -218,13 +212,11 @@
     <TabHost
         android:id="@+id/tabpanel"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content">
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="wrap_content"
@@ -261,7 +253,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/tab_menu"
                 android:layout_width="wrap_content"
@@ -274,11 +265,7 @@
                     android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
             </LinearLayout>
-
-
         </FrameLayout>
-
     </TabHost>
-
 
 </LinearLayout>

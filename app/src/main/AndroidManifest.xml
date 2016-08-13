@@ -22,6 +22,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".DetalleRestActivity" />
         <activity android:name=".PerfActivity" />
+        <activity android:name=".FiltrosActivity" />
         <activity android:name=".MapsActivity" android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".BienvenidaActivity"

@@ -94,7 +94,7 @@ public class ResturantActivity extends AppCompatActivity {
         lista_comentarios.setLayoutManager(new LinearLayoutManager(this));
 
 
-        RecyclerView.Adapter adapter_comentarios = new ComentariosAdapter(this, getComentarios());
+        RecyclerView.Adapter adapter_comentarios = new ComentariosAdapter(this, getComentarios(restaurantDetail));
         lista_comentarios.setAdapter(adapter_comentarios);
 
 
@@ -102,7 +102,7 @@ public class ResturantActivity extends AppCompatActivity {
         lista_platos.setLayoutManager(new LinearLayoutManager(this));
 
 
-        RecyclerView.Adapter adapter_platos = new PlatosAdapter(this, getPlatos());
+        RecyclerView.Adapter adapter_platos = new PlatosAdapter(this, getPlatos(restaurantDetail));
         lista_platos.setAdapter(adapter_platos);
 
 
@@ -110,7 +110,7 @@ public class ResturantActivity extends AppCompatActivity {
         lista_menus.setLayoutManager(new LinearLayoutManager(this));
 
 
-        RecyclerView.Adapter adapter_menus = new MenusAdapter(this, getMenus());
+        RecyclerView.Adapter adapter_menus = new MenusAdapter(this, getMenus(restaurantDetail));
         lista_menus.setAdapter(adapter_menus);
 
 
@@ -215,68 +215,25 @@ public class ResturantActivity extends AppCompatActivity {
         // startActivity(intent);
     }
 
-
     public void hacerResena(View view) {
         DialogFragment dialog = new ResenaDialog();
         dialog.show(getSupportFragmentManager(), "Resena");
-//        Intent intent = new Intent(getApplicationContext(),ResenaActivity.class);
-//        startActivity(intent);
     }
 
-
-    //TODO: este método desaparece cuando este la base de datos
-    public List<Platos> getPlatos() {
-        List<Platos> platos = new ArrayList<Platos>();
-        Platos p1 = new Platos();
-        p1.setDescription("Causa de Atún");
-
-        Platos p2 = new Platos();
-        p2.setDescription("Lomito Saltado");
-
-        platos.add(p1);
-        platos.add(p2);
+    public List<Platos> getPlatos(Restaurant rest) {
+        List<Platos> platos = rest.getUserPhotos();
 
         return platos;
     }
 
-
-    //TODO: este método desaparece cuando este la base de datos
-    public List<Commentary> getComentarios() {
-        List<Commentary> comentarios = new ArrayList<Commentary>();
-        Commentary c1 = new Commentary();
-        c1.setComment("EXCELENTE SITIO");
-        User u = new User();
-        u.setName("lpessagno");
-        c1.setUser(u);
-
-        Commentary c2 = new Commentary();
-        c2.setComment("RECOMENDADO");
-        User u2 = new User();
-        u2.setName("jkrentzien");
-        c2.setUser(u2);
-
-        comentarios.add(c1);
-        comentarios.add(c2);
+    public List<Commentary> getComentarios(Restaurant rest) {
+        List<Commentary> comentarios = rest.getResena();
 
         return comentarios;
     }
 
-
-    //TODO: este método desaparece cuando este la base de datos
-    public List<Menu> getMenus() {
-        List<Menu> menus = new ArrayList<Menu>();
-
-        Menu m1 = new Menu();
-        m1.setName("Lomo Saltado");
-        m1.setPrice(25.0);
-
-        Menu m2 = new Menu();
-        m2.setName("Ají de Gallina");
-        m2.setPrice(25.0);
-
-        menus.add(m1);
-        menus.add(m2);
-
+    public List<Menu> getMenus(Restaurant rest) {
+        List<Menu> menus = rest.getMenu();
         return menus;
     }
     //@
@@ -324,6 +281,7 @@ public class ResturantActivity extends AppCompatActivity {
         Log.d("HOLA","HOLA A TODOS");
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAPTURA);
+        //photo = (ImageView)findViewById(R.id.dishphoto);
     }
 
     @Override
@@ -331,9 +289,9 @@ public class ResturantActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==111){
             if (resultCode==RESULT_OK){
+
                 Bitmap foto_bitmap = (Bitmap) data.getExtras().get("data");
                 Intent intent = new Intent(this,FotosComidaActivity.class);
-
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 foto_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -341,6 +299,8 @@ public class ResturantActivity extends AppCompatActivity {
                 intent.putExtra("fotografia_plato",byteArray);
                 startActivityForResult(intent,1984);
 
+
+               // Bitmap foto = (Bitmap) data.getExtras().get("data");
             }
         } else if (requestCode==1984){
                 dialog_comida.dismiss();

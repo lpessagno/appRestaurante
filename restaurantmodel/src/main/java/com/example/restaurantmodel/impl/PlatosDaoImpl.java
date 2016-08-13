@@ -97,11 +97,36 @@ public class PlatosDaoImpl implements PlatosDao {
 
     @Override
     public List<Platos> listByUserId(int userid) {
-        return null;
+        AppRestSqlOpenHelper db = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite=db.getWritableDatabase();
+        String whereClause = RestaurantSchemaContract.UserPhotos.COLUMN_USER+"=?";
+        String[] whereArgs = new String[]{""+userid};
+
+        Cursor cursor = sqlite.query(RestaurantSchemaContract.UserPhotos.TABLE_NAME,null,whereClause,whereArgs,null,null,null);
+        List<Platos> list = new ArrayList<Platos>();
+        if (cursor.moveToFirst()) {
+            do {
+                Platos dish = new Platos();
+                dish.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.UserPhotos._ID)));
+                int userId = cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.UserPhotos.COLUMN_USER));
+                User user = new User();
+                user.setId(userId);
+                dish.setUser(user);
+                Restaurant rest = new Restaurant();
+                rest.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.UserPhotos.COLUMN_RESTAURANT)));
+                dish.setDescription(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.UserPhotos.COLUMN_NAME)));
+                Date date = new Date(cursor.getLong(cursor.getColumnIndex(RestaurantSchemaContract.UserPhotos.COLUMN_DATE)));
+                dish.setDate(date);
+                dish.setPhoto(cursor.getBlob(cursor.getColumnIndex(RestaurantSchemaContract.UserPhotos.COLUMN_DISH)));
+                list.add(dish);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        sqlite.close();
+
+        return list;
     }
 
-    @Override
-    public List<Platos> list() {
-        return null;
-    }
 }

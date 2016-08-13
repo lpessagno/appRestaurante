@@ -92,39 +92,27 @@ public class RestaurantDaoImpl implements RestaurantDao {
     }
 
     @Override
-    public long delete(Restaurant restaurant) {
-        return 0;
-    }
-
-
-    @Override
     public Restaurant get(int id) {
         // restaurant
         Restaurant rest = getRestaurant(id);
-        Log.d("DAORESTAURANT",rest.getName());
         //CATEGORY
         rest.setCategories(getRestaurantCategories(id));
-        Log.d("DAORESTAURANT",rest.getCategories().get(0).getName());
         //DISTRICT
         rest.setDistrict(getDistrict(rest.getDistrict().getId()));
-        Log.d("DAORESTAURANT",rest.getDistrict().getName());
         // MENU
         rest.setMenu(getRestaurantMenu(id));
-        if (rest.getMenu()!=null){
-            Log.d("DAORESTAURANT","menu: "+rest.getMenu().size());
-        }
         //COMMENTS
         rest.setResena(getRestaurantComment(id));
-        if (rest.getResena()!=null){
-            Log.d("DAORESTAURANT","comment: "+rest.getResena().size());
-        }
         //PLATOS
         rest.setUserPhotos(getRestaurantDish(id));
-        if (rest.getUserPhotos()!=null){
-            Log.d("DAORESTAURANT","platos: "+rest.getUserPhotos().size());
-        }
         return rest;
     }
+
+    @Override
+    public Restaurant simpleGet(int id) {
+        return getRestaurant(id);
+    }
+
 
     @Override
     public List<Restaurant> list() {
@@ -140,6 +128,84 @@ public class RestaurantDaoImpl implements RestaurantDao {
         }
         //PUEDE SER NECESARIO SETEAR OTRAS COSAS
         return allRestaurants;
+    }
+
+    @Override
+    public List<Restaurant> listByFiltro(int[] idsDistricts, /*int[] idsCategories,*/ String orderBy) {
+        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite = helper.getWritableDatabase();
+        String query = "Select * from " + RestaurantSchemaContract.Restaurant.TABLE_NAME;
+        String idsDis = "";
+        String idsCat = "";
+        //boolean where = false;
+        for (int i = 0; i < idsDistricts.length; i++) {
+            idsDis = idsDis + "" + idsDistricts[i] + "";
+            if (i != idsDistricts.length - 1) {
+                idsDis = idsDis + ", ";
+            }
+        }
+        if (idsDis != null && !idsDis.trim().equals("")) {
+            query = query + " where " + RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT + " IN (" + idsDis + ")";
+            // where = true;
+        }
+        /*for (int i = 0; i < idsCategories.length; i++) {
+            idsCat = idsCat + "" + idsCategories[i] + "";
+            if (i != idsCategories.length - 1) {
+                idsCat = idsCat + ", ";
+            }
+        }
+        if (idsCat != null && !idsCat.trim().equals("")) {
+            if (where){
+                query = " and " + RestaurantSchemaContract.Restaurant.Col + " IN (" + idsCat + ")";
+
+            }
+            where = true;
+        }*/
+
+        if (orderBy!= null && !orderBy.equals("")) {
+            query = query + " order by " + orderBy + " DESC";
+        }
+
+        Cursor cursor = sqlite.rawQuery(query, null);
+        List<Restaurant> list = new ArrayList<Restaurant>();
+        if (cursor.moveToFirst()) {
+            do {
+                Restaurant rest = new Restaurant();
+                rest.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant._ID)));
+                rest.setName(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_NAME)));
+                rest.setHorario(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_HORARIO)));
+                rest.setEmail(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_EMAIL)));
+                rest.setPhone(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHONE)));
+                rest.setAvg_ranking(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_RANKING)));
+                rest.setAvg_price(cursor.getDouble(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_AVG_PRICE)));
+                rest.setVotos(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_VOTE)));
+                //DISTRICT
+                int districtid = cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT));
+                rest.setDistrict(new District(districtid));
+
+                rest.setAddress(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_ADDRESS)));
+                rest.setLatitude(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_LATITUDE)));
+                rest.setLongitude(cursor.getString(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_LONGITUDE)));
+                //PHOTO COLUMNS
+                rest.setPhotoid(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO_ID)));
+                rest.setPhoto(cursor.getBlob(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant.COLUMN_PHOTO)));
+
+                list.add(rest);
+            } while (cursor.moveToNext());
+            if (list != null || list.size() > 0) {
+                for (Restaurant rest : list) {
+                    int district_id = rest.getDistrict().getId();
+                    rest.setDistrict(getDistrict(district_id));
+                    rest.setCategories(getRestaurantCategories(rest.getId()));
+                }
+            }
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        sqlite.close();
+
+        return list;
     }
 
     private Restaurant getRestaurant(int id) {
@@ -180,7 +246,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
         return rest;
     }
 
-    //COLOCAR COMENTARIOS AQUI
     private List<Category> getRestaurantCategories(int id) {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
         SQLiteDatabase sqlite = helper.getWritableDatabase();
@@ -194,7 +259,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 cat_list.add(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES)));
             } while (cursor.moveToNext());
         }
-        Log.d("DAO","LIST: CAT: "+cat_list.size());
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }

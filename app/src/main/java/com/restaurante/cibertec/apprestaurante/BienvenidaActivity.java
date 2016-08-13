@@ -1,6 +1,7 @@
 package com.restaurante.cibertec.apprestaurante;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -23,40 +24,45 @@ import java.util.List;
 public class BienvenidaActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    SharedPreferences appPreferences;
+    SharedPreferences.Editor editor;
 
-    public void grabar()
-    {
-        RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
-        Restaurant o= new Restaurant();
-        o.setName("Ole");
-        o.setHorario("www.wwww.www");
-        o.setEmail("ssss");
-        o.setPhone("1212121");
-        o.setAvg_price(12);
-        o.setAddress("Av.canevaro 178");
-        o.setLatitude("-12.0912905");
-        o.setLongitude("-77.0502661");
-        mydao.insert(o);
-    }
+//    public void grabar()
+//    {
+//        RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
+//        Restaurant o= new Restaurant();
+//        o.setName("Ole");
+//        o.setHorario("www.wwww.www");
+//        o.setEmail("ssss");
+//        o.setPhone("1212121");
+//        o.setAvg_price(12);
+//        o.setAddress("Av.canevaro 178");
+//        o.setLatitude("-12.0912905");
+//        o.setLongitude("-77.0502661");
+//        mydao.insert(o);
+//    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bienvenida);
+        appPreferences = getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                //grabar();
-                //listar();
-            }
-        });
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();*/
+//                //grabar();
+//                //listar();
+//            }
+//        });
 
         listar();
 
@@ -69,6 +75,24 @@ public class BienvenidaActivity extends AppCompatActivity {
         //RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
         //List<Restaurant> list = mydao.listarRestaurantes();
         List<Restaurant> list = getRestaurtants();
+        String distritos = appPreferences.getString(FiltrosActivity.DISTRITOSID, "vacio");
+        String ordenar = appPreferences.getString(FiltrosActivity.ORDENAR, "vacio");
+        int[] idsDistricts;
+        String[] idsDistritos;
+        if (!distritos.equals("vacio") && !distritos.trim().equals("")) {
+            idsDistritos = distritos.split(",");
+            idsDistricts = new int[idsDistritos.length];
+            for (int i = 0; i<idsDistritos.length; i++) {
+                idsDistricts[i] = Integer.parseInt(idsDistritos[i]);
+            }
+        }else{
+            idsDistricts = new int[0];
+        }
+
+        if (ordenar==null || ordenar.trim().equals("") || ordenar.equals("vacio")) {
+            ordenar = "";
+        }
+        list = getRestaurtantsFiltro(idsDistricts, ordenar);
         RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this,list); //cambiar el dato de entrada
         recyclerView.setAdapter(adapter1);
     }
@@ -87,6 +111,13 @@ public class BienvenidaActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    private List<Restaurant> getRestaurtantsFiltro(int[] ids, String orderBy) {
+        Log.d("DAOS", "getRestaurtants");
+        RestaurantDao dao = new RestaurantDaoImpl(this);
+        List<Restaurant> list = dao.listByFiltro(ids, orderBy);
+        return list;
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int idopcion = item.getItemId();
         switch (idopcion) {
@@ -96,9 +127,15 @@ public class BienvenidaActivity extends AppCompatActivity {
                 //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
                 break;*/
             case R.id.opt2:
+                //COLOCAR CONDICIONAL PARA IR A UN DIALOG DE LOGIN/SIGNIN antes de ir a perfil
+                //SI esta logueado se dirige al perfil
                 Intent intent2 = new Intent(this,PerfActivity.class);
                 startActivity(intent2);
                 //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.opt3:
+                Intent intent3 = new Intent(this, FiltrosActivity.class);
+                startActivity(intent3);
                 break;
         }
         return super.onOptionsItemSelected(item);
