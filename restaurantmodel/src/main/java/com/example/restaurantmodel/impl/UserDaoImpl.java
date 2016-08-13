@@ -98,15 +98,17 @@ public class UserDaoImpl implements UserDao {
         sqlite.close();
         //get other Values
         //getFavorites
-
-        //getDefaultSearch
-        if(user.getSearch()!=null) {
-            user.setSearch(getUserDefaultSearch(user.getSearch().getId()));
+        if (user!=null){
+            //getDefaultSearch
+            if(user.getSearch()!=null) {
+                user.setSearch(getUserDefaultSearch(user.getSearch().getId()));
+            }
+            //getComment
+            user.setCommentaries(getUserComments(user.getId()));
+            //getPlatos
+            user.setUserPhotos(getPhotosByUser(user.getId()));
         }
-        //getComment
-        user.setCommentaries(getUserComments(user.getId()));
-        //getPlatos
-        user.setUserPhotos(getPhotosByUser(user.getId()));
+
         return user;
     }
 

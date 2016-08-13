@@ -96,15 +96,17 @@ public class RestaurantDaoImpl implements RestaurantDao {
         // restaurant
         Restaurant rest = getRestaurant(id);
         //CATEGORY
-        rest.setCategories(getRestaurantCategories(id));
-        //DISTRICT
-        rest.setDistrict(getDistrict(rest.getDistrict().getId()));
-        // MENU
-        rest.setMenu(getRestaurantMenu(id));
-        //COMMENTS
-        rest.setResena(getRestaurantComment(id));
-        //PLATOS
-        rest.setUserPhotos(getRestaurantDish(id));
+        if (rest!=null){
+            rest.setCategories(getRestaurantCategories(id));
+            //DISTRICT
+            rest.setDistrict(getDistrict(rest.getDistrict().getId()));
+            // MENU
+            rest.setMenu(getRestaurantMenu(id));
+            //COMMENTS
+            rest.setResena(getRestaurantComment(id));
+            //PLATOS
+            rest.setUserPhotos(getRestaurantDish(id));
+        }
         return rest;
     }
 

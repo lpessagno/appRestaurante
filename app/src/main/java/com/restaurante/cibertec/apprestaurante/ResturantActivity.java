@@ -4,6 +4,7 @@ import android.*;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.content.pm.PackageManager;
@@ -54,6 +55,7 @@ public class ResturantActivity extends AppCompatActivity {
     private static final int REQUEST_CAPTURA =111 ;
 
     Restaurant restaurantDetail;
+    int idRest;
     SharedPreferences appPreferences;
     SharedPreferences.Editor editor;
 
@@ -84,7 +86,7 @@ public class ResturantActivity extends AppCompatActivity {
 
         appPreferences = getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
         Intent intent = getIntent();
-        int idRest = intent.getIntExtra(getString(R.string.intentIdExtra),0);
+        idRest = intent.getIntExtra(getString(R.string.intentIdExtra),0);
         Log.d("RESTACTIVITY","ID: "+idRest);
         findRestaurantViews();
 
@@ -217,11 +219,11 @@ public class ResturantActivity extends AppCompatActivity {
 
     public void subirFoto(View view) {
         String userlogged = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
-        if (userlogged!=getString(R.string.default_string)){
+        if (!userlogged.equals(getString(R.string.default_string))){
             dialog_comida = new FotosDialog();
             dialog_comida.show(getSupportFragmentManager(), "Fotos");
         } else {
-            Toast.makeText(this,"No puedes subir fotos si no estas loggeado",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"No puedes subir fotos si no estas loggeado",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -254,10 +256,10 @@ public class ResturantActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CALL_PHONE},12);
         }
         else {
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:"+detailPhoneNumber.getText())); // pasar telefono del Restaurant   detailPhoneNumber (043) 631641
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:"+detailPhoneNumber.getText())); // pasar telefono del Restaurant   detailPhoneNumber (043) 631641
             Log.d("phone",""+ detailPhoneNumber.getText());
-        startActivity(intent);
+            startActivity(intent);
         }
     }
 
@@ -270,11 +272,11 @@ public class ResturantActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int idopcion = item.getItemId();
         switch (idopcion) {
-           /* case R.id.opt2:
+            case R.id.opt2:
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
                 //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
-                break;*/
+                break;
             case R.id.opt1: //Llamar a mapa
                 Intent intentMap = new Intent(this,MapsActivity.class);
                 intentMap.putExtra(EXTRA_NAME, detailName.getText());
@@ -291,7 +293,6 @@ public class ResturantActivity extends AppCompatActivity {
         Log.d("HOLA","HOLA A TODOS");
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAPTURA);
-        //photo = (ImageView)findViewById(R.id.dishphoto);
     }
 
     @Override
@@ -314,17 +315,37 @@ public class ResturantActivity extends AppCompatActivity {
             }
         } else if (requestCode==1984){
             dialog_comida.dismiss();
-            if (resultCode==RESULT_OK){
-                //reload recycler view
+            if (resultCode==RESULT_OK) {
+/*                restaurantDetail = getRestaurantData(idRest);
+                lista_platos = (RecyclerView) findViewById(R.id.lista_platos);
+                lista_platos.setLayoutManager(new LinearLayoutManager(this));
+                RecyclerView.Adapter adapter_platos = new PlatosAdapter(this, getPlatos(restaurantDetail));
+                lista_platos.setAdapter(adapter_platos);*/
             }
-               // RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista);
-               // recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                //RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
-                //List<Restaurant> list = mydao.listarRestaurantes();
-              //  List<Platos> list = getPlatos();
-              //  RecyclerView.Adapter adapter1 = new PlatosAdapter(this,list); //cambiar el dato de entrada
-              //  recyclerView.setAdapter(adapter1);
+        } else if (requestCode== 2222){
+            /*Intent intent = new Intent(this,FotosComidaActivity.class);
+            Uri selectedImage = data.getData();
+            String[] filePath = { MediaStore.Images.Media.DATA };
+            Log.d("filPath",filePath[0]+filePath[1]+"");
+            Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+            Bitmap foto_bitmap = (BitmapFactory.decodeFile(picturePath));
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            foto_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            intent.putExtra("fotografia_plato",byteArray);
+            startActivityForResult(intent,1984);*/
         }
+
+    }
+
+        public void seleccionarGaleria(View view) {
+            Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 2222);
     }
    /* public void verMapa(View view) {
         Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();

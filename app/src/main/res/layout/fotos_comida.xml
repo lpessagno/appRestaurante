@@ -17,6 +17,7 @@
         android:id="@+id/elegirFoto"
         android:text="Elegir de la Galería"
         android:textStyle="bold"
+        android:onClick="seleccionarGaleria"
         android:layout_toLeftOf="@id/tomarFoto"/>
 
 </LinearLayout>
