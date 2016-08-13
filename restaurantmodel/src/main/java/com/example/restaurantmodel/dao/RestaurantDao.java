@@ -16,5 +16,6 @@ public interface RestaurantDao {
     public Restaurant get(int id);
     public Restaurant simpleGet(int id);
     public List<Restaurant> list();
+    public List<Restaurant> listByFiltro(int[] idsDistricts, String orderBy);
 
 }

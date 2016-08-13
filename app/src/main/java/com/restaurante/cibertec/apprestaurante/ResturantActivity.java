@@ -33,6 +33,7 @@ import com.restaurante.cibertec.recyclers.ComentariosAdapter;
 import com.restaurante.cibertec.recyclers.MenusAdapter;
 import com.restaurante.cibertec.recyclers.PlatosAdapter;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -50,7 +51,7 @@ public class ResturantActivity extends AppCompatActivity {
     RecyclerView lista_menus;
 
     private static final int REQUEST_CAPTURA =111 ;
-    private ImageView photo;
+
     //RestaurantViews
     TextView detailName;
     TextView detailCategory;
@@ -69,6 +70,8 @@ public class ResturantActivity extends AppCompatActivity {
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3, floatingActionButton4;
 
+    DialogFragment dialog_comida;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,8 @@ public class ResturantActivity extends AppCompatActivity {
 
         Restaurant restaurantDetail = getRestaurantData(idRest);
         setDetailData(restaurantDetail);
+
+
 
         tabHost = (TabHost) findViewById(R.id.tabpanel);
         tabHost.setup();
@@ -204,8 +209,10 @@ public class ResturantActivity extends AppCompatActivity {
     }
 
     public void subirFoto(View view) {
-        DialogFragment dialog = new FotosDialog();
-        dialog.show(getSupportFragmentManager(), "Fotos");
+        dialog_comida = new FotosDialog();
+        dialog_comida.show(getSupportFragmentManager(), "Fotos");
+        // Intent intent= new Intent(getApplicationContext(),FotosComidaActivity.class);
+        // startActivity(intent);
     }
 
     public void hacerResena(View view) {
@@ -274,7 +281,7 @@ public class ResturantActivity extends AppCompatActivity {
         Log.d("HOLA","HOLA A TODOS");
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAPTURA);
-        photo = (ImageView)findViewById(R.id.dishphoto);
+        //photo = (ImageView)findViewById(R.id.dishphoto);
     }
 
     @Override
@@ -282,15 +289,28 @@ public class ResturantActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==111){
             if (resultCode==RESULT_OK){
-                Bitmap foto = (Bitmap) data.getExtras().get("data");
-                Log.d("ACTIVITYFOTO",""+foto);
-                if (photo !=null){
-                    photo.setImageBitmap(foto);
-                } else {
-                    photo = (ImageView)findViewById(R.id.dishphoto);
-                    Log.d("ACTIVITYFOTO","view: "+photo);
-                }
+
+                Bitmap foto_bitmap = (Bitmap) data.getExtras().get("data");
+                Intent intent = new Intent(this,FotosComidaActivity.class);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                foto_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                intent.putExtra("fotografia_plato",byteArray);
+                startActivityForResult(intent,1984);
+
+
+               // Bitmap foto = (Bitmap) data.getExtras().get("data");
             }
+        } else if (requestCode==1984){
+                dialog_comida.dismiss();
+               // RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista);
+               // recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                //RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
+                //List<Restaurant> list = mydao.listarRestaurantes();
+              //  List<Platos> list = getPlatos();
+              //  RecyclerView.Adapter adapter1 = new PlatosAdapter(this,list); //cambiar el dato de entrada
+              //  recyclerView.setAdapter(adapter1);
         }
     }
    /* public void verMapa(View view) {

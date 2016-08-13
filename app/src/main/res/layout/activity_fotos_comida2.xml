@@ -8,27 +8,28 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context="com.restaurante.cibertec.apprestaurante.FotosComidaActivity">
 
     <ImageView
-        android:id="@+id/dishphoto"
+        android:id="@+id/fotografia_plato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
         />
+
+    <TextView
+        android:id="@+id/descripcion_plato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Descripción del Plato"
+        />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tomarFoto"
-        android:text="Tomar Foto"
-        android:textStyle="bold"
-        android:onClick="tomarFoto"
-       />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/elegirFoto"
-        android:text="Elegir de la Galería"
-        android:textStyle="bold"
-        android:layout_toLeftOf="@id/tomarFoto"/>
+        android:text="OK"
+        android:id="@+id/boton_comida"
+        android:onClick="regresarRest"/>
+
 </LinearLayout>
