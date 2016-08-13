@@ -4,12 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.restaurantmodel.contract.AppRestSqlOpenHelper;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
 import com.example.restaurantmodel.dao.CategoryDistrictDao;
 import com.example.restaurantmodel.model.Category;
 import com.example.restaurantmodel.model.District;
+import com.example.restaurantmodel.model.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +134,37 @@ public class CategoryDistrictDaoImpl implements CategoryDistrictDao {
             sqlite.insert(RestaurantSchemaContract.Search_Categories.TABLE_NAME,null,content);
         }
         sqlite.close();
+    }
+
+    @Override
+    public List<Restaurant> getRestaurantsById(List<Category> categorias) {
+        AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
+        SQLiteDatabase sqlite = helper.getWritableDatabase();
+        String categoriasListar = "";
+        Log.d("prueba",""+categorias.get(0).getId());
+        for (int i = 0; i<categorias.size(); i++) {
+            categoriasListar = categoriasListar + "" + categorias.get(i).getId();
+            if (i!=categorias.size()-1) {
+                categoriasListar = categoriasListar + ", ";
+            }
+        }
+        String query = "select distinct(" + RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT + ") from " + RestaurantSchemaContract.Restaurant_Categories.TABLE_NAME + " where  " + RestaurantSchemaContract.Restaurant_Categories.COLUMN_CATEGORIES + " in (" + categoriasListar + ")";
+        Log.d("prueba",query);
+        Cursor cursor = sqlite.rawQuery(query, null);
+        List<Restaurant> list = new ArrayList<Restaurant>();
+        if (cursor.moveToFirst()) {
+            do {
+                Restaurant rest = new Restaurant();
+                rest.setId(cursor.getInt(cursor.getColumnIndex(RestaurantSchemaContract.Restaurant_Categories.COLUMN_RESTAURANT)));
+                list.add(rest);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        sqlite.close();
+
+        return list;
     }
 
     @Override
