@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,7 +32,9 @@ public class FiltrosActivity extends AppCompatActivity {
     public static final String ORD_RANKING = RestaurantSchemaContract.Restaurant.COLUMN_RANKING;
 
     public static final String DISTRITOSID = "DISTRITOSID";
+    public static final String CATEGORIASID = "CATEGORIASID";
     public static String idsDistricts;
+    public static String idsCategorias;
     SharedPreferences appPreferences;
     SharedPreferences.Editor editor;
 
@@ -39,7 +42,7 @@ public class FiltrosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros);
-        appPreferences = getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
+        appPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
         editor = appPreferences.edit();
         editor.putString(ORDENAR, "");
         editor.commit();
@@ -67,7 +70,7 @@ public class FiltrosActivity extends AppCompatActivity {
             temp.setColorFilter(0);*/
             temp = (ImageView) findViewById(R.id.btnRanking);
             temp.setColorFilter(0);
-            editor.putString(ORDENAR,  ORD_DISTANCIA);
+            editor.putString(ORDENAR, ORD_DISTANCIA);
         }
 
         if (imageView.getId() == R.id.btnPrecio) {
@@ -77,7 +80,7 @@ public class FiltrosActivity extends AppCompatActivity {
             temp.setColorFilter(0);*/
             temp = (ImageView) findViewById(R.id.btnRanking);
             temp.setColorFilter(0);
-            editor.putString(ORDENAR,  ORD_PRECIO);
+            editor.putString(ORDENAR, ORD_PRECIO);
         }
 
 
@@ -100,10 +103,12 @@ public class FiltrosActivity extends AppCompatActivity {
         List<Category> categorias = getTiposComida();
         final String[] opciones = new String[categorias.size()];
         final boolean[] arreglo = new boolean[categorias.size()];
+        final int[] ids = new int[categorias.size()];
 
         for (int i = 0; i < categorias.size(); i++) {
-            opciones[i]  = categorias.get(i).getName();
+            opciones[i] = categorias.get(i).getName();
             arreglo[i] = false;
+            ids[i] = categorias.get(i).getId();
         }
         builder.setMultiChoiceItems(opciones, arreglo, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
@@ -118,19 +123,24 @@ public class FiltrosActivity extends AppCompatActivity {
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String texto = "";
+                editor = appPreferences.edit();
+                String idsCategorias = "";
                 for (int i = 0; i < arreglo.length; i++) {
                     if (arreglo[i] == true) {
-                        texto += " " + opciones[i];
+                        idsCategorias = idsCategorias + ids[i] + ",";
                     }
                 }
-                Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+                Log.d("prueba", idsCategorias);
+                editor.putString(CATEGORIASID, idsCategorias);
+                editor.commit();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                editor.putString(CATEGORIASID, idsCategorias);
+                editor.commit();
             }
         });
         builder.create().show();
@@ -146,7 +156,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
         for (int i = 0; i < distritos.size(); i++) {
             ids[i] = distritos.get(i).getId();
-            opciones[i]  = distritos.get(i).getName();
+            opciones[i] = distritos.get(i).getName();
             arreglo[i] = false;
         }
         builder.setMultiChoiceItems(opciones, arreglo, new DialogInterface.OnMultiChoiceClickListener() {
@@ -166,8 +176,7 @@ public class FiltrosActivity extends AppCompatActivity {
                 String idsDistricts = "";
                 for (int i = 0; i < arreglo.length; i++) {
                     if (arreglo[i] == true) {
-                        System.out.println("seleccionado: " + arreglo[i]);
-                        idsDistricts = idsDistricts + ids[i]+ ",";
+                        idsDistricts = idsDistricts + ids[i] + ",";
                     }
                 }
                 editor.putString(DISTRITOSID, idsDistricts);
@@ -193,13 +202,13 @@ public class FiltrosActivity extends AppCompatActivity {
 
     private List<Category> getTiposComida() {
         CategoryDistrictDao dao = new CategoryDistrictDaoImpl(this);
-        List<Category> list = dao.listCategory() ;
+        List<Category> list = dao.listCategory();
         return list;
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_filtros , menu);
+        menuInflater.inflate(R.menu.menu_filtros, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

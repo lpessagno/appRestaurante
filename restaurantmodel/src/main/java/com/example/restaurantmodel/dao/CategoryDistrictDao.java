@@ -3,6 +3,7 @@ package com.example.restaurantmodel.dao;
 import com.example.restaurantmodel.model.Category;
 import com.example.restaurantmodel.model.District;
 import com.example.restaurantmodel.model.Menu;
+import com.example.restaurantmodel.model.Restaurant;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public interface CategoryDistrictDao {
     List<District> listDistrict();
 
     void insertSearchCategory(int id,List<Category> list);
+    List<Restaurant> getRestaurantsById(List<Category> categorias);
     int deleteSearchCategoryFromSearchId(int searchId);
 
 }

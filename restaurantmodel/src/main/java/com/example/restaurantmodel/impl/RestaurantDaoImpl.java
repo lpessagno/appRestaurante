@@ -133,13 +133,32 @@ public class RestaurantDaoImpl implements RestaurantDao {
     }
 
     @Override
-    public List<Restaurant> listByFiltro(int[] idsDistricts, /*int[] idsCategories,*/ String orderBy) {
+    public List<Restaurant> listByFiltro(int[] idsDistricts, List<Category> categorias, String orderBy) {
         AppRestSqlOpenHelper helper = new AppRestSqlOpenHelper(context);
         SQLiteDatabase sqlite = helper.getWritableDatabase();
+        List<Restaurant> restaurantes = null;
+        boolean where = false;
+        if (categorias != null && categorias.size() > 0) {
+            CategoryDistrictDao dao = new CategoryDistrictDaoImpl(context);
+            restaurantes = dao.getRestaurantsById(categorias);
+        }
         String query = "Select * from " + RestaurantSchemaContract.Restaurant.TABLE_NAME;
-        String idsDis = "";
+
         String idsCat = "";
-        //boolean where = false;
+        if (restaurantes != null && restaurantes.size() > 0) {
+
+            for (int i = 0; i < restaurantes.size(); i++) {
+                idsCat = idsCat + "" + restaurantes.get(i).getId();
+                if (i!=restaurantes.size()-1) {
+                    idsCat = idsCat + ", ";
+                }
+            }
+
+            query = query + " where " + RestaurantSchemaContract.Restaurant._ID + " IN (" + idsCat + ")";
+            where = true;
+        }
+
+        String idsDis = "";
         for (int i = 0; i < idsDistricts.length; i++) {
             idsDis = idsDis + "" + idsDistricts[i] + "";
             if (i != idsDistricts.length - 1) {
@@ -147,27 +166,20 @@ public class RestaurantDaoImpl implements RestaurantDao {
             }
         }
         if (idsDis != null && !idsDis.trim().equals("")) {
-            query = query + " where " + RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT + " IN (" + idsDis + ")";
-            // where = true;
-        }
-        /*for (int i = 0; i < idsCategories.length; i++) {
-            idsCat = idsCat + "" + idsCategories[i] + "";
-            if (i != idsCategories.length - 1) {
-                idsCat = idsCat + ", ";
-            }
-        }
-        if (idsCat != null && !idsCat.trim().equals("")) {
-            if (where){
-                query = " and " + RestaurantSchemaContract.Restaurant.Col + " IN (" + idsCat + ")";
+            if (where) {
+                query = query + " and " + RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT + " IN (" + idsDis + ")";
+
+            }else {
+                query = query + " where " + RestaurantSchemaContract.Restaurant.COLUMN_DISTRICT + " IN (" + idsDis + ")";
+                where = true;
 
             }
-            where = true;
-        }*/
+        }
 
-        if (orderBy!= null && !orderBy.equals("")) {
+        if (orderBy != null && !orderBy.equals("")) {
             query = query + " order by " + orderBy + " DESC";
         }
-
+        Log.d("prueba",query);
         Cursor cursor = sqlite.rawQuery(query, null);
         List<Restaurant> list = new ArrayList<Restaurant>();
         if (cursor.moveToFirst()) {

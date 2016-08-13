@@ -97,14 +97,14 @@
         android:text="Ranking"/>
 
     <TextView
-    android:id="@+id/lblTipoComida"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Tipo de Comida: "
-    android:textSize="20dp"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentRight="true"
-    android:layout_below="@id/lblPrecio"/>
+        android:id="@+id/lblTipoComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo de Comida: "
+        android:textSize="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/lblPrecio"/>
 
     <Button
         android:id="@+id/btnElegirTiposComida"
