@@ -6,4 +6,9 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_add_location_white_24dp"
         android:title="Buscar Rest"></item>
+    <item
+        android:id="@+id/opt3"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_call_white_24dp"
+        android:title="Buscar Rest"></item>
 </menu>

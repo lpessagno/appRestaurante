@@ -149,17 +149,17 @@ public class ResturantActivity extends AppCompatActivity {
         ///@
 
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
+        //floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
         floatingActionButton4 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item4);
 
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+       /* floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 llamar();
             }
-        });
+        });*/
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 hacerResena(v);
@@ -167,7 +167,7 @@ public class ResturantActivity extends AppCompatActivity {
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast toast3 = Toast.makeText(getApplicationContext(), "Ejemplo 3", Toast.LENGTH_SHORT);
+                Toast toast3 = Toast.makeText(getApplicationContext(), "Agregado a tus Favoritos", Toast.LENGTH_SHORT);
                 toast3.show();
             }
         });
@@ -287,6 +287,9 @@ public class ResturantActivity extends AppCompatActivity {
                 intentMap.putExtra(EXTRA_LONGITUD, detailLongitud.getText());
                 Log.d("mapArctmr",""+detailLatitud.getText() + detailLongitud.getText());
                 startActivity(intentMap);
+                break;
+            case R.id.opt3:
+                llamar();
                 break;
         }
         return super.onOptionsItemSelected(item);
