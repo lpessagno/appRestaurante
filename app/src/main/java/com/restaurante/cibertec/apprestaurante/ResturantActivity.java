@@ -3,8 +3,9 @@ package com.restaurante.cibertec.apprestaurante;
 import android.*;
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
@@ -21,7 +22,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.restaurantmodel.contract.RestaurantSchemaContract;
 import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.impl.RestaurantDaoImpl;
 import com.example.restaurantmodel.model.*;
@@ -49,6 +49,8 @@ public class ResturantActivity extends AppCompatActivity {
     RecyclerView lista_comentarios;
     RecyclerView lista_menus;
 
+    private static final int REQUEST_CAPTURA =111 ;
+    private ImageView photo;
     //RestaurantViews
     TextView detailName;
     TextView detailCategory;
@@ -204,71 +206,27 @@ public class ResturantActivity extends AppCompatActivity {
     public void subirFoto(View view) {
         DialogFragment dialog = new FotosDialog();
         dialog.show(getSupportFragmentManager(), "Fotos");
-        // Intent intent= new Intent(getApplicationContext(),FotosComidaActivity.class);
-        // startActivity(intent);
-    }
-
-    public void tomarFoto(View view){
-        Toast.makeText(view.getContext(),"FOTO",Toast.LENGTH_SHORT).show();
-        ImageView photos;
-
     }
 
     public void hacerResena(View view) {
         DialogFragment dialog = new ResenaDialog();
         dialog.show(getSupportFragmentManager(), "Resena");
-//        Intent intent = new Intent(getApplicationContext(),ResenaActivity.class);
-//        startActivity(intent);
     }
 
     public List<Platos> getPlatos(Restaurant rest) {
         List<Platos> platos = rest.getUserPhotos();
-       /* Platos p1 = new Platos();
-        p1.setDescription("Causa de Atún");
-
-        Platos p2 = new Platos();
-        p2.setDescription("Lomito Saltado");
-
-        platos.add(p1);
-        platos.add(p2);*/
 
         return platos;
     }
 
     public List<Commentary> getComentarios(Restaurant rest) {
         List<Commentary> comentarios = rest.getResena();
-        /*Commentary c1 = new Commentary();
-        c1.setComment("EXCELENTE SITIO");
-        User u = new User();
-        u.setName("lpessagno");
-        c1.setUser(u);
-
-        Commentary c2 = new Commentary();
-        c2.setComment("RECOMENDADO");
-        User u2 = new User();
-        u2.setName("jkrentzien");
-        c2.setUser(u2);
-
-        comentarios.add(c1);
-        comentarios.add(c2);*/
 
         return comentarios;
     }
 
     public List<Menu> getMenus(Restaurant rest) {
         List<Menu> menus = rest.getMenu();
-
-        /*Menu m1 = new Menu();
-        m1.setName("Lomo Saltado");
-        m1.setPrice(25.0);
-
-        Menu m2 = new Menu();
-        m2.setName("Ají de Gallina");
-        m2.setPrice(25.0);
-
-        menus.add(m1);
-        menus.add(m2);*/
-
         return menus;
     }
     //@
@@ -312,7 +270,29 @@ public class ResturantActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void tomarFoto(View view) {
+        Log.d("HOLA","HOLA A TODOS");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAPTURA);
+        photo = (ImageView)findViewById(R.id.dishphoto);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==111){
+            if (resultCode==RESULT_OK){
+                Bitmap foto = (Bitmap) data.getExtras().get("data");
+                Log.d("ACTIVITYFOTO",""+foto);
+                if (photo !=null){
+                    photo.setImageBitmap(foto);
+                } else {
+                    photo = (ImageView)findViewById(R.id.dishphoto);
+                    Log.d("ACTIVITYFOTO","view: "+photo);
+                }
+            }
+        }
+    }
    /* public void verMapa(View view) {
         Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();
     }*/

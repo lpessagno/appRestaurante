@@ -102,6 +102,8 @@ public class BienvenidaActivity extends AppCompatActivity {
                 //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
                 break;*/
             case R.id.opt2:
+                //COLOCAR CONDICIONAL PARA IR A UN DIALOG DE LOGIN/SIGNIN antes de ir a perfil
+                //SI esta logueado se dirige al perfil
                 Intent intent2 = new Intent(this,PerfActivity.class);
                 startActivity(intent2);
                 //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();

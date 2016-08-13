@@ -23,7 +23,7 @@ public class FotosDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fotos_activity,null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.fotos_comida,null);
         builder.setView(view);
         builder.setTitle("Subir Fotos");
         builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
