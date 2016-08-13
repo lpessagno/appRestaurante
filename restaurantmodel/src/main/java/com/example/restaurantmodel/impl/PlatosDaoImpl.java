@@ -37,7 +37,6 @@ public class PlatosDaoImpl implements PlatosDao {
         ContentValues content = new ContentValues();
         content.put(RestaurantSchemaContract.UserPhotos.COLUMN_USER,plato.getUser().getId());
         content.put(RestaurantSchemaContract.UserPhotos.COLUMN_RESTAURANT,plato.getRestaurant().getId());
-        content.put(RestaurantSchemaContract.UserPhotos.COLUMN_USER,plato.getUser().getId());
         content.put(RestaurantSchemaContract.UserPhotos.COLUMN_NAME,plato.getDescription());
         content.put(RestaurantSchemaContract.UserPhotos.COLUMN_DISH,plato.getPhoto());
         content.put(RestaurantSchemaContract.UserPhotos.COLUMN_DATE,plato.getDate().getTime());

@@ -3,6 +3,7 @@ package com.restaurante.cibertec.apprestaurante;
 import android.*;
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.content.pm.PackageManager;
@@ -52,6 +53,10 @@ public class ResturantActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAPTURA =111 ;
 
+    Restaurant restaurantDetail;
+    SharedPreferences appPreferences;
+    SharedPreferences.Editor editor;
+
     //RestaurantViews
     TextView detailName;
     TextView detailCategory;
@@ -77,15 +82,17 @@ public class ResturantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resturant);
 
+        appPreferences = getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
         Intent intent = getIntent();
         int idRest = intent.getIntExtra(getString(R.string.intentIdExtra),0);
         Log.d("RESTACTIVITY","ID: "+idRest);
         findRestaurantViews();
 
-        Restaurant restaurantDetail = getRestaurantData(idRest);
+        restaurantDetail = getRestaurantData(idRest);
         setDetailData(restaurantDetail);
 
-
+        editor = appPreferences.edit();
+        editor.putInt(getString(R.string.restaurantid),restaurantDetail.getId());
 
         tabHost = (TabHost) findViewById(R.id.tabpanel);
         tabHost.setup();
@@ -209,10 +216,13 @@ public class ResturantActivity extends AppCompatActivity {
     }
 
     public void subirFoto(View view) {
-        dialog_comida = new FotosDialog();
-        dialog_comida.show(getSupportFragmentManager(), "Fotos");
-        // Intent intent= new Intent(getApplicationContext(),FotosComidaActivity.class);
-        // startActivity(intent);
+        String userlogged = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
+        if (userlogged!=getString(R.string.default_string)){
+            dialog_comida = new FotosDialog();
+            dialog_comida.show(getSupportFragmentManager(), "Fotos");
+        } else {
+            Toast.makeText(this,"No puedes subir fotos si no estas loggeado",Toast.LENGTH_SHORT);
+        }
     }
 
     public void hacerResena(View view) {
@@ -303,7 +313,10 @@ public class ResturantActivity extends AppCompatActivity {
                // Bitmap foto = (Bitmap) data.getExtras().get("data");
             }
         } else if (requestCode==1984){
-                dialog_comida.dismiss();
+            dialog_comida.dismiss();
+            if (resultCode==RESULT_OK){
+                //reload recycler view
+            }
                // RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista);
                // recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 //RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);

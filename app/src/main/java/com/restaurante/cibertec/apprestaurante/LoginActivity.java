@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         UserDao dao = new UserDaoImpl(this);
         User user = dao.getByName(loginUserText);
         if (user.getPassword().equals(loginPasswordText)){
-            editor.putString(getString(R.string.userid),""+user.getId());
+            editor.putInt(getString(R.string.userid),user.getId());
             editor.commit();
             validate = true;
         }

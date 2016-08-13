@@ -62,7 +62,7 @@ public class SignInActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = appPreferences.edit();
             editor.putString(getString(R.string.user),user.getName());
             editor.putString(getString(R.string.password),user.getPassword());
-            editor.putString(getString(R.string.userid),""+user.getId());
+            editor.putInt(getString(R.string.userid),user.getId());
             editor.commit();
 
             Intent intent = new Intent();

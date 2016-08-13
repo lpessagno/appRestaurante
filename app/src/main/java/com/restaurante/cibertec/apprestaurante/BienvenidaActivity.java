@@ -144,7 +144,7 @@ public class BienvenidaActivity extends AppCompatActivity {
                     editor = appPreferences.edit();
                     editor.putString(getString(R.string.user),getString(R.string.default_string));
                     editor.putString(getString(R.string.password),getString(R.string.default_string));
-                    editor.putString(getString(R.string.userid),getString(R.string.default_string));
+                    editor.putInt(getString(R.string.userid),0);
                     editor.commit();
                 } else {
                     Toast.makeText(this,"NO USER",Toast.LENGTH_SHORT).show();

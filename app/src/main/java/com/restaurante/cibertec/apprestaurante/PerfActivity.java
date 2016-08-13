@@ -45,14 +45,15 @@ public class PerfActivity extends AppCompatActivity {
         tab1.setIndicator("Reseñas");
         tab1.setContent(R.id.linearLayout);
 
-        /*tab2.setIndicator("Fotos");
+        tab2.setIndicator("Fotos");
         tab2.setContent(R.id.linearLayout2);
 
         tab3.setIndicator("Favoritos");
-        tab3.setContent(R.id.linearLayout3);*/
+        tab3.setContent(R.id.linearLayout3);
 
-        tbh.addTab(tab1);/* tbh.addTab(tab2);
-        tbh.addTab(tab3);*/
+        tbh.addTab(tab1);
+        tbh.addTab(tab2);
+        tbh.addTab(tab3);
 
 
 //////
