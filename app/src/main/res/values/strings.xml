@@ -1,12 +1,19 @@
 <resources>
-    <string name="app_name">appRestaurante</string>
-    <string name="title_activity_bienvenida">appRestaurante</string>
+    <string name="app_name">Vamo a Comer!</string>
+    <string name="title_activity_bienvenida">Vamo a Comer!</string>
     <string name="rank">Ranking</string>
     <string name="preferences">appRestaurantPreferences</string>
     <string name="user">USER</string>
     <string name="password">PASSWORD</string>
     <string name="default_string">APP_RESTAURANT_DEFAULT</string>
     <string name="settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="intentIdExtra">IDEXTRA</string>
+    <string name="clave_invalida">Clave invalida. Debe confirmar su clave.</string>
+    <string name="signin_error">SIGN IN ERROR</string>
+    <string name="USEROK_VALUE">USEROK</string>
+    <string name="ok">OK</string>
+    <string name="userid">USER_ID</string>
 
     <string-array name="ranking_values">
         <item>1</item>
@@ -15,7 +22,5 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    <string name="title_activity_maps">Map</string>
-    <string name="intentIdExtra">IDEXTRA</string>
-    <string name="ok">OK</string>
+
 </resources>

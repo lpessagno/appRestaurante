@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface PlatosDao {
 
+    long insertPlato(Platos plato);
     Platos get(int id);
     List<Platos> listByRestaurantId(int restid);
     List<Platos> listByUserId(int userid);

@@ -3,7 +3,7 @@ package com.restaurante.cibertec.apprestaurante;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.impl.RestaurantDaoImpl;
@@ -98,7 +98,6 @@ public class BienvenidaActivity extends AppCompatActivity {
     }
 
     private List<Restaurant> getRestaurtants() {
-        Log.d("DAOS","getRestaurtants");
         RestaurantDao dao = new RestaurantDaoImpl(this);
         List<Restaurant> list = dao.list();
         return list;
@@ -112,7 +111,6 @@ public class BienvenidaActivity extends AppCompatActivity {
     }
 
     private List<Restaurant> getRestaurtantsFiltro(int[] ids, String orderBy) {
-        Log.d("DAOS", "getRestaurtants");
         RestaurantDao dao = new RestaurantDaoImpl(this);
         List<Restaurant> list = dao.listByFiltro(ids, orderBy);
         return list;
@@ -127,15 +125,30 @@ public class BienvenidaActivity extends AppCompatActivity {
                 //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
                 break;*/
             case R.id.opt2:
-                //COLOCAR CONDICIONAL PARA IR A UN DIALOG DE LOGIN/SIGNIN antes de ir a perfil
-                //SI esta logueado se dirige al perfil
-                Intent intent2 = new Intent(this,PerfActivity.class);
-                startActivity(intent2);
-                //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();
+                String loginUser = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
+                if(!loginUser.equals(getString(R.string.default_string))){ //HAY UN PERFIL LOGUEADO?
+                    Intent intent2 = new Intent(this,PerfActivity.class);
+                    startActivity(intent2);
+                } else {
+                    Intent intent = new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.opt3:
                 Intent intent3 = new Intent(this, FiltrosActivity.class);
                 startActivity(intent3);
+                break;
+            case R.id.opt4:
+                String logname = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
+                if (!logname.equals(getString(R.string.default_string))){
+                    editor = appPreferences.edit();
+                    editor.putString(getString(R.string.user),getString(R.string.default_string));
+                    editor.putString(getString(R.string.password),getString(R.string.default_string));
+                    editor.putString(getString(R.string.userid),getString(R.string.default_string));
+                    editor.commit();
+                } else {
+                    Toast.makeText(this,"NO USER",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

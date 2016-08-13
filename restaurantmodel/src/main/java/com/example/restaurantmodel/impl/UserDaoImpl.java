@@ -42,7 +42,6 @@ public class UserDaoImpl implements UserDao {
         content.put(RestaurantSchemaContract.User.COLUMN_EMAIL,user.getEmail());
         content.put(RestaurantSchemaContract.User.COLUMN_PHONE,user.getPhone());
         content.put(RestaurantSchemaContract.User.COLUMN_PWD,user.getPassword());
-        content.put(RestaurantSchemaContract.User.COLUMN_DEFAULT_SEARCH,user.getSearch().getId());
         long id = sqlite.insert(RestaurantSchemaContract.User.TABLE_NAME,null,content);
         sqlite.close();
 
@@ -101,7 +100,9 @@ public class UserDaoImpl implements UserDao {
         //getFavorites
 
         //getDefaultSearch
-        user.setSearch(getUserDefaultSearch(user.getSearch().getId()));
+        if(user.getSearch()!=null) {
+            user.setSearch(getUserDefaultSearch(user.getSearch().getId()));
+        }
         //getComment
         user.setCommentaries(getUserComments(user.getId()));
         //getPlatos
