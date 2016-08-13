@@ -75,6 +75,24 @@ public class BienvenidaActivity extends AppCompatActivity {
         //RestaurantDaoImpl mydao = new RestaurantDaoImpl(this);
         //List<Restaurant> list = mydao.listarRestaurantes();
         List<Restaurant> list = getRestaurtants();
+        String distritos = appPreferences.getString(FiltrosActivity.DISTRITOSID, "vacio");
+        String ordenar = appPreferences.getString(FiltrosActivity.ORDENAR, "vacio");
+        int[] idsDistricts;
+        String[] idsDistritos;
+        if (!distritos.equals("vacio") && !distritos.trim().equals("")) {
+            idsDistritos = distritos.split(",");
+            idsDistricts = new int[idsDistritos.length];
+            for (int i = 0; i<idsDistritos.length; i++) {
+                idsDistricts[i] = Integer.parseInt(idsDistritos[i]);
+            }
+        }else{
+            idsDistricts = new int[0];
+        }
+
+        if (ordenar==null || ordenar.trim().equals("") || ordenar.equals("vacio")) {
+            ordenar = "";
+        }
+        list = getRestaurtantsFiltro(idsDistricts, ordenar);
         RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this,list); //cambiar el dato de entrada
         recyclerView.setAdapter(adapter1);
     }
@@ -93,6 +111,13 @@ public class BienvenidaActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    private List<Restaurant> getRestaurtantsFiltro(int[] ids, String orderBy) {
+        Log.d("DAOS", "getRestaurtants");
+        RestaurantDao dao = new RestaurantDaoImpl(this);
+        List<Restaurant> list = dao.listByFiltro(ids, orderBy);
+        return list;
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int idopcion = item.getItemId();
         switch (idopcion) {
@@ -107,6 +132,10 @@ public class BienvenidaActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(this,PerfActivity.class);
                 startActivity(intent2);
                 //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.opt3:
+                Intent intent3 = new Intent(this, FiltrosActivity.class);
+                startActivity(intent3);
                 break;
         }
         return super.onOptionsItemSelected(item);

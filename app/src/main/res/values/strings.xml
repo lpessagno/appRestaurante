@@ -17,4 +17,5 @@
     </string-array>
     <string name="title_activity_maps">Map</string>
     <string name="intentIdExtra">IDEXTRA</string>
+    <string name="ok">OK</string>
 </resources>
