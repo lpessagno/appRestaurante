@@ -19,7 +19,7 @@
         android:id="@+id/txtname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arthuro Zapata"
+        android:hint="NombreUsuario"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imgPerf"
         />

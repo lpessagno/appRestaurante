@@ -17,4 +17,7 @@
     </string-array>
     <string name="title_activity_maps">Map</string>
     <string name="intentIdExtra">IDEXTRA</string>
+    <string name="clave_invalida">Clave invalida. Debe confirmar su clave.</string>
+    <string name="signin_error">SIGN IN ERROR</string>
+    <string name="USEROK_VALUE">USEROK</string>
 </resources>

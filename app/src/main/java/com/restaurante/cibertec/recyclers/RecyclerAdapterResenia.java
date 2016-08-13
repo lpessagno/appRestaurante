@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.restaurantmodel.model.Commentary;
 import com.restaurante.cibertec.apprestaurante.R;
-import com.restaurante.cibertec.apprestaurante.Resenia;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ import java.util.List;
 public class RecyclerAdapterResenia extends RecyclerView.Adapter<RecyclerAdapterResenia.CustomViewHolder> {
 
     private Context context;
-    private List<Resenia> data;
+    private List<Commentary> data;
 
 
-    public  RecyclerAdapterResenia(Context context, List<Resenia> data){
+    public  RecyclerAdapterResenia(Context context, List<Commentary> data){
         this.context = context;
         this.data = data;
     }
@@ -37,11 +37,11 @@ public class RecyclerAdapterResenia extends RecyclerView.Adapter<RecyclerAdapter
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        Resenia fila = data.get(position);
-        holder.txtrestname.setText(fila.getRestname());
-        holder.txtfecha.setText(fila.getFecha());
-        holder.txtresenia.setText(fila.getResenia());
-        holder.imgres.setImageResource(fila.getImagen());
+        Commentary fila = data.get(position);
+        holder.txtrestname.setText(fila.getRestaurant().getName());
+        holder.txtfecha.setText(fila.getDate().toString());
+        holder.txtresenia.setText(fila.getComment());
+        //holder.imgres.setImageResource(fila.getImagen());
     }
 
     @Override

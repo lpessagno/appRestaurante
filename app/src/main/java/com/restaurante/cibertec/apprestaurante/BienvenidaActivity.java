@@ -3,7 +3,7 @@ package com.restaurante.cibertec.apprestaurante;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.impl.RestaurantDaoImpl;
@@ -102,11 +101,14 @@ public class BienvenidaActivity extends AppCompatActivity {
                 //Toast.makeText(this,"Opcion 1",Toast.LENGTH_SHORT).show();
                 break;*/
             case R.id.opt2:
-                //COLOCAR CONDICIONAL PARA IR A UN DIALOG DE LOGIN/SIGNIN antes de ir a perfil
-                //SI esta logueado se dirige al perfil
-                Intent intent2 = new Intent(this,PerfActivity.class);
-                startActivity(intent2);
-                //Toast.makeText(this,"Opcion 2",Toast.LENGTH_SHORT).show();
+                String loginUser = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
+                if(!loginUser.equals(getString(R.string.default_string))){ //HAY UN PERFIL LOGUEADO?
+                    Intent intent2 = new Intent(this,PerfActivity.class);
+                    startActivity(intent2);
+                } else {
+                    Intent intent = new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
