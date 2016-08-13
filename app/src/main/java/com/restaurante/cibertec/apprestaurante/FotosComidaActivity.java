@@ -95,7 +95,7 @@ public class FotosComidaActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-    }
+    }*/
 
 
 
