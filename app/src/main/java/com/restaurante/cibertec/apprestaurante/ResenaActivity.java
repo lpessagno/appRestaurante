@@ -46,7 +46,7 @@ public class ResenaActivity extends AppCompatActivity {
         comment.setUser(user);
         Restaurant rest = new Restaurant();
         rest.setId(appPreferences.getInt(getString(R.string.restaurantid),0));
-        rest.setName(appPreferences.getString(getString(R.string.restaurant_name),getString(R.string.default_string)));
+        //rest.setName(appPreferences.getString(getString(R.string.restaurant_name),getString(R.string.default_string)));
         comment.setRestaurant(rest);
         double price = Double.parseDouble(priceText.getText().toString());
         comment.setPrice(price);

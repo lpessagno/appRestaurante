@@ -127,11 +127,11 @@ public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
 
         //FAVORITES
         String sql_favorites = "CREATE TABLE "+RestaurantSchemaContract.Favorites.TABLE_NAME+" ( "+
-                RestaurantSchemaContract.Comment._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
-                RestaurantSchemaContract.Comment.COLUMN_USER +" INTEGER ," +
-                RestaurantSchemaContract.Comment.COLUMN_RESTAURANT +" INTEGER, "+
-                "FOREIGN KEY ("+RestaurantSchemaContract.Comment.COLUMN_USER+") REFERENCES "+RestaurantSchemaContract.User.TABLE_NAME+"("+RestaurantSchemaContract.User._ID+"),"+
-                "FOREIGN KEY ("+RestaurantSchemaContract.Comment.COLUMN_RESTAURANT+") REFERENCES "+RestaurantSchemaContract.Restaurant.TABLE_NAME+"("+RestaurantSchemaContract.Restaurant._ID+")"+
+                RestaurantSchemaContract.Favorites._ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+
+                RestaurantSchemaContract.Favorites.COLUMN_USER +" INTEGER ," +
+                RestaurantSchemaContract.Favorites.COLUMN_RESTAURANT +" INTEGER, "+
+                "FOREIGN KEY ("+RestaurantSchemaContract.Favorites.COLUMN_USER+") REFERENCES "+RestaurantSchemaContract.User.TABLE_NAME+"("+RestaurantSchemaContract.User._ID+"),"+
+                "FOREIGN KEY ("+RestaurantSchemaContract.Favorites.COLUMN_RESTAURANT+") REFERENCES "+RestaurantSchemaContract.Restaurant.TABLE_NAME+"("+RestaurantSchemaContract.Restaurant._ID+")"+
                 ")";
         db.execSQL(sql_favorites);
 

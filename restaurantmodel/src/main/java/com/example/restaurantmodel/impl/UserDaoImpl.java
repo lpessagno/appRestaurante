@@ -8,16 +8,20 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.restaurantmodel.contract.AppRestSqlOpenHelper;
 import com.example.restaurantmodel.contract.RestaurantSchemaContract;
 import com.example.restaurantmodel.dao.DefaultSearchDao;
+import com.example.restaurantmodel.dao.FavoritesDAO;
 import com.example.restaurantmodel.dao.PlatosDao;
 import com.example.restaurantmodel.dao.ReseniaDAO;
+import com.example.restaurantmodel.dao.RestaurantDao;
 import com.example.restaurantmodel.dao.UserDao;
 import com.example.restaurantmodel.model.Commentary;
 import com.example.restaurantmodel.model.DefaultSearch;
 import com.example.restaurantmodel.model.District;
+import com.example.restaurantmodel.model.Favorites;
 import com.example.restaurantmodel.model.Platos;
 import com.example.restaurantmodel.model.Restaurant;
 import com.example.restaurantmodel.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,10 +111,14 @@ public class UserDaoImpl implements UserDao {
             user.setCommentaries(getUserComments(user.getId()));
             //getPlatos
             user.setUserPhotos(getPhotosByUser(user.getId()));
+            //getFavorites
+            user.setFavorites(getFavorites(user.getId()));
         }
 
         return user;
     }
+
+
 
     @Override
     public User get(int id) {
@@ -156,5 +164,17 @@ public class UserDaoImpl implements UserDao {
     private DefaultSearch getUserDefaultSearch(int id) {
         DefaultSearchDao dao = new DefaultSearchImpl(context);
         return dao.get(id);
+    }
+
+    private List<Restaurant> getFavorites(int id) {
+        FavoritesDAO dao = new FavoritesDaoImpl(context);
+        List<Favorites> list_fav = dao.listarFavorites(id);
+        RestaurantDao daorest = new RestaurantDaoImpl(context);
+        List<Restaurant> list = new ArrayList<Restaurant>();
+
+        for (Favorites fav:list_fav){
+            list.add(daorest.get(fav.getRestaurant().getId()));
+        }
+        return list;
     }
 }

@@ -52,8 +52,8 @@ public class RestaurantSchemaContract {
 
     public static abstract class Favorites implements BaseColumns {
         public static final String TABLE_NAME = "favorites";
-        public static final String COLUMN_NAME = "iduser";
-        public static final String COLUMN_PRICE = "idrestaurant";
+        public static final String COLUMN_USER = "iduser";
+        public static final String COLUMN_RESTAURANT = "idrestaurant";
     }
 
     public static abstract class DefaultSearch implements BaseColumns {

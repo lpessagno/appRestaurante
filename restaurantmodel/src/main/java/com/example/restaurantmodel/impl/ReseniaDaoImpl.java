@@ -108,11 +108,11 @@ public class ReseniaDaoImpl implements ReseniaDAO {
 
     @Override
     public List<Commentary> getCommentByUserId(int userid) {
-        SQLiteDatabase db=appRestSqlOpenHelper.getWritableDatabase();
-        String whereClause = RestaurantSchemaContract.Comment.COLUMN_USER+"=?";
-        String[] whereArgs = new String[]{""+userid};
+        SQLiteDatabase db = appRestSqlOpenHelper.getWritableDatabase();
+        String whereClause = RestaurantSchemaContract.Comment.COLUMN_USER + "=?";
+        String[] whereArgs = new String[]{"" + userid};
 
-        Cursor cursor = db.query(RestaurantSchemaContract.Comment.TABLE_NAME,null,whereClause,whereArgs,null,null,null);
+        Cursor cursor = db.query(RestaurantSchemaContract.Comment.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<Commentary> list = new ArrayList<Commentary>();
         if (cursor.moveToFirst()) {
             do {
@@ -138,17 +138,12 @@ public class ReseniaDaoImpl implements ReseniaDAO {
         db.close();
 
         //SetREstaurant
-        for (Commentary comm:list){
+        for (Commentary comm : list) {
             RestaurantDao dao = new RestaurantDaoImpl(context);
-            comm.setRestaurant(dao.simpleGet(comm.getRestaurant().getId()));
+            comm.setRestaurant(dao.get(comm.getRestaurant().getId()));
         }
 
         return list;
-    }
-
-    @Override
-    public int actualizarResenia(Commentary commentary) {
-        return 0;
     }
 
     @Override

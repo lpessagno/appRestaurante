@@ -11,14 +11,16 @@ import android.widget.TextView;
 import com.example.restaurantmodel.dao.UserDao;
 import com.example.restaurantmodel.impl.UserDaoImpl;
 import com.example.restaurantmodel.model.Commentary;
+import com.example.restaurantmodel.model.Restaurant;
 import com.example.restaurantmodel.model.User;
 import com.restaurante.cibertec.recyclers.RecyclerAdapterResenia;
+import com.restaurante.cibertec.recyclers.RestauranteRecyclerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PerfActivity extends AppCompatActivity {
     RecyclerView recyclerView;
+    RecyclerView recyclerView_fav;
     TabHost tbh;
     TextView userName;
 
@@ -45,41 +47,30 @@ public class PerfActivity extends AppCompatActivity {
         tab1.setIndicator("Reseñas");
         tab1.setContent(R.id.linearLayout);
 
-        tab2.setIndicator("Fotos");
-        tab2.setContent(R.id.linearLayout2);
+        /*tab2.setIndicator("Fotos");
+        tab2.setContent(R.id.linearLayout2);*/
 
         tab3.setIndicator("Favoritos");
         tab3.setContent(R.id.linearLayout3);
 
         tbh.addTab(tab1);
-        tbh.addTab(tab2);
+        //tbh.addTab(tab2);
         tbh.addTab(tab3);
 
-
-//////
         recyclerView = (RecyclerView) findViewById(R.id.viewResenia);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Commentary> comments = user.getCommentaries();
 
-        /*final String[] nombre = {"China","Argentina","Peru"};
-        final String[] fecha = {"24 JUN 2016","30 JUN 2016","15 JUL 2016"};
-        final String[] descripcion = {"Estuvimos en el Chifa Mandarin para un almuerzo de sabado con un grupo grandem en lo cual fuismo muy bien atendidos por todo el staff.",
-                "Estuvimos en el Restaurant Comida Gourmet El Argentino para un almuerzo de sabado con un grupo grande en lo cual fuimos muy bien atendidos por todo el staff.",
-                "Estuvimos en el Restaurant Peruano para un almuerzo de sabado con un grupo grande en lo cual fuimos muy bien atendidos por todo el staff."};
-
-        List<Resenia> resenialista = new ArrayList<Resenia>();
-        for (int i=0; i<nombre.length;i++){
-            Resenia res = new Resenia();
-            res.setRestname(nombre[i]);
-            res.setFecha(fecha[i]);
-            res.setResenia(descripcion[i]);
-            res.setImagen(getResources().getIdentifier(res.getRestname().toLowerCase(), "drawable", getPackageName()));
-            resenialista.add(res);
-        }*/
-
         RecyclerAdapterResenia adapterCustom = new RecyclerAdapterResenia(this, comments);
         recyclerView.setAdapter(adapterCustom);
-        ////
+
+        recyclerView_fav = (RecyclerView) findViewById(R.id.viewFavoritos);
+        recyclerView_fav.setLayoutManager(new LinearLayoutManager(this));
+        List<Restaurant> favoritos = user.getFavorites();
+
+        RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this, favoritos);
+        recyclerView_fav.setAdapter(adapter1);
+
     }
 
     private User getUserForProfile() {

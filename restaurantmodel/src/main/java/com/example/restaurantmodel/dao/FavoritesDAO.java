@@ -3,6 +3,8 @@ package com.example.restaurantmodel.dao;
 
 
 import com.example.restaurantmodel.model.Favorites;
+import com.example.restaurantmodel.model.Restaurant;
+import com.example.restaurantmodel.model.User;
 
 import java.util.List;
 
@@ -11,9 +13,9 @@ import java.util.List;
  */
 public interface FavoritesDAO {
 
-    public  long insertarFavorites(Favorites favorites);
-    public  int actualizarFavorites(Favorites favorites);
-    public  int eliminarFavorites(Favorites favorites);
-    public  Favorites obtenerFavorites(Favorites favorites);
-    public List<Favorites> listarFavorites();
+    long insertarFavorites(Favorites favorites);
+    int eliminarFavorites(Favorites favorites);
+    //public  Favorites obtenerFavorites(Favorites favorites);
+    List<Favorites> listarFavorites(int userid);
+    Favorites getExistFavorite(User user, Restaurant rest);
 }

@@ -75,8 +75,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/viewFotos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
                     </LinearLayout>
 
@@ -84,7 +86,12 @@
                         android:id="@+id/linearLayout3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"></LinearLayout>
+                        android:orientation="vertical">
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/viewFavoritos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
         </TabHost>

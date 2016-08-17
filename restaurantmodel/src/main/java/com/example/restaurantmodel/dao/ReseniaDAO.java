@@ -10,7 +10,6 @@ import java.util.List;
 public interface ReseniaDAO {
 
     public  long insertarResenia(Commentary commentary);
-    public  int actualizarResenia(Commentary commentary);
     public  int eliminarResenia(Commentary commentary);
     public Commentary obtenerResenia(Commentary commentary);
     public List<Commentary> listarResenia();

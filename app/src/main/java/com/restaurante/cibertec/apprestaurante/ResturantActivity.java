@@ -24,7 +24,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.restaurantmodel.dao.FavoritesDAO;
 import com.example.restaurantmodel.dao.RestaurantDao;
+import com.example.restaurantmodel.impl.FavoritesDaoImpl;
 import com.example.restaurantmodel.impl.RestaurantDaoImpl;
 import com.example.restaurantmodel.model.*;
 import com.example.restaurantmodel.model.Commentary;
@@ -164,13 +166,18 @@ public class ResturantActivity extends AppCompatActivity {
         });*/
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                hacerResena(v);
+                if (isUserLogged()) {
+                    hacerResena(v);
+                }
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast toast3 = Toast.makeText(getApplicationContext(), "Agregado a tus Favoritos", Toast.LENGTH_SHORT);
-                toast3.show();
+                if (isUserLogged()){
+                    agregarFavorito();
+                    Toast toast3 = Toast.makeText(getApplicationContext(), "Agregado a tus Favoritos", Toast.LENGTH_SHORT);
+                    toast3.show();
+                }
             }
         });
         floatingActionButton4.setOnClickListener(new View.OnClickListener() {
@@ -221,13 +228,8 @@ public class ResturantActivity extends AppCompatActivity {
     }
 
     public void subirFoto(View view) {
-        String userlogged = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
-        if (!userlogged.equals(getString(R.string.default_string))){
-            dialog_comida = new FotosDialog();
-            dialog_comida.show(getSupportFragmentManager(), "Fotos");
-        } else {
-            Toast.makeText(this,"No puedes subir fotos si no estas loggeado",Toast.LENGTH_SHORT).show();
-        }
+        dialog_comida = new FotosDialog();
+        dialog_comida.show(getSupportFragmentManager(), "Fotos");
     }
 
     public void hacerResena(View view) {
@@ -365,4 +367,30 @@ public class ResturantActivity extends AppCompatActivity {
    /* public void verMapa(View view) {
         Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();
     }*/
+
+    private void agregarFavorito() {
+        FavoritesDAO dao = new FavoritesDaoImpl(this);
+
+        User user = new User();
+        user.setId(appPreferences.getInt(getString(R.string.userid),0));
+        Favorites favorites = dao.getExistFavorite(user,restaurantDetail);
+        if (favorites==null){
+            favorites.setRestaurant(restaurantDetail);
+            favorites.setUser(user);
+            int id = (int)dao.insertarFavorites(favorites);
+        } else {
+            Toast.makeText(this,"Ya tienes el restuarant como Favorito",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private boolean isUserLogged(){
+        String userlogged = appPreferences.getString(getString(R.string.user),getString(R.string.default_string));
+        if (!userlogged.equals(getString(R.string.default_string))){
+            return true;
+        } else {
+            Toast.makeText(this,"No puedes subir fotos si no estas loggeado",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 }
