@@ -48,6 +48,8 @@ public class ResturantActivity extends AppCompatActivity {
     public static final String  EXTRA_LATITUD="LATITUD";
     public static final String  EXTRA_LONGITUD="LONGITUD";
     public static final int RESENA_REQUEST = 1987;
+    public static final int REQUEST_GET_PHOTO = 1984;
+    public static final int REQUEST_GALLERY = 2222;
 
     TabHost tabHost;
     TabHost.TabSpec tabSpec;
@@ -308,7 +310,7 @@ public class ResturantActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==111){
+        if (requestCode==REQUEST_CAPTURA){
             if (resultCode==RESULT_OK){
 
                 Bitmap foto_bitmap = (Bitmap) data.getExtras().get("data");
@@ -318,21 +320,19 @@ public class ResturantActivity extends AppCompatActivity {
                 foto_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
                 intent.putExtra("fotografia_plato",byteArray);
-                startActivityForResult(intent,1984);
+                startActivityForResult(intent,REQUEST_GET_PHOTO);
+
 
 
                // Bitmap foto = (Bitmap) data.getExtras().get("data");
             }
-        } else if (requestCode==1984){
+        } else if (requestCode==REQUEST_GET_PHOTO){
             dialog_comida.dismiss();
             if (resultCode==RESULT_OK) {
-/*                restaurantDetail = getRestaurantData(idRest);
-                lista_platos = (RecyclerView) findViewById(R.id.lista_platos);
-                lista_platos.setLayoutManager(new LinearLayoutManager(this));
-                RecyclerView.Adapter adapter_platos = new PlatosAdapter(this, getPlatos(restaurantDetail));
-                lista_platos.setAdapter(adapter_platos);*/
+                restaurantDetail = getRestaurantData(idRest);
+                ((PlatosAdapter)lista_platos.getAdapter()).swapData(getPlatos(restaurantDetail));
             }
-        } else if (requestCode== 2222){
+        } else if (requestCode== REQUEST_GALLERY){
             /*Intent intent = new Intent(this,FotosComidaActivity.class);
             Uri selectedImage = data.getData();
             String[] filePath = { MediaStore.Images.Media.DATA };
@@ -349,20 +349,25 @@ public class ResturantActivity extends AppCompatActivity {
             byte[] byteArray = stream.toByteArray();
             intent.putExtra("fotografia_plato",byteArray);
             startActivityForResult(intent,1984);*/
-        } else if (resultCode==RESENA_REQUEST) {
-            //actualizar recycler view
-            /*restaurantDetail = getRestaurantData(idRest);
-            lista_comentarios = (RecyclerView) findViewById(R.id.lista_comentarios);
-            lista_comentarios.setLayoutManager(new LinearLayoutManager(this));
-            RecyclerView.Adapter adapter_comentarios = new ComentariosAdapter(this, getComentarios(restaurantDetail));
-            lista_comentarios.setAdapter(adapter_comentarios);*/
+        } else if (requestCode==RESENA_REQUEST) {
+            if (resultCode==RESULT_OK) {
+                restaurantDetail = getRestaurantData(idRest);
+                setNewInfo();
+                ((ComentariosAdapter)lista_comentarios.getAdapter()).swapData(getComentarios(restaurantDetail));
+            }
         }
 
     }
 
-        public void seleccionarGaleria(View view) {
+    private void setNewInfo() {
+        detailRank.setText(restaurantDetail.getAvg_ranking()+"");
+        detailVotes.setText(restaurantDetail.getVotos());
+        detailPrice.setText(restaurantDetail.getAvg_price()+"");
+    }
+
+    public void seleccionarGaleria(View view) {
             Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, 2222);
+            startActivityForResult(intent, REQUEST_GALLERY);
     }
    /* public void verMapa(View view) {
         Toast.makeText(this,"VER MAPA",Toast.LENGTH_LONG).show();
@@ -375,11 +380,12 @@ public class ResturantActivity extends AppCompatActivity {
         user.setId(appPreferences.getInt(getString(R.string.userid),0));
         Favorites favorites = dao.getExistFavorite(user,restaurantDetail);
         if (favorites==null){
+            favorites = new Favorites();
             favorites.setRestaurant(restaurantDetail);
             favorites.setUser(user);
             int id = (int)dao.insertarFavorites(favorites);
         } else {
-            Toast.makeText(this,"Ya tienes el restuarant como Favorito",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Ya tienes el restaurant como Favorito",Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -11,13 +11,13 @@
         android:textStyle="bold"
         android:onClick="tomarFoto"
         />
-    <Button
+    <!--<Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/elegirFoto"
         android:text="Elegir de la Galería"
         android:textStyle="bold"
         android:onClick="seleccionarGaleria"
-        android:layout_toLeftOf="@id/tomarFoto"/>
+        android:layout_toLeftOf="@id/tomarFoto"/>-->
 
 </LinearLayout>

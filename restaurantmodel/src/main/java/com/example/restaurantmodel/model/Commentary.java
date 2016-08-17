@@ -1,12 +1,14 @@
 package com.example.restaurantmodel.model;
 
 import android.graphics.Bitmap;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by azapata on 04/08/2016.
  */
-public class Commentary {
+public class Commentary implements Serializable {
 
     //CAMBIAR EL NOMBRE DE LA CLASE A COMMETARY
     private int id;

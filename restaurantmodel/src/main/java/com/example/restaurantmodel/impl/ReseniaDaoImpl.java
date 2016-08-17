@@ -45,7 +45,29 @@ public class ReseniaDaoImpl implements ReseniaDAO {
         //content.put(RestaurantSchemaContract.Comment.COLUMN_IMAGEN, commentary.getImagen());
         long id = sqlite.insert(RestaurantSchemaContract.Comment.TABLE_NAME,null,content);
         sqlite.close();
+
+        calculateRestaurantAvg(commentary.getRestaurant().getId());
         return id;
+    }
+
+    private void calculateRestaurantAvg(int restId) {
+        List<Commentary> restComments = getCommentByRestaurantId(restId);
+
+        int votes = restComments.size();
+        int sumRank = 0;
+        int sumPrice = 0;
+        for (Commentary comm:restComments) {
+            sumRank += comm.getRanking();
+            sumPrice += comm.getPrice();
+        }
+
+        RestaurantDao dao = new RestaurantDaoImpl(context);
+        Restaurant rest = dao.get(restId);
+        rest.setAvg_price(sumPrice/votes);
+        rest.setVotos(votes);
+        rest.setAvg_ranking(sumRank/votes);
+
+        dao.update(rest);
     }
 
     @Override

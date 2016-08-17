@@ -16,6 +16,7 @@
     <string name="userid">USER_ID</string>
     <string name="restaurantid">RESTAURANTID</string>
     <string name="restaurant_name">RESTAURANT_NAME</string>
+    <string name="commentaryData">COMENTARIO</string>
 
     <string-array name="ranking_values">
         <item>1</item>

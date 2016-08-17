@@ -1,6 +1,8 @@
 package com.restaurante.cibertec.recyclers;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +38,23 @@ public class PlatosAdapter extends RecyclerView.Adapter<PlatosAdapter.CustomPlat
     public void onBindViewHolder(PlatosAdapter.CustomPlatosHolder holder, int position) {
         Platos plato= lista_platos.get(position);
         holder.nombre_plato.setText(plato.getDescription());
-        holder.foto_plato.setImageResource(R.mipmap.lomito);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(plato.getPhoto(),0,plato.getPhoto().length);
+        holder.foto_plato.setImageBitmap(bitmap);
     }
 
     @Override
     public int getItemCount() {
         return lista_platos== null?0:lista_platos.size();
+    }
+
+    public void swapData(List<Platos> list){
+        if (lista_platos!=null){
+            lista_platos.clear();
+            lista_platos.addAll(list);
+        } else {
+            lista_platos = list;
+        }
+        notifyDataSetChanged();
     }
 
 

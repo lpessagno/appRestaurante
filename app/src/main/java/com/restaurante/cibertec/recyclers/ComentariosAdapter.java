@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.restaurantmodel.model.Commentary;
+import com.example.restaurantmodel.model.Platos;
 import com.restaurante.cibertec.apprestaurante.R;
 
 import java.util.List;
@@ -44,6 +45,15 @@ public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.
         return lista_comentarios== null?0:lista_comentarios.size();
     }
 
+    public void swapData(List<Commentary> list){
+        if (lista_comentarios!=null){
+            lista_comentarios.clear();
+            lista_comentarios.addAll(list);
+        } else {
+            lista_comentarios = list;
+        }
+        notifyDataSetChanged();
+    }
 
     class CustomComentariosHolder extends RecyclerView.ViewHolder {
       TextView comentario;

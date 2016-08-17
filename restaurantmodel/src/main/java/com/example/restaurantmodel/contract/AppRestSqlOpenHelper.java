@@ -20,7 +20,7 @@ import java.util.Date;
 public class AppRestSqlOpenHelper extends SQLiteOpenHelper {
 
     private static final String dbName = "RestaurantDB2.db";
-    private static final int versionDB = 12;
+    private static final int versionDB = 13;
     private static final String NOTNULL = "NOT NULL";
     private Context ctx;
 

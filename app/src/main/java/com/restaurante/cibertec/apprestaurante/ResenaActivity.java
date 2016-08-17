@@ -56,6 +56,7 @@ public class ResenaActivity extends AppCompatActivity {
         comment.setRanking(Integer.parseInt(value));
 
         int id = (int)dao.insertarResenia(comment);
+        Log.d("TEST_RESENA","TEST AFTER INSERT");
         Intent intent = new Intent();
         setResult(RESULT_OK,intent);
         finish();

@@ -11,8 +11,10 @@ import android.widget.TextView;
 import com.example.restaurantmodel.dao.UserDao;
 import com.example.restaurantmodel.impl.UserDaoImpl;
 import com.example.restaurantmodel.model.Commentary;
+import com.example.restaurantmodel.model.Platos;
 import com.example.restaurantmodel.model.Restaurant;
 import com.example.restaurantmodel.model.User;
+import com.restaurante.cibertec.recyclers.PlatosAdapter;
 import com.restaurante.cibertec.recyclers.RecyclerAdapterResenia;
 import com.restaurante.cibertec.recyclers.RestauranteRecyclerAdapter;
 
@@ -21,6 +23,7 @@ import java.util.List;
 public class PerfActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView recyclerView_fav;
+    RecyclerView recyclerView_foto;
     TabHost tbh;
     TextView userName;
 
@@ -47,14 +50,14 @@ public class PerfActivity extends AppCompatActivity {
         tab1.setIndicator("Reseñas");
         tab1.setContent(R.id.linearLayout);
 
-        /*tab2.setIndicator("Fotos");
-        tab2.setContent(R.id.linearLayout2);*/
+        tab2.setIndicator("Fotos");
+        tab2.setContent(R.id.linearLayout2);
 
         tab3.setIndicator("Favoritos");
         tab3.setContent(R.id.linearLayout3);
 
         tbh.addTab(tab1);
-        //tbh.addTab(tab2);
+        tbh.addTab(tab2);
         tbh.addTab(tab3);
 
         recyclerView = (RecyclerView) findViewById(R.id.viewResenia);
@@ -70,6 +73,13 @@ public class PerfActivity extends AppCompatActivity {
 
         RecyclerView.Adapter adapter1 = new RestauranteRecyclerAdapter(this, favoritos);
         recyclerView_fav.setAdapter(adapter1);
+
+        recyclerView_foto = (RecyclerView) findViewById(R.id.viewFotos);
+        recyclerView_foto.setLayoutManager(new LinearLayoutManager(this));
+        List<Platos> fotos = user.getUserPhotos();
+
+        PlatosAdapter adapterFotos = new PlatosAdapter(this, fotos);
+        recyclerView_foto.setAdapter(adapterFotos);
 
     }
 
